@@ -93,14 +93,15 @@ migration_protocol.md「外部 migration test」)。**不在本仓**(本仓不�
 - [~] Phase 1 — code lives in new lib; pyright strict 0 + smoke + data-dependent
       tests green。**仅差 initial commit**(尚未 git init / commit,push 待用户授权);
       代码 + 测试侧已就绪,checkbox 仅卡在 commit。
-- [ ] Phase 2 — parity + behavior tests green in
+- [x] Phase 2 — parity + behavior tests green in
       `hjlib-migration-tests/evaluation/`; `(monolith_sha, new_lib_sha)`
       pair pinned in that subdir's README.md;
       `grep -rn 'lib_dynamic_hvip' .../evaluation/behavior/` returns empty.
-      **现状(2026-06-25):parity + behavior 已跑绿** —— capstone end-to-end(wp×2 + jta×2)
-      + enumeration/GT(含 jta_ext)+ behavior(7);pyright standard 0;grep 空。**仅差 SHA pin**:
-      待 assembly + eval commit 后,把 `(monolith 2bc42db4, new_lib_sha)` 钉进 migration-tests
-      `evaluation/README.md` + 勾本 box + 台账 `evaluation.md`,Phase 2 即 close。
+      **Verified 2026-06-25 at `(monolith 2bc42db4, hjlib-evaluation 3753ad8)`** —— 15 tests:
+      capstone end-to-end(wp×2 + jta×2)+ enumeration/GT(含 jta_ext)+ behavior(8);pyright
+      standard 0;grep 空。monolith working tree 带 uncommitted **vrv1-only** 改(不在 parity
+      路径上,故 pin 仍准——详见 migration-tests `evaluation/README.md` SHA pair 注)。OLD 侧
+      经 `py312th280cu128` subprocess 跑活的。
 - [ ] Phase 3 — absorbed; `behavior/` + per-lib `conftest.py` +
       `local_setting_test.py` + readers moved into
       `hjlib-evaluation/test/`; `parity/` and `divergence/` deleted;
