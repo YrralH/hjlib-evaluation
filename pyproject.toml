@@ -1,0 +1,33 @@
+[build-system]
+requires = ['hatchling']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'hjlib-evaluation'
+version = '0.1.0'
+description = 'Dynamic-scene evaluation protocol (testset builder / GT provider / network driver / tester / metric reducer). Execution layer symmetric to hjlib-trainer: consumes hjlib-network + hjlib-dataset-assembly, owns no model / dataset definition.'
+requires-python = '>=3.12'
+dependencies = [
+    'numpy',
+    'torch',
+    'tqdm',
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ['src/hjlib_evaluation']
+
+[tool.pytest.ini_options]
+testpaths = ['test_smoke', 'test']
+
+# Pinned internal deps (Phase 1-5): the testset/GT layers import hjlib-dataset-assembly
+# (Dataset factory + filter store) + hjlib-dataset-std (JTA raw 22-joint GT) +
+# hjlib-skeleton (JTA-22 -> SMPL-54 name map). hjlib-network / hjlib-smpl / hjlib-geometry
+# are NOT pinned: the eval-on-dumps path + the verbatim-numpy reducer import none of them;
+# they land with the deferred live network_driver (DIV-10) / 2D-OKS metrics.
+# NOTE: the assembly SHA is the PRE-change HEAD; it must bump to the commit that lands the
+# additive ``get_dataset_seq_assembly(..., divider=...)`` injection + ``py.typed`` that the
+# eval divider-injection relies on. ``hjlibm update`` auto-bumps once the user commits assembly.
+[tool.hjlibm.deps]
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "6a5e36e1aa3f50132762c33d34fcbd8358e144f7" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "f40d579e4abb95b11d2a17197aa834b0eedcc948" }
+hjlib-skeleton = { path = '../hjlib-skeleton', commit = "a69c1487821378ad363d94b145403f63a3c5f54f" }

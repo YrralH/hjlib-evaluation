@@ -1,0 +1,6 @@
+{
+    "include": ["src", "test_smoke", "test"],
+    "typeCheckingMode": "strict",
+    "reportImplicitOverride": "error",
+    "pythonVersion": "3.12"
+}

@@ -1,0 +1,19 @@
+# per-machine test config, never committed
+test/local_setting_test.py
+
+# all transient / sample data + evaluation output (dumps, metric tables)
+test_data/
+
+# python build / cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
