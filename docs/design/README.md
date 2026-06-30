@@ -98,7 +98,7 @@ src/hjlib_evaluation/
     testset_builder_base.py  TestSet_Builder_Base(ABC)
     testset_builder.py     TestSet_Builder(单一泛型,合并 monolith wp/jta/jta_ext;读 washed filter store)
     eval_meta.py           Eval_Meta / Metric_Spec_3D / Metric_Spec_2D_OKS(评测契约)
-    eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter)+ compute_jitter
+    eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
     dump_reader.py         load_inference_dump(qualname-routing unpickler,读 monolith 真 dump 零 monolith import;legacy bare name→canonical 归一,FIX-1)
     gt_provider_base.py    GT_Provider_Base(ABC;joints/param/eval_meta 抽象,camera/ground/video deferred→raise)
     network_driver_base.py Network_Driver_Base(ABC,infer(dict_item)->dict;live driver deferred)
@@ -134,12 +134,34 @@ smoke)deferred(narrow scenes below split,vis-only)。
 
 1. 本文件「依赖方向铁律」+「与 assembly / network 的接线」—— 改本仓前必须守住的线。
 2. [migration.md](migration.md) —— 从 monolith 迁出的 port 表 / divergence / 测试状态。
-3. `hjlib-dataset-assembly/docs/design/validity_filtering_analysis.md` —— 本 initiative
+3. [jta_protocol_parity_and_standup.md](jta_protocol_parity_and_standup.md) —— campaign 02
+   标准 eval standup / JTA parity 的实测驻地(读数和阶段计划)。
+4. `hjlib-dataset-assembly/docs/design/validity_filtering_analysis.md` —— 本 initiative
    设计 SSOT(§5 四层架构 / §6 track 2)。
-4. [test.md](test.md) —— 测试两棵树本仓如何实例化。
+5. [test.md](test.md) —— 测试两棵树本仓如何实例化。
+
+## Dump prediction field contract
+
+`eval_reducer.eval_dumps_against_gt` 和 `Tester.stage_eval` 默认读取
+`pred['joints_54_world']`。这是本仓的标准 protocol 字段,也与 monolith 的
+`protocol_dynamic` eval 等价:monolith 在 dump 侧先根据 detector/input KP 的
+`invalid_frame_mask` 对 `transl_raw` 做线性插值/tame,再把同一个 translation delta
+平移到 `joints_54_world`。reducer 本身不按 invalid mask 分支。
+
+`pred_joints_key='joints_54_world_raw'` 是显式诊断通道,用于观察 no-invalid-tame
+raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root translation 可能来自
+0、fallback 或任意失败值,所以绝对 MPJPE 变差是预期信号;T-MPJPE 常常接近不变,因为
+主要差异落在每帧平移上。
+
+若未来要把 invalid 处理改成数据侧 validity(bbox/visibility/in-image/GT availability),
+应作为 protocol redesign 单独落地,不得默默替换默认 `joints_54_world` 口径。
 
 ## State of the world
 
+- **2026-06-30 field-select eval**:`eval_dumps_against_gt(..., pred_joints_key=...)` 与
+  `Tester.stage_eval(..., pred_joints_key=...)` 支持同一套 TestSet/GT 同时读
+  monolith-equivalent `joints_54_world` 和 raw diagnostic `joints_54_world_raw`;
+  默认值保持 `joints_54_world`。新增 smoke 覆盖字段选择;pyright strict 0。
 - 2026-06-24 仓初建 + **端口 Phase 1-5 done**(脚手架 / testset 层 / GT 层 / network_driver ABC /
   tester + eval_reducer + dump_reader);**Phase 6 parity + behavior 已在 `hjlib-migration-tests/evaluation/`
   落地并跑绿**(2026-06-25,只差 SHA pin —— 见 What's open)。

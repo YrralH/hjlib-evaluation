@@ -5,7 +5,10 @@ whose dump conforms to the per-segment schema:
 
 The reducer iterates the testset's flat indices, loads the matching pred dump,
 asserts non-NaN at the meta-declared indices, computes per-metric MPJPE + T-MPJPE +
-absolute jitter, and prints one per-scene + ALL table per metric variant.
+absolute jitter, and prints one per-scene + ALL table per metric variant. The default
+prediction field is ``joints_54_world`` (the monolith-equivalent dump-side tamed
+protocol). Passing ``pred_joints_key='joints_54_world_raw'`` evaluates the raw
+no-invalid-tame diagnostic field when a dump provides it.
 
 Port of monolith ``test/protocol_dynamic/eval_reducer.py``. Changes: the pred dump is
 read via ``dump_reader.load_inference_dump`` (qualname-routing, so the monolith dumps
@@ -66,12 +69,19 @@ def eval_dumps_against_gt(
         gt_provider:   GT_Provider_Base,
         path_dump_dir: str,
         path_pkl_for_segment: Path_Pkl_For_Segment,
+        pred_joints_key: str = 'joints_54_world',
     ) -> None:
     '''Reduce per-segment pred dumps vs GT into per-scene + ALL frame-weighted
     MPJPE / T-MPJPE tables, one table per metric variant in eval meta.
 
     path_pkl_for_segment(path_dump_dir, seg) -> filesystem path of the dump pkl.
-    Injected to keep the reducer agnostic of the Tester's filename scheme.'''
+    Injected to keep the reducer agnostic of the Tester's filename scheme.
+
+    pred_joints_key selects the prediction field inside each dump. The default
+    ``joints_54_world`` is the monolith-equivalent protocol field: legacy dumps have
+    already interpolated invalid-frame world translation before writing it. Use
+    ``joints_54_world_raw`` only as a diagnostic no-invalid-tame view; it is expected to
+    be worse on detector-failure frames.'''
     meta = gt_provider.get_eval_meta()
     scale_mm = {'m': 1000.0, 'mm': 1.0}[meta.unit_world]
     fps = get_dataset_facts(meta.name_dataset).fps
@@ -84,7 +94,8 @@ def eval_dumps_against_gt(
     for flat_idx in tqdm(range(len(testset)), desc='eval'):
         seg = testset.get_test_segment(flat_idx)
         pred_joints, gt_j = _load_one_segment(
-            gt_provider, path_dump_dir, path_pkl_for_segment, flat_idx, seg)
+            gt_provider, path_dump_dir, path_pkl_for_segment, flat_idx, seg,
+            pred_joints_key=pred_joints_key)
 
         for metric in meta.metrics_3d:
             mpjpe_mm, tmpjpe_mm, j_pred, j_gt, n_windows = _compute_one_metric(
@@ -113,6 +124,7 @@ def _load_one_segment(
         path_pkl_for_segment: Path_Pkl_For_Segment,
         flat_idx:             int,
         seg:                  Test_Segment,
+        pred_joints_key:      str = 'joints_54_world',
     ) -> Tuple[np.ndarray, np.ndarray]:
     '''Load pred dump, assert segment match, fetch GT joints, assert shape.'''
     path_pkl = path_pkl_for_segment(path_dump_dir, seg)
@@ -125,7 +137,11 @@ def _load_one_segment(
         'Likely a stale inference dump. Disk: %s  vs  TestSet: %s'
         % (path_pkl, flat_idx, seg_on_disk.to_str(), seg.to_str()))
 
-    pred_joints: np.ndarray = pred['joints_54_world']
+    if pred_joints_key not in pred:
+        raise KeyError(
+            'eval reducer: pred field %r missing in %s. Available fields: %s'
+            % (pred_joints_key, path_pkl, sorted(pred.keys())))
+    pred_joints: np.ndarray = pred[pred_joints_key]
     gt_joints: np.ndarray = gt_provider.get_smpl_joints_54_world(
         seg.name_scene, seg.name_seq,
         (seg.index_frame_original_start, seg.index_frame_original_end),

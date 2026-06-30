@@ -13,6 +13,7 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 |---|---|
 | `test_testset.py` | `Test_Segment`(length/to_str);`TestSet`(len / get_test_segment / restrict_to_scenes 对齐 / summary);`get_testset_builder` 路径解析(wp→`wp` token 等)+ vrv1/unknown/curated-policy 错误分支 |
 | `test_gt.py` | `Eval_Meta`(WP 全 SMPL-24 / JTA 12·10 limb 两 variant);`get_gt_provider` 错误分支(vrv1 / unknown / jta 缺 raw root) |
+| `test_eval_pred_field.py` | `eval_dumps_against_gt` / `Tester.stage_eval` 的 `pred_joints_key` 字段选择:默认 `joints_54_world` vs raw 诊断 `joints_54_world_raw` |
 | `test_all_func.py` | master runner;导入并依次跑每个 `smoke_test_*` |
 | `clean_test_data.py` | `LIST_PATH_CLEAN`(当前空:无持久产物) |
 

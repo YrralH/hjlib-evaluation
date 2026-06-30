@@ -157,12 +157,16 @@ class Tester:
 
         print('Wrote %d per-segment pkls to %s' % (len(indices_to_run), path_dump_dir))
 
-    def stage_eval(self, path_dump_dir: str) -> None:
+    def stage_eval(self, path_dump_dir: str, pred_joints_key: str = 'joints_54_world') -> None:
         '''Reduce per-segment pred dumps vs gt_provider GT into per-scene + ALL
         frame-weighted MPJPE / T-MPJPE tables, one per metric variant in the dataset's
         eval meta. NaN at meta-declared indices raises. Delegates to
         eval_reducer.eval_dumps_against_gt so an external-method tester reuses the exact
-        same code path.'''
+        same code path.
+
+        pred_joints_key defaults to ``joints_54_world``, the monolith-equivalent
+        dump-side tamed protocol. Use ``joints_54_world_raw`` only for a diagnostic
+        no-invalid-tame pass when the dump carries that field.'''
         assert self.gt_provider is not None, (
             'stage_eval requires a gt_provider; none was injected.')
         eval_dumps_against_gt(
@@ -170,6 +174,7 @@ class Tester:
             gt_provider          =self.gt_provider,
             path_dump_dir        =path_dump_dir,
             path_pkl_for_segment =path_pkl_for_segment,
+            pred_joints_key      =pred_joints_key,
         )
 
 
