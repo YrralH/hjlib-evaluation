@@ -1,0 +1,3810 @@
+{
+  "algorithm": "scipy.optimize.linear_sum_assignment",
+  "assignment_name": "linear sum assignment / Hungarian-style bipartite matching",
+  "contact_sheet": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/contact_sheet.jpg",
+  "cost": {
+    "center_weight": 0.25,
+    "max_cost_px": 90.0,
+    "trim_ratio": 0.8,
+    "type": "2D robust bidirectional nearest-joint distance"
+  },
+  "frame_range": [
+    0,
+    10
+  ],
+  "frames": [
+    {
+      "accepted_count": 20,
+      "crowd_count": 39,
+      "frame": "NET_ARG_231908_frame0",
+      "frame_index": 0,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 6.289100805365175,
+          "chamfer_px": 3.1338870144017172,
+          "cost_px": 4.706162215743011,
+          "crowd_center_uv": [
+            324.6978635116362,
+            864.5301496478874
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            327.85433461865796,
+            869.969770874644
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 4.600758767901937,
+          "chamfer_px": 2.3126989343212343,
+          "cost_px": 3.4628886262967185,
+          "crowd_center_uv": [
+            1461.2644644723812,
+            651.155810718805
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1457.4776051376236,
+            653.768601873717
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 6.123554553090944,
+          "chamfer_px": 2.160594808819326,
+          "cost_px": 3.691483447092062,
+          "crowd_center_uv": [
+            1593.0252582388864,
+            468.0652985908616
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1591.0185213184657,
+            473.85070499809876
+          ],
+          "gt_id": 3
+        },
+        {
+          "center_px": 4.578264138116496,
+          "chamfer_px": 2.6424955006759525,
+          "cost_px": 3.7870615352050763,
+          "crowd_center_uv": [
+            470.2978571502256,
+            596.0357726191131
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            465.77088460445407,
+            596.719162762585
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 0.9631317138770942,
+          "chamfer_px": 1.1241778694940523,
+          "cost_px": 1.3649607979633258,
+          "crowd_center_uv": [
+            1269.1556791923415,
+            598.6647803078235
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1268.27338959698,
+            599.0510286323412
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.8791851278260125,
+          "chamfer_px": 1.9341538400396043,
+          "cost_px": 2.6539501219961075,
+          "crowd_center_uv": [
+            1779.9048126650528,
+            598.6568715270137
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1778.2813887665554,
+            601.0347280925117
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 6.518312540401729,
+          "chamfer_px": 2.986101722039212,
+          "cost_px": 4.615679857139645,
+          "crowd_center_uv": [
+            2317.797965036312,
+            951.3364627462038
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            2313.521069720326,
+            956.2554631355571
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 2.3338848649180113,
+          "chamfer_px": 1.8159425964511127,
+          "cost_px": 2.3994138126806153,
+          "crowd_center_uv": [
+            1806.0703950264085,
+            719.2005933304907
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1803.7652243774055,
+            719.5655684552163
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 3.8011670611653035,
+          "chamfer_px": 3.262183676290771,
+          "cost_px": 4.212475441582097,
+          "crowd_center_uv": [
+            886.4664074535101,
+            1071.326765893211
+          ],
+          "crowd_index": 37,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            890.0960895714514,
+            1070.1979263343785
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 3.2495148041860435,
+          "chamfer_px": 1.7837373732709145,
+          "cost_px": 2.5961160743174254,
+          "crowd_center_uv": [
+            1042.1685395576585,
+            643.8026630240427
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1041.6684305858364,
+            647.0134631546841
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 2.348814829337946,
+          "chamfer_px": 1.5382889557640942,
+          "cost_px": 2.125492663098581,
+          "crowd_center_uv": [
+            866.7178722972601,
+            595.5966117751431
+          ],
+          "crowd_index": 2,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            868.2403246115066,
+            597.385206210269
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 1.3458679712921802,
+          "chamfer_px": 1.2728128124299751,
+          "cost_px": 1.6092798052530202,
+          "crowd_center_uv": [
+            1167.7697547590228,
+            675.7866236727002
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1168.808200821501,
+            676.6427722412756
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 7.867287057002454,
+          "chamfer_px": 3.369621146630892,
+          "cost_px": 5.336442910881505,
+          "crowd_center_uv": [
+            1962.5911108742298,
+            703.9295086927817
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1955.4925226727044,
+            707.3213004290831
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 1.8423683666576816,
+          "chamfer_px": 3.02350212398711,
+          "cost_px": 3.48409421565153,
+          "crowd_center_uv": [
+            1928.2644318056778,
+            949.8648862167144
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1928.0581099499918,
+            951.6956654197662
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 15.187336610500687,
+          "chamfer_px": 6.792944807235058,
+          "cost_px": 10.58977895986023,
+          "crowd_center_uv": [
+            860.8808860241527,
+            1036.9281031648877
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            847.4129966072868,
+            1043.9474441578675
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 65.35889264477967,
+          "chamfer_px": 38.57999843506455,
+          "cost_px": 54.91972159625947,
+          "crowd_center_uv": [
+            1683.6075181558099,
+            530.0582894338688
+          ],
+          "crowd_index": 11,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1718.7971186087134,
+            585.1352979557271
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 0.1973258798005565,
+          "chamfer_px": 1.119990534779745,
+          "cost_px": 1.169322004729884,
+          "crowd_center_uv": [
+            1555.0239962725573,
+            538.7102609553807
+          ],
+          "crowd_index": 7,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1554.984120521711,
+            538.9035157802455
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 5.438049377043473,
+          "chamfer_px": 3.040412510291599,
+          "cost_px": 4.399924854552467,
+          "crowd_center_uv": [
+            2142.5164124394805,
+            882.1310794454225
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            2146.5770658773317,
+            885.7481880538044
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 4.133798989993337,
+          "chamfer_px": 2.23705272519739,
+          "cost_px": 3.270502472695724,
+          "crowd_center_uv": [
+            1810.2032333159111,
+            747.437627228213
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1806.8708089824156,
+            749.8836938976227
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 5.6359166366397915,
+          "chamfer_px": 2.4886599426723617,
+          "cost_px": 3.8976391018323095,
+          "crowd_center_uv": [
+            1853.8093811894807,
+            600.9196038044674
+          ],
+          "crowd_index": 20,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1848.401507204764,
+            602.5065679819384
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame0_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 359.3926862050102,
+          "chamfer_px": 310.1317301482235,
+          "cost_px": 399.97990169947604,
+          "crowd_index": 10,
+          "gt_id": 1
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        12,
+        13,
+        14,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        34,
+        38
+      ],
+      "unmatched_gt_ids": [
+        1
+      ]
+    },
+    {
+      "accepted_count": 20,
+      "crowd_count": 37,
+      "frame": "NET_ARG_231908_frame1",
+      "frame_index": 1,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 4.244315677654345,
+          "chamfer_px": 2.469946340599943,
+          "cost_px": 3.5310252600135295,
+          "crowd_center_uv": [
+            325.6534002599582,
+            866.4182403994279
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            327.5609788985272,
+            870.2097255054592
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 6.104779577811922,
+          "chamfer_px": 3.288636897484391,
+          "cost_px": 4.8148317919373715,
+          "crowd_center_uv": [
+            1653.8834899042693,
+            930.4522240867077
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1650.372545441049,
+            935.4463809394559
+          ],
+          "gt_id": 1
+        },
+        {
+          "center_px": 3.946989575505708,
+          "chamfer_px": 2.2541942697807906,
+          "cost_px": 3.2409416636572175,
+          "crowd_center_uv": [
+            1460.1754700566682,
+            651.5458949988996
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1456.930553245894,
+            653.792946756271
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 1.6691597928033552,
+          "chamfer_px": 1.6860690165601355,
+          "cost_px": 2.1033589647609743,
+          "crowd_center_uv": [
+            466.2140752228213,
+            597.8357672892826
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            464.89923058036226,
+            596.8075270546544
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 1.6661970138592819,
+          "chamfer_px": 1.4245262182962986,
+          "cost_px": 1.841075471761119,
+          "crowd_center_uv": [
+            1269.8949885838467,
+            598.8436365261883
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1268.264390726354,
+            599.186219532383
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.8258374973301303,
+          "chamfer_px": 1.8221158089627516,
+          "cost_px": 2.5285751832952843,
+          "crowd_center_uv": [
+            1779.81718853158,
+            598.9903057259573
+          ],
+          "crowd_index": 20,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1777.8400689470761,
+            601.0093044158747
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 6.298897732362426,
+          "chamfer_px": 3.013831640522019,
+          "cost_px": 4.588556073612626,
+          "crowd_center_uv": [
+            2317.4627393265846,
+            951.8840632908781
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            2312.933323698224,
+            956.2613348963787
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 2.4417261208391596,
+          "chamfer_px": 1.851283554789016,
+          "cost_px": 2.461715084998806,
+          "crowd_center_uv": [
+            1805.7481912962148,
+            719.52597604671
+          ],
+          "crowd_index": 25,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1803.3064946569395,
+            719.5139772576018
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 3.535385981491415,
+          "chamfer_px": 3.1267680947683205,
+          "cost_px": 4.0106145901411745,
+          "crowd_center_uv": [
+            886.4867046517386,
+            1071.1779011471172
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            889.8076716549828,
+            1069.9654110640693
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.248156227925755,
+          "chamfer_px": 1.4065256054179174,
+          "cost_px": 1.968564662399356,
+          "crowd_center_uv": [
+            1041.5237435354313,
+            644.6150985502861
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1041.576637651896,
+            646.862632451611
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 1.1865734711252527,
+          "chamfer_px": 1.4356025087448003,
+          "cost_px": 1.7322458765261135,
+          "crowd_center_uv": [
+            867.7356997207856,
+            596.1624678490867
+          ],
+          "crowd_index": 3,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            867.9728993768474,
+            597.325091143857
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 0.6631452317944889,
+          "chamfer_px": 1.1952947107999345,
+          "cost_px": 1.3610810187485567,
+          "crowd_center_uv": [
+            1168.6378242600133,
+            676.0730384504292
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1168.4133240044548,
+            676.6970266183506
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 7.421165021363402,
+          "chamfer_px": 3.2214898982955202,
+          "cost_px": 5.076781153636371,
+          "crowd_center_uv": [
+            1961.3045585524867,
+            704.4006674323283
+          ],
+          "crowd_index": 27,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1954.3499536248357,
+            706.9904860697237
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 4.840546696580905,
+          "chamfer_px": 3.0090707152948557,
+          "cost_px": 4.219207389440082,
+          "crowd_center_uv": [
+            1929.0988322513203,
+            947.8469934597821
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1926.3489879623269,
+            951.8306160207271
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 15.381426414994474,
+          "chamfer_px": 7.117061502768504,
+          "cost_px": 10.962418106517122,
+          "crowd_center_uv": [
+            859.2494609993948,
+            1035.7695561798525
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            846.0138329763795,
+            1043.6057816357886
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.362380977308264,
+          "chamfer_px": 1.6794759042239051,
+          "cost_px": 2.2700711485509713,
+          "crowd_center_uv": [
+            1718.8316650390625,
+            582.9691660706426
+          ],
+          "crowd_index": 10,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1717.9136066724313,
+            585.1458637339405
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 2.8994539956544,
+          "chamfer_px": 1.7698870152732749,
+          "cost_px": 2.494750514186875,
+          "crowd_center_uv": [
+            1558.3238147144586,
+            538.4734196192782
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1555.4800562245534,
+            539.0389911213964
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 4.555438841682419,
+          "chamfer_px": 2.4274966352413903,
+          "cost_px": 3.566356345661995,
+          "crowd_center_uv": [
+            2144.2009896291815,
+            882.0375331824933
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            2146.815709941298,
+            885.7678496207751
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 3.8643564576007896,
+          "chamfer_px": 2.0680816544760976,
+          "cost_px": 3.034170768876295,
+          "crowd_center_uv": [
+            1809.4621839926276,
+            747.9233518788512
+          ],
+          "crowd_index": 26,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1806.071042975696,
+            749.776299108182
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 5.484477042841315,
+          "chamfer_px": 2.4635119817163407,
+          "cost_px": 3.8346312424266698,
+          "crowd_center_uv": [
+            1853.383115096831,
+            601.121513259243
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1848.085099532236,
+            602.5394411526007
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame1_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 106.80702687479999,
+          "chamfer_px": 92.63451980121368,
+          "cost_px": 119.33627651991368,
+          "crowd_index": 11,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        19,
+        22,
+        23,
+        24,
+        30,
+        36
+      ],
+      "unmatched_gt_ids": [
+        3
+      ]
+    },
+    {
+      "accepted_count": 20,
+      "crowd_count": 33,
+      "frame": "NET_ARG_231908_frame2",
+      "frame_index": 2,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 2.512229476898273,
+          "chamfer_px": 2.44688032349949,
+          "cost_px": 3.0749376927240584,
+          "crowd_center_uv": [
+            325.8396172322018,
+            868.6041345730633
+          ],
+          "crowd_index": 25,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            327.43429825966547,
+            870.5453427961152
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 4.466878174729536,
+          "chamfer_px": 2.6236021631056397,
+          "cost_px": 3.7403217067880234,
+          "crowd_center_uv": [
+            1650.4793924680898,
+            931.3494460414832
+          ],
+          "crowd_index": 26,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1648.4273667437942,
+            935.3170890514709
+          ],
+          "gt_id": 1
+        },
+        {
+          "center_px": 3.778355041142884,
+          "chamfer_px": 1.9537209147548453,
+          "cost_px": 2.8983096750405664,
+          "crowd_center_uv": [
+            1459.4396164585166,
+            651.7436678174516
+          ],
+          "crowd_index": 20,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1456.2913889146828,
+            653.832837544682
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 71.31975019001126,
+          "chamfer_px": 44.408123721257525,
+          "cost_px": 62.23806126876034,
+          "crowd_center_uv": [
+            1558.6517557493398,
+            537.9478063449054
+          ],
+          "crowd_index": 13,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1589.389182271215,
+            473.5916304332034
+          ],
+          "gt_id": 3
+        },
+        {
+          "center_px": 2.5871789111433454,
+          "chamfer_px": 1.9852590875559308,
+          "cost_px": 2.6320538153417674,
+          "crowd_center_uv": [
+            466.29679720166706,
+            596.2239818304357
+          ],
+          "crowd_index": 1,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            463.8023580477745,
+            596.9104714704104
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 2.2273937302963915,
+          "chamfer_px": 1.8194242391686342,
+          "cost_px": 2.376272671742732,
+          "crowd_center_uv": [
+            1270.352862290933,
+            598.2031593860036
+          ],
+          "crowd_index": 10,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1268.448896218838,
+            599.3590988420628
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.8937632294744406,
+          "chamfer_px": 1.8490451935602612,
+          "cost_px": 2.5724860009288713,
+          "crowd_center_uv": [
+            1778.5956034055898,
+            598.3930088096942
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1777.3748575006266,
+            601.0166789611754
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 6.95801174465652,
+          "chamfer_px": 3.0861208426462774,
+          "cost_px": 4.8256237788104075,
+          "crowd_center_uv": [
+            2316.9166070642605,
+            951.2406839719961
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            2312.419277413391,
+            956.5499168214939
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 3.917822945918357,
+          "chamfer_px": 2.241670017416565,
+          "cost_px": 3.221125753896154,
+          "crowd_center_uv": [
+            1805.6543639277068,
+            716.8526637117627
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1802.8002157056542,
+            719.5365367642968
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 2.649797802829672,
+          "chamfer_px": 3.1545514295230195,
+          "cost_px": 3.8170008802304376,
+          "crowd_center_uv": [
+            887.3287344919124,
+            1070.999540946853
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            889.7236427411992,
+            1069.8655908274125
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.4816873782609985,
+          "chamfer_px": 1.6949661425175586,
+          "cost_px": 2.3153879870828082,
+          "crowd_center_uv": [
+            1043.0688854808539,
+            644.6404848770356
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1041.7429986858513,
+            646.7382924111669
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 0.5698411325758275,
+          "chamfer_px": 1.4345761164388486,
+          "cost_px": 1.5770363995828056,
+          "crowd_center_uv": [
+            867.6311258665273,
+            596.7880068496919
+          ],
+          "crowd_index": 5,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            867.8910696596494,
+            597.2951046122512
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 0.04215908329312278,
+          "chamfer_px": 1.234098585795175,
+          "cost_px": 1.2446383566184556,
+          "crowd_center_uv": [
+            1168.114207952795,
+            676.7621803820973
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1168.1516170750656,
+            676.7816212121993
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 7.014167530040661,
+          "chamfer_px": 2.9860335814061827,
+          "cost_px": 4.739575463916347,
+          "crowd_center_uv": [
+            1959.3740457884023,
+            703.9186882771237
+          ],
+          "crowd_index": 22,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1952.9116880908518,
+            706.6456791330648
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 6.043894269228351,
+          "chamfer_px": 3.1930558862758014,
+          "cost_px": 4.704029453582889,
+          "crowd_center_uv": [
+            1926.6565663512324,
+            946.9233123349471
+          ],
+          "crowd_index": 27,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1923.600965563701,
+            952.1379035715494
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 10.842737706417525,
+          "chamfer_px": 5.331887896028965,
+          "cost_px": 8.042572322633346,
+          "crowd_center_uv": [
+            853.5887846610915,
+            1037.6241008060078
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            844.2374648775678,
+            1043.1120675767206
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 4.184942522067938,
+          "chamfer_px": 2.165012701566497,
+          "cost_px": 3.211248332083481,
+          "crowd_center_uv": [
+            1718.3458870901188,
+            581.4327280823613
+          ],
+          "crowd_index": 14,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1716.5790264101818,
+            585.2264000832998
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 4.285286779408165,
+          "chamfer_px": 2.232437120321233,
+          "cost_px": 3.303758815173274,
+          "crowd_center_uv": [
+            2146.0438627860917,
+            881.9034578565141
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            2147.5032488441816,
+            885.9325861884519
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 2.8059278612333585,
+          "chamfer_px": 1.9675774824440957,
+          "cost_px": 2.6690594477524354,
+          "crowd_center_uv": [
+            1807.8022220235475,
+            748.8115148409992
+          ],
+          "crowd_index": 24,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1805.1318952542804,
+            749.6732492013335
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 5.406824137530012,
+          "chamfer_px": 2.4613065618227177,
+          "cost_px": 3.813012596205221,
+          "crowd_center_uv": [
+            1852.7061200209066,
+            600.5194117586377
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame2",
+          "frame_index": 2,
+          "gt_center_uv": [
+            1847.7177276017883,
+            602.6050024008923
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame2_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 96.02274337936183,
+          "chamfer_px": 86.48640696749652,
+          "cost_px": 110.49209281233698,
+          "crowd_index": 12,
+          "gt_id": 18
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        0,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        17,
+        23,
+        32
+      ],
+      "unmatched_gt_ids": [
+        18
+      ]
+    },
+    {
+      "accepted_count": 19,
+      "crowd_count": 38,
+      "frame": "NET_ARG_231908_frame3",
+      "frame_index": 3,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 2.539256755419036,
+          "chamfer_px": 2.677158430894206,
+          "cost_px": 3.311972619748965,
+          "crowd_center_uv": [
+            327.6516242228763,
+            868.4899257606183
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            327.4485393841624,
+            871.0210483215043
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 3.856656735989653,
+          "chamfer_px": 2.0624829053189178,
+          "cost_px": 3.026647089316331,
+          "crowd_center_uv": [
+            1458.110195106184,
+            651.0045845139194
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1455.5888221192174,
+            653.922885293457
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 0.5006168776518142,
+          "chamfer_px": 1.747794165818831,
+          "cost_px": 1.8729483852317845,
+          "crowd_center_uv": [
+            462.70929084025636,
+            596.6096509476782
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            462.5539620790057,
+            597.0855608489392
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 2.2261176806247804,
+          "chamfer_px": 1.484253834540543,
+          "cost_px": 2.040783254696738,
+          "crowd_center_uv": [
+            1270.8766849141725,
+            598.9501076281911
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1268.7488836619877,
+            599.6043719166794
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.7818180444669416,
+          "chamfer_px": 1.8866294551059837,
+          "cost_px": 2.582083966222719,
+          "crowd_center_uv": [
+            1778.5308287714568,
+            598.8301460373569
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1776.8897043080053,
+            601.0763032286468
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 5.673410292585667,
+          "chamfer_px": 3.0130765981038876,
+          "cost_px": 4.431429171250304,
+          "crowd_center_uv": [
+            2316.7583145356516,
+            953.9787941516286
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            2312.017438379364,
+            957.0951506169198
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 2.283005192250611,
+          "chamfer_px": 1.7580060305019476,
+          "cost_px": 2.3287573285646004,
+          "crowd_center_uv": [
+            1804.4710383885342,
+            720.2005228391836
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1802.2591278230984,
+            719.6352226018258
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 1.4254806691092086,
+          "chamfer_px": 2.4579496609963885,
+          "cost_px": 2.8143198282736908,
+          "crowd_center_uv": [
+            888.5968249683649,
+            1070.7789994360696
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            889.7413618902398,
+            1069.929275732464
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.615210826306472,
+          "chamfer_px": 2.038341712592579,
+          "cost_px": 2.692144419169197,
+          "crowd_center_uv": [
+            1043.8885893485915,
+            644.7980011416154
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1042.0701673753133,
+            646.6775407642702
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 1.403699549372261,
+          "chamfer_px": 1.4631987091213117,
+          "cost_px": 1.814123596464377,
+          "crowd_center_uv": [
+            868.2941378741198,
+            595.9995951048086
+          ],
+          "crowd_index": 2,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            867.9094486687837,
+            597.3495531190467
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 0.7516253812348179,
+          "chamfer_px": 1.297740469531246,
+          "cost_px": 1.4856468148399504,
+          "crowd_center_uv": [
+            1168.5526105853874,
+            676.46054721886
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1167.973073156337,
+            676.9391671955076
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 6.781484127988891,
+          "chamfer_px": 3.121444224896379,
+          "cost_px": 4.816815256893602,
+          "crowd_center_uv": [
+            1957.962997221611,
+            704.8207689741968
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1951.3527460679356,
+            706.3350696918546
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 4.346750166780499,
+          "chamfer_px": 2.7969525697661908,
+          "cost_px": 3.8836401114613155,
+          "crowd_center_uv": [
+            1921.646102690361,
+            948.4380948778609
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1920.1919934551736,
+            952.5344107036425
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 11.853908395270858,
+          "chamfer_px": 5.841199456099222,
+          "cost_px": 8.804676554916936,
+          "crowd_center_uv": [
+            852.0145891216439,
+            1035.7575056049186
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            842.3103230887781,
+            1042.5650282825775
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.1615760150378844,
+          "chamfer_px": 1.4514182169384071,
+          "cost_px": 1.991812220697878,
+          "crowd_center_uv": [
+            1715.2972687197403,
+            583.2808683153609
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1714.9365089526068,
+            585.4121269245411
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 2.191150326513932,
+          "chamfer_px": 1.4270669690225235,
+          "cost_px": 1.9748545506510065,
+          "crowd_center_uv": [
+            1559.787334603323,
+            539.4285381478323
+          ],
+          "crowd_index": 7,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1557.6014245290366,
+            539.2770888146687
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 3.607650704779913,
+          "chamfer_px": 2.1196852905994454,
+          "cost_px": 3.021597966794424,
+          "crowd_center_uv": [
+            2149.117373184419,
+            882.7092216384243
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            2148.440112528763,
+            886.2527314256267
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 3.946292506737977,
+          "chamfer_px": 2.0567584554977456,
+          "cost_px": 3.04333158218224,
+          "crowd_center_uv": [
+            1807.866181709397,
+            748.3891859457526
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1804.1100715471093,
+            749.5995003666759
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 4.831714225666508,
+          "chamfer_px": 2.3913489135313624,
+          "cost_px": 3.5992774699479897,
+          "crowd_center_uv": [
+            1851.9208245075924,
+            601.2447183098592
+          ],
+          "crowd_index": 22,
+          "frame": "NET_ARG_231908_frame3",
+          "frame_index": 3,
+          "gt_center_uv": [
+            1847.3241657170804,
+            602.733405759298
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame3_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 230.83808307351816,
+          "chamfer_px": 178.220821261009,
+          "cost_px": 235.93034202938856,
+          "crowd_index": 27,
+          "gt_id": 1
+        },
+        {
+          "center_px": 88.021303253187,
+          "chamfer_px": 68.75998440529202,
+          "cost_px": 90.76531021858877,
+          "crowd_index": 8,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 2,
+      "unmatched_crowd_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        20,
+        23,
+        24,
+        25,
+        26,
+        27,
+        37
+      ],
+      "unmatched_gt_ids": [
+        1,
+        3
+      ]
+    },
+    {
+      "accepted_count": 19,
+      "crowd_count": 38,
+      "frame": "NET_ARG_231908_frame4",
+      "frame_index": 4,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 1.852912753538289,
+          "chamfer_px": 2.699796250880492,
+          "cost_px": 3.1630244392650644,
+          "crowd_center_uv": [
+            327.67678446165274,
+            869.6822681695643
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            327.5440209346879,
+            871.5304184659776
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 2.873388757363299,
+          "chamfer_px": 1.8998554905908094,
+          "cost_px": 2.6182026799316342,
+          "crowd_center_uv": [
+            1456.8081793986576,
+            651.923262475242
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1454.884451689677,
+            654.0576557503069
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 0.15825993330454324,
+          "chamfer_px": 1.684650999267191,
+          "cost_px": 1.7242159825933268,
+          "crowd_center_uv": [
+            461.1270665988116,
+            597.2134751870599
+          ],
+          "crowd_index": 1,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            461.2703656364597,
+            597.2806435747038
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 1.578543834096588,
+          "chamfer_px": 1.41584296591976,
+          "cost_px": 1.810478924443907,
+          "crowd_center_uv": [
+            1270.6842728735696,
+            599.6223041373239
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1269.1295153421763,
+            599.895305336479
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.7732470852944973,
+          "chamfer_px": 1.7690317271962455,
+          "cost_px": 2.4623434985198696,
+          "crowd_center_uv": [
+            1778.2574548855634,
+            599.1099887901629
+          ],
+          "crowd_index": 20,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1776.4303631971661,
+            601.1962858347574
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 5.0249403773940795,
+          "chamfer_px": 2.562066346971295,
+          "cost_px": 3.818301441319815,
+          "crowd_center_uv": [
+            2316.0320855798855,
+            955.2580901669784
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            2311.6604770918193,
+            957.7358038355513
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 3.9222040705235965,
+          "chamfer_px": 2.2033300910214293,
+          "cost_px": 3.1838811086523284,
+          "crowd_center_uv": [
+            1803.6445621974033,
+            723.2319645411532
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1801.7366691840189,
+            719.8050666698546
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 2.438853403454484,
+          "chamfer_px": 2.6199922399242066,
+          "cost_px": 3.2297055907878276,
+          "crowd_center_uv": [
+            888.7629850145796,
+            1072.2591432383363
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            889.8329164408134,
+            1070.0675108178107
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.751310439659969,
+          "chamfer_px": 2.014230275531128,
+          "cost_px": 2.7020578854461204,
+          "crowd_center_uv": [
+            1044.4693569129622,
+            644.7287133445202
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1042.5011157940942,
+            646.651143065831
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 1.5661519599946077,
+          "chamfer_px": 1.629432566724185,
+          "cost_px": 2.020970556722837,
+          "crowd_center_uv": [
+            869.0285764882262,
+            596.2510659661092
+          ],
+          "crowd_index": 5,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            868.0142876153361,
+            597.4444016456756
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 1.3689664261779417,
+          "chamfer_px": 1.5094689913686095,
+          "cost_px": 1.8517105979130948,
+          "crowd_center_uv": [
+            1169.171856087698,
+            676.7125459053148
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1167.8704593198645,
+            677.1373229393868
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 5.356293141007532,
+          "chamfer_px": 2.6185310280167955,
+          "cost_px": 3.9576043132686785,
+          "crowd_center_uv": [
+            1954.938847931338,
+            704.7347308951364
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1949.7442915137228,
+            706.0410462615844
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 4.596553502939491,
+          "chamfer_px": 2.949026060827814,
+          "cost_px": 4.098164436562687,
+          "crowd_center_uv": [
+            1918.979521415603,
+            949.1351455903389
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1916.4859872560032,
+            952.9965690973237
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 9.007014397145792,
+          "chamfer_px": 4.082860183359674,
+          "cost_px": 6.334613782646122,
+          "crowd_center_uv": [
+            847.7088141642826,
+            1036.792879346391
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            840.3547328944842,
+            1041.9932444323817
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.376898236109475,
+          "chamfer_px": 1.6317983484636156,
+          "cost_px": 2.226022907490984,
+          "crowd_center_uv": [
+            1714.0845465861576,
+            583.4592826735806
+          ],
+          "crowd_index": 13,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1713.185387508951,
+            585.6595458802668
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 2.3478533299537294,
+          "chamfer_px": 1.4341805350629377,
+          "cost_px": 2.02114386755137,
+          "crowd_center_uv": [
+            1560.8461209149427,
+            538.0282240316901
+          ],
+          "crowd_index": 12,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1558.9522290256234,
+            539.4158798861963
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 2.7302870997881343,
+          "chamfer_px": 2.1843983236333795,
+          "cost_px": 2.866970098580413,
+          "crowd_center_uv": [
+            2150.419354505942,
+            884.0754136636224
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            2149.539250654,
+            886.6599609851212
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 4.9109974391098525,
+          "chamfer_px": 2.4776620129742195,
+          "cost_px": 3.7054113727516826,
+          "crowd_center_uv": [
+            1807.8619487923636,
+            748.4669051909111
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1803.076405868777,
+            749.5698443431107
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 4.96501771098875,
+          "chamfer_px": 2.4433364570041736,
+          "cost_px": 3.684590884751361,
+          "crowd_center_uv": [
+            1851.7091322348151,
+            601.5123411366637
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame4",
+          "frame_index": 4,
+          "gt_center_uv": [
+            1846.9477324368584,
+            602.9196338689868
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame4_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 221.52091037782003,
+          "chamfer_px": 168.69735573417793,
+          "cost_px": 224.07758332863295,
+          "crowd_index": 25,
+          "gt_id": 1
+        },
+        {
+          "center_px": 157.5046398206824,
+          "chamfer_px": 146.33691810596434,
+          "cost_px": 185.71307806113495,
+          "crowd_index": 11,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 2,
+      "unmatched_crowd_indices": [
+        0,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        14,
+        15,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        37
+      ],
+      "unmatched_gt_ids": [
+        1,
+        3
+      ]
+    },
+    {
+      "accepted_count": 20,
+      "crowd_count": 36,
+      "frame": "NET_ARG_231908_frame5",
+      "frame_index": 5,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 3.0002803941562446,
+          "chamfer_px": 2.9693858991825053,
+          "cost_px": 3.7194559977215667,
+          "crowd_center_uv": [
+            329.20198682328345,
+            869.4294089733714
+          ],
+          "crowd_index": 26,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            327.72973995220156,
+            872.0436338286867
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 1.2702711902849921,
+          "chamfer_px": 2.1821003383615802,
+          "cost_px": 2.4996681359328283,
+          "crowd_center_uv": [
+            1641.9568249339789,
+            936.3697922397668
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1640.7217136524862,
+            936.0729942963817
+          ],
+          "gt_id": 1
+        },
+        {
+          "center_px": 2.7895514520779674,
+          "chamfer_px": 1.7909598283098362,
+          "cost_px": 2.488347691329328,
+          "crowd_center_uv": [
+            1455.5412855551276,
+            651.7642521388094
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1454.1444889966656,
+            654.1789067058353
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 0.6876357352306693,
+          "chamfer_px": 1.6227177375559507,
+          "cost_px": 1.794626671363618,
+          "crowd_center_uv": [
+            460.58917064398105,
+            597.244912590779
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            459.9381253023432,
+            597.46623332523
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 1.951796211797241,
+          "chamfer_px": 1.5270252599251877,
+          "cost_px": 2.014974312874498,
+          "crowd_center_uv": [
+            1271.4155651683539,
+            599.6755792322293
+          ],
+          "crowd_index": 14,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1269.529683542224,
+            600.1785294729207
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.9572546160787385,
+          "chamfer_px": 1.9193465130236964,
+          "cost_px": 2.658660167043381,
+          "crowd_center_uv": [
+            1778.0600723481514,
+            599.226728412467
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1775.958772567951,
+            601.3075681703649
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 4.580094365298637,
+          "chamfer_px": 2.4861906750324367,
+          "cost_px": 3.631214266357096,
+          "crowd_center_uv": [
+            2315.2318132427376,
+            955.9051891917914
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            2311.465850033192,
+            958.5118701272703
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 3.0251118249363538,
+          "chamfer_px": 2.0736383576402946,
+          "cost_px": 2.8299163138743832,
+          "crowd_center_uv": [
+            1803.0691622881823,
+            722.3421931736906
+          ],
+          "crowd_index": 24,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1801.20010243476,
+            719.9635555767256
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 2.522488384760409,
+          "chamfer_px": 2.754777065951642,
+          "cost_px": 3.3853991621417445,
+          "crowd_center_uv": [
+            887.5923487703565,
+            1071.2880584286972
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            889.9051407353224,
+            1070.281112065657
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.383453011759059,
+          "chamfer_px": 2.1640052986188634,
+          "cost_px": 2.759868551558628,
+          "crowd_center_uv": [
+            1045.206269600022,
+            645.8657450071523
+          ],
+          "crowd_index": 12,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1042.9424599935628,
+            646.6114086880206
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 1.133666931021501,
+          "chamfer_px": 1.57469332665542,
+          "cost_px": 1.8581100594107953,
+          "crowd_center_uv": [
+            869.1658196247799,
+            597.1582899496589
+          ],
+          "crowd_index": 2,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            868.104136468097,
+            597.5558193011631
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 1.775276640569638,
+          "chamfer_px": 1.5931163524184697,
+          "cost_px": 2.0369355125608792,
+          "crowd_center_uv": [
+            1169.3891739106514,
+            676.5714197293133
+          ],
+          "crowd_index": 13,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1167.8024670561715,
+            677.3676411234612
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 5.831267127480357,
+          "chamfer_px": 2.741738720452508,
+          "cost_px": 4.199555502322598,
+          "crowd_center_uv": [
+            1954.1344028526628,
+            706.0698672012544
+          ],
+          "crowd_index": 25,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1948.3087701769925,
+            705.8135856369621
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 5.494989551158944,
+          "chamfer_px": 3.386995916827727,
+          "cost_px": 4.7607433046174625,
+          "crowd_center_uv": [
+            1914.6161112180898,
+            948.2305504167583
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1912.6955136060906,
+            953.3789691040961
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 7.267632150945705,
+          "chamfer_px": 3.186025104161762,
+          "cost_px": 5.002933141898188,
+          "crowd_center_uv": [
+            844.9542846679688,
+            1038.0152476136113
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            838.515559153177,
+            1041.3858990086135
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 1.8699949484617029,
+          "chamfer_px": 1.6120887899044942,
+          "cost_px": 2.07958752701992,
+          "crowd_center_uv": [
+            1712.1057988556338,
+            584.3428955078125
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1711.2817062154154,
+            586.0215117318525
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 2.0066664952068125,
+          "chamfer_px": 1.3267038910237765,
+          "cost_px": 1.8283705148254796,
+          "crowd_center_uv": [
+            1561.4481493452904,
+            537.8527866417254
+          ],
+          "crowd_index": 8,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1560.332665621443,
+            539.5208413425123
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 2.3630404371084346,
+          "chamfer_px": 2.15630179117794,
+          "cost_px": 2.7470619004550487,
+          "crowd_center_uv": [
+            2151.6648465008802,
+            885.0759380501761
+          ],
+          "crowd_index": 27,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            2150.59091464472,
+            887.1808443368631
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 3.9550881177450266,
+          "chamfer_px": 2.325761056152237,
+          "cost_px": 3.3145330855884936,
+          "crowd_center_uv": [
+            1805.9054522447184,
+            748.6759918642716
+          ],
+          "crowd_index": 23,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1802.039402349658,
+            749.5104858594759
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 4.77061564568441,
+          "chamfer_px": 2.4426781878965556,
+          "cost_px": 3.635332099317658,
+          "crowd_center_uv": [
+            1850.9898647254622,
+            601.302206549846
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame5",
+          "frame_index": 5,
+          "gt_center_uv": [
+            1846.5698874853,
+            603.0973597007766
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame5_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 153.9264917350074,
+          "chamfer_px": 141.9970862379742,
+          "cost_px": 180.47870917172605,
+          "crowd_index": 7,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11,
+        18,
+        19,
+        20,
+        21,
+        22,
+        28,
+        29,
+        35
+      ],
+      "unmatched_gt_ids": [
+        3
+      ]
+    },
+    {
+      "accepted_count": 19,
+      "crowd_count": 40,
+      "frame": "NET_ARG_231908_frame6",
+      "frame_index": 6,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 2.7826504619626613,
+          "chamfer_px": 2.7081248409552,
+          "cost_px": 3.4037874564458654,
+          "crowd_center_uv": [
+            329.09442697444433,
+            870.0079543422645
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            327.92097094527026,
+            872.5310763252562
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 2.624773559343628,
+          "chamfer_px": 1.654104235614446,
+          "cost_px": 2.310297625450353,
+          "crowd_center_uv": [
+            1455.1046005034111,
+            652.3058506065692
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1453.3904056666447,
+            654.2935558914222
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 69.0367537402392,
+          "chamfer_px": 38.0723051004867,
+          "cost_px": 55.3314935355465,
+          "crowd_center_uv": [
+            1563.0950618260342,
+            538.5970158106844
+          ],
+          "crowd_index": 7,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1585.4784403844967,
+            473.28960634361863
+          ],
+          "gt_id": 3
+        },
+        {
+          "center_px": 1.3407156100028812,
+          "chamfer_px": 1.5881144762634203,
+          "cost_px": 1.9232933787641406,
+          "crowd_center_uv": [
+            459.88962737607284,
+            597.9660782075264
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            458.59066471304686,
+            597.6340927455407
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 2.1911859131795666,
+          "chamfer_px": 1.5158492134788415,
+          "cost_px": 2.063645691773733,
+          "crowd_center_uv": [
+            1271.9473498707086,
+            599.6222577162192
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1269.920009998832,
+            600.4536353380108
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 3.4028299452625133,
+          "chamfer_px": 2.0318190100190776,
+          "cost_px": 2.882526496334706,
+          "crowd_center_uv": [
+            1777.8260051028828,
+            598.952909227828
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1775.4832620871834,
+            601.4208652239444
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 4.33758588992824,
+          "chamfer_px": 2.544194975842946,
+          "cost_px": 3.628591448325006,
+          "crowd_center_uv": [
+            2315.3690684143926,
+            957.8600558428698
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            2311.2608485162455,
+            959.2518822045157
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 1.3332275980930055,
+          "chamfer_px": 1.6777727436040026,
+          "cost_px": 2.011079643127254,
+          "crowd_center_uv": [
+            1801.9791723976673,
+            719.9198307520907
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1800.6615023146676,
+            720.1229104918098
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 1.6055737688993197,
+          "chamfer_px": 2.4576758505377305,
+          "cost_px": 2.8590692927625603,
+          "crowd_center_uv": [
+            888.4708664585168,
+            1069.9176876444212
+          ],
+          "crowd_index": 37,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            889.9671945286792,
+            1070.4998125741583
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 1.9756913768701836,
+          "chamfer_px": 2.1082461469726734,
+          "cost_px": 2.6021689911902195,
+          "crowd_center_uv": [
+            1045.270868865537,
+            645.9801343461157
+          ],
+          "crowd_index": 14,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1043.3815287164061,
+            646.5578455347915
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 2.0934378319116385,
+          "chamfer_px": 1.8178070536849333,
+          "cost_px": 2.341166511662843,
+          "crowd_center_uv": [
+            870.2463791538293,
+            597.2595627475793
+          ],
+          "crowd_index": 2,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            868.1918978590156,
+            597.6615435497823
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 2.132629104053472,
+          "chamfer_px": 1.60572378028709,
+          "cost_px": 2.138881056300458,
+          "crowd_center_uv": [
+            1169.6267416510784,
+            676.5752898740096
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1167.7463856459394,
+            677.5814549645359
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 6.451074475771117,
+          "chamfer_px": 2.5562513892602077,
+          "cost_px": 4.1690200082029865,
+          "crowd_center_uv": [
+            1953.2584108164613,
+            706.4783772213358
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1946.872991500625,
+            705.5603456026591
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 4.548901181262115,
+          "chamfer_px": 3.2618520521722756,
+          "cost_px": 4.399077347487804,
+          "crowd_center_uv": [
+            1910.6001440773548,
+            949.5246556241748
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1908.861865403116,
+            953.7283313023848
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 6.441044642884052,
+          "chamfer_px": 3.125708952111272,
+          "cost_px": 4.735970112832285,
+          "crowd_center_uv": [
+            843.2150612414723,
+            1040.1857377173196
+          ],
+          "crowd_index": 38,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            836.7992013609395,
+            1040.7547703042553
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 1.5589325316466356,
+          "chamfer_px": 1.519537866274998,
+          "cost_px": 1.909270999186657,
+          "crowd_center_uv": [
+            1710.8581267880722,
+            585.9628166950924
+          ],
+          "crowd_index": 8,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1709.3532226204475,
+            586.3696754967568
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 2.3423575129117253,
+          "chamfer_px": 2.333887482197688,
+          "cost_px": 2.919476860425619,
+          "crowd_center_uv": [
+            2153.7758032570423,
+            886.7437065017056
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            2151.6390950280393,
+            887.7034547303597
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 4.450982171155402,
+          "chamfer_px": 2.648529048140907,
+          "cost_px": 3.761274590929758,
+          "crowd_center_uv": [
+            1805.4368208764304,
+            749.1654792033451
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1800.9944541458915,
+            749.442282598094
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 4.655240307158248,
+          "chamfer_px": 2.2595004422369978,
+          "cost_px": 3.42331051902656,
+          "crowd_center_uv": [
+            1850.6399854203346,
+            601.9167403100242
+          ],
+          "crowd_index": 22,
+          "frame": "NET_ARG_231908_frame6",
+          "frame_index": 6,
+          "gt_center_uv": [
+            1846.1863042774598,
+            603.2717261383607
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame6_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 225.74090651880243,
+          "chamfer_px": 173.38902550093593,
+          "cost_px": 229.82425213063652,
+          "crowd_index": 28,
+          "gt_id": 1
+        },
+        {
+          "center_px": 164.80282673519034,
+          "chamfer_px": 145.90499154136734,
+          "cost_px": 187.10569822516493,
+          "crowd_index": 20,
+          "gt_id": 18
+        }
+      ],
+      "rejected_count": 2,
+      "unmatched_crowd_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12,
+        13,
+        16,
+        17,
+        20,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        34,
+        39
+      ],
+      "unmatched_gt_ids": [
+        1,
+        18
+      ]
+    },
+    {
+      "accepted_count": 20,
+      "crowd_count": 38,
+      "frame": "NET_ARG_231908_frame7",
+      "frame_index": 7,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 2.440460451740033,
+          "chamfer_px": 2.804840725199923,
+          "cost_px": 3.414955838134931,
+          "crowd_center_uv": [
+            329.2473290671765,
+            870.7635970854424
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            328.23743952054923,
+            872.9853014582427
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 1.9100721295033627,
+          "chamfer_px": 1.4951954768111573,
+          "cost_px": 1.972713509186998,
+          "crowd_center_uv": [
+            1453.686669578015,
+            652.824443118673
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1452.6002085316375,
+            654.3954230468102
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 84.07167256647003,
+          "chamfer_px": 63.04928149036374,
+          "cost_px": 84.06719963198125,
+          "crowd_center_uv": [
+            1523.6508720290492,
+            531.8585497359155
+          ],
+          "crowd_index": 7,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1584.0698273721941,
+            473.398341359903
+          ],
+          "gt_id": 3
+        },
+        {
+          "center_px": 1.257660481129616,
+          "chamfer_px": 1.6268282230950784,
+          "cost_px": 1.9412433433774823,
+          "crowd_center_uv": [
+            458.4055837711818,
+            597.469942334672
+          ],
+          "crowd_index": 1,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            457.1889064858316,
+            597.7883858447457
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 1.9666161635710484,
+          "chamfer_px": 1.520600506989732,
+          "cost_px": 2.012254547882494,
+          "crowd_center_uv": [
+            1271.972157652949,
+            599.677499690526
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1270.3042717605942,
+            600.719486151524
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 3.8052866772100207,
+          "chamfer_px": 2.1577965472612055,
+          "cost_px": 3.1091182165637106,
+          "crowd_center_uv": [
+            1777.3629631794674,
+            598.5641281772668
+          ],
+          "crowd_index": 22,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1774.9785167150399,
+            601.5297009303839
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 4.518510742249185,
+          "chamfer_px": 2.8068758167032257,
+          "cost_px": 3.9365035022655217,
+          "crowd_center_uv": [
+            2315.7658553862234,
+            959.578496368838
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            2311.2944016794386,
+            960.2289124478995
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 1.2065852294090345,
+          "chamfer_px": 1.3065580816369629,
+          "cost_px": 1.6082043889892215,
+          "crowd_center_uv": [
+            1801.1786077794895,
+            719.7395268829775
+          ],
+          "crowd_index": 24,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1800.0969115311511,
+            720.2741119016216
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 1.308201670562686,
+          "chamfer_px": 2.5279993238568155,
+          "cost_px": 2.855049741497487,
+          "crowd_center_uv": [
+            888.8424072265625,
+            1070.204647440306
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            889.9792929225351,
+            1070.8518587853516
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 1.849557567670599,
+          "chamfer_px": 2.0242194999522134,
+          "cost_px": 2.4866088918698632,
+          "crowd_center_uv": [
+            1045.579679247359,
+            646.2095715160101
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1043.7697809574586,
+            646.590532637836
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 1.2547480938568294,
+          "chamfer_px": 1.278246482247622,
+          "cost_px": 1.5919335057118293,
+          "crowd_center_uv": [
+            869.2161805058869,
+            598.6308000591439
+          ],
+          "crowd_index": 13,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            868.2653314521228,
+            597.812094461268
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 2.470166373890764,
+          "chamfer_px": 1.834406476015091,
+          "cost_px": 2.451948069487782,
+          "crowd_center_uv": [
+            1170.0413319762324,
+            677.0297860159001
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1167.697678214389,
+            677.810176276794
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 6.7891695684084965,
+          "chamfer_px": 2.838387263083608,
+          "cost_px": 4.5356796551857315,
+          "crowd_center_uv": [
+            1952.353555168904,
+            706.4135286572954
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1945.6353269856966,
+            705.4346346349613
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 5.222587383539047,
+          "chamfer_px": 3.6998088222132877,
+          "cost_px": 5.005455668098049,
+          "crowd_center_uv": [
+            1908.3122696137764,
+            949.9600924639635
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1905.1364399539923,
+            954.1061176629628
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 5.544369657194229,
+          "chamfer_px": 2.681902034172574,
+          "cost_px": 4.067994448471131,
+          "crowd_center_uv": [
+            840.6992952588579,
+            1041.3386204679248
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            835.2880222555547,
+            1040.1310777650203
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.2095718647429297,
+          "chamfer_px": 1.8137779082815144,
+          "cost_px": 2.366170874467247,
+          "crowd_center_uv": [
+            1709.4874233192122,
+            586.4124162700814
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1707.3029044237712,
+            586.7442068982264
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 1.3918071715620195,
+          "chamfer_px": 1.3540360076925164,
+          "cost_px": 1.7019878005830213,
+          "crowd_center_uv": [
+            1564.3104248046875,
+            539.117803009463
+          ],
+          "crowd_index": 8,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1563.007260317255,
+            539.6065662665787
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 2.4423533763983634,
+          "chamfer_px": 2.4160107011847702,
+          "cost_px": 3.026599045284361,
+          "crowd_center_uv": [
+            2154.973622496699,
+            887.553457340724
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            2152.681954623218,
+            888.3980568747398
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 4.703182537772357,
+          "chamfer_px": 2.669834868393096,
+          "cost_px": 3.845630502836185,
+          "crowd_center_uv": [
+            1804.7006904709508,
+            750.1669784330986
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1800.0614999035608,
+            749.3937793235241
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 3.990239593066768,
+          "chamfer_px": 1.9838088285147646,
+          "cost_px": 2.9813687267814566,
+          "crowd_center_uv": [
+            1849.284717828455,
+            601.5125018912302
+          ],
+          "crowd_index": 23,
+          "frame": "NET_ARG_231908_frame7",
+          "frame_index": 7,
+          "gt_center_uv": [
+            1845.7911690981919,
+            603.440487700139
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame7_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 236.20420225377526,
+          "chamfer_px": 183.94540315742012,
+          "cost_px": 242.99645372086394,
+          "crowd_index": 28,
+          "gt_id": 1
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12,
+        14,
+        18,
+        20,
+        21,
+        25,
+        26,
+        27,
+        28,
+        37
+      ],
+      "unmatched_gt_ids": [
+        1
+      ]
+    },
+    {
+      "accepted_count": 19,
+      "crowd_count": 38,
+      "frame": "NET_ARG_231908_frame8",
+      "frame_index": 8,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 2.6836374319469734,
+          "chamfer_px": 2.7654516499551116,
+          "cost_px": 3.436361007941855,
+          "crowd_center_uv": [
+            329.67549584617075,
+            870.9795807314591
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            328.5585919288521,
+            873.4197519356219
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 2.224672450840603,
+          "chamfer_px": 1.6210996964563442,
+          "cost_px": 2.177267809166495,
+          "crowd_center_uv": [
+            1453.2264627805898,
+            652.7851442148988
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1451.7990921898718,
+            654.4915382814269
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 1.9544382403855551,
+          "chamfer_px": 1.6979244830431566,
+          "cost_px": 2.1865340431395452,
+          "crowd_center_uv": [
+            457.7236173387984,
+            597.8034281126211
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            455.772906455881,
+            597.9240758923312
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 2.0665133923203154,
+          "chamfer_px": 1.5223366609633044,
+          "cost_px": 2.038965009043383,
+          "crowd_center_uv": [
+            1272.365127778389,
+            599.7647008761554
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1270.6859661449464,
+            600.9692314110168
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 3.3040202768357094,
+          "chamfer_px": 2.163798594353514,
+          "cost_px": 2.989803663562441,
+          "crowd_center_uv": [
+            1776.7605650995818,
+            599.2584151147117
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1774.4702684655963,
+            601.6398204389051
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 3.5340659592459667,
+          "chamfer_px": 2.2546911602655784,
+          "cost_px": 3.13820765007707,
+          "crowd_center_uv": [
+            2314.7516745983717,
+            962.0686774455326
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            2311.325322267874,
+            961.2028068364951
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 1.419589728611802,
+          "chamfer_px": 1.7121567274451297,
+          "cost_px": 2.0670541595980803,
+          "crowd_center_uv": [
+            1800.8536755199164,
+            719.9067485970511
+          ],
+          "crowd_index": 23,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1799.532210139546,
+            720.4253662269698
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 0.6982803757820235,
+          "chamfer_px": 2.2596666792731632,
+          "cost_px": 2.434236773218669,
+          "crowd_center_uv": [
+            890.4806828028719,
+            1070.716807190801
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            889.985086042551,
+            1071.2087211409607
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 1.9640493103511913,
+          "chamfer_px": 1.846142750100552,
+          "cost_px": 2.33715507768835,
+          "crowd_center_uv": [
+            1045.915888396787,
+            645.7504495969961
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1044.1545368601949,
+            646.6194320237662
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 3.0300728511466324,
+          "chamfer_px": 2.1911938827170188,
+          "cost_px": 2.948712095503677,
+          "crowd_center_uv": [
+            871.1411975269586,
+            596.8141857738226
+          ],
+          "crowd_index": 2,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            868.3347043066633,
+            597.9565242909409
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 2.5683919512278592,
+          "chamfer_px": 1.8799186898865345,
+          "cost_px": 2.5220166776934994,
+          "crowd_center_uv": [
+            1169.974666111906,
+            676.9069248253192
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1167.6609451375687,
+            678.0219730162257
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 5.862530415015278,
+          "chamfer_px": 2.261197654956269,
+          "cost_px": 3.7268302587100886,
+          "crowd_center_uv": [
+            1950.1501843089789,
+            706.4680975255832
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1944.406008899405,
+            705.2960430340917
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 2.142335832339868,
+          "chamfer_px": 2.434361890767538,
+          "cost_px": 2.969945848852505,
+          "crowd_center_uv": [
+            1899.6566282460387,
+            953.2351443868288
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1901.406795669018,
+            954.4706672761632
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 5.80849002102343,
+          "chamfer_px": 2.809048362375406,
+          "cost_px": 4.261170867631264,
+          "crowd_center_uv": [
+            839.0706082196302,
+            1042.1797150088028
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            833.9153908937028,
+            1039.503469383531
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.9642407747735513,
+          "chamfer_px": 1.7767825042639918,
+          "cost_px": 2.51784269795738,
+          "crowd_center_uv": [
+            1708.1518503108496,
+            587.6677968199824
+          ],
+          "crowd_index": 11,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1705.2431033251075,
+            587.0969077381401
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 0.7410166456631041,
+          "chamfer_px": 0.957080649270627,
+          "cost_px": 1.142334810686403,
+          "crowd_center_uv": [
+            1564.7716339541153,
+            539.0284329266615
+          ],
+          "crowd_index": 10,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1564.2823296131664,
+            539.5849281477357
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 3.395785362098856,
+          "chamfer_px": 2.4360643898872283,
+          "cost_px": 3.2850107304119422,
+          "crowd_center_uv": [
+            2157.068524427817,
+            888.6089425960057
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            2153.7049585064924,
+            889.0756143418278
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 4.176622718137925,
+          "chamfer_px": 2.4345713806874647,
+          "cost_px": 3.4787270602219458,
+          "crowd_center_uv": [
+            1803.2545441103653,
+            748.7373665823063
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1799.1220537835588,
+            749.3429250258254
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 3.8597688181118217,
+          "chamfer_px": 1.9028026286797854,
+          "cost_px": 2.867744833207741,
+          "crowd_center_uv": [
+            1848.894099705656,
+            601.9844858948613
+          ],
+          "crowd_index": 22,
+          "frame": "NET_ARG_231908_frame8",
+          "frame_index": 8,
+          "gt_center_uv": [
+            1845.3908547955032,
+            603.6046989761434
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame8_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 239.7509293953662,
+          "chamfer_px": 187.1600776550664,
+          "cost_px": 247.09781000390797,
+          "crowd_index": 28,
+          "gt_id": 1
+        },
+        {
+          "center_px": 93.9183482204339,
+          "chamfer_px": 71.1683019592017,
+          "cost_px": 94.64788901431018,
+          "crowd_index": 9,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 2,
+      "unmatched_crowd_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        12,
+        13,
+        14,
+        15,
+        20,
+        24,
+        25,
+        26,
+        27,
+        28,
+        37
+      ],
+      "unmatched_gt_ids": [
+        1,
+        3
+      ]
+    },
+    {
+      "accepted_count": 19,
+      "crowd_count": 37,
+      "frame": "NET_ARG_231908_frame9",
+      "frame_index": 9,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 3.229793498190944,
+          "chamfer_px": 2.8952295067647533,
+          "cost_px": 3.702677881312489,
+          "crowd_center_uv": [
+            330.1957853075484,
+            870.8700277838908
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            329.0027161962865,
+            873.8713861658088
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 2.185948812694367,
+          "chamfer_px": 1.5970345748322723,
+          "cost_px": 2.143521778005864,
+          "crowd_center_uv": [
+            1452.2714121643926,
+            652.831923793739
+          ],
+          "crowd_index": 22,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1451.0038893589299,
+            654.6128668443029
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 2.4967515128427933,
+          "chamfer_px": 1.6914730085750311,
+          "cost_px": 2.3156608867857296,
+          "crowd_center_uv": [
+            456.81410496671435,
+            598.4975027164943
+          ],
+          "crowd_index": 1,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            454.3528315991993,
+            598.0780965562583
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 1.9471058179897514,
+          "chamfer_px": 1.304153501207311,
+          "cost_px": 1.7909299557047489,
+          "crowd_center_uv": [
+            1272.6485716054137,
+            600.0774596308319
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1271.0809735679943,
+            601.2323871002118
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 3.480888088760446,
+          "chamfer_px": 2.1507754916794948,
+          "cost_px": 3.0209975138696064,
+          "crowd_center_uv": [
+            1776.5004349829446,
+            599.4054410692671
+          ],
+          "crowd_index": 23,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1773.9682332148645,
+            601.7938581375796
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 3.6188599200684037,
+          "chamfer_px": 2.2183454586986615,
+          "cost_px": 3.1230604387157626,
+          "crowd_center_uv": [
+            2315.0667019696302,
+            962.9183624697404
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            2311.4780169558644,
+            962.4520074622085
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 2.6258187824460015,
+          "chamfer_px": 1.8459398097968607,
+          "cost_px": 2.502394505408361,
+          "crowd_center_uv": [
+            1801.1691739794235,
+            719.1801740619499
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1798.9753619792998,
+            720.623127001709
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 1.2850691771213991,
+          "chamfer_px": 2.424178018986529,
+          "cost_px": 2.745445313266879,
+          "crowd_center_uv": [
+            890.8929770026408,
+            1070.8938933896347
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            890.1929536062257,
+            1071.971562185907
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.5043188030191854,
+          "chamfer_px": 1.9012273933702053,
+          "cost_px": 2.5273070941250015,
+          "crowd_center_uv": [
+            1046.8057414310078,
+            645.7455427142936
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1044.5547667554283,
+            646.8431426765089
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 3.377871002706708,
+          "chamfer_px": 2.396702092399379,
+          "cost_px": 3.2411698430760563,
+          "crowd_center_uv": [
+            871.2113466934419,
+            596.2479162081867
+          ],
+          "crowd_index": 5,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            868.428726609627,
+            598.162867377297
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 2.9019536323872552,
+          "chamfer_px": 1.972300721960388,
+          "cost_px": 2.6977891300572017,
+          "crowd_center_uv": [
+            1170.37607456261,
+            677.2582019214899
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1167.6615296147127,
+            678.2841554342625
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 5.604380030716019,
+          "chamfer_px": 1.9184130419862933,
+          "cost_px": 3.319508049665298,
+          "crowd_center_uv": [
+            1948.7207873707086,
+            706.7205458090339
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1943.292661867298,
+            705.326082095662
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 1.0123594706497472,
+          "chamfer_px": 2.3693599181475955,
+          "cost_px": 2.622449785810032,
+          "crowd_center_uv": [
+            1897.06611224967,
+            954.3995980276188
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1897.6723703772518,
+            955.2103524790745
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 4.565063629394087,
+          "chamfer_px": 2.8989281255988497,
+          "cost_px": 4.040194032947372,
+          "crowd_center_uv": [
+            835.8987581494829,
+            1042.3229825731735
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            832.809517888644,
+            1038.961970738736
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.745732073519331,
+          "chamfer_px": 1.743678014174997,
+          "cost_px": 2.4301110325548296,
+          "crowd_center_uv": [
+            1705.6804061674736,
+            588.3440783863336
+          ],
+          "crowd_index": 13,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1703.0787580495485,
+            587.4663132183933
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 1.498905921925786,
+          "chamfer_px": 1.3123001766506142,
+          "cost_px": 1.6870266571320607,
+          "crowd_center_uv": [
+            1566.780459121919,
+            538.878173828125
+          ],
+          "crowd_index": 12,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1565.46226019489,
+            539.5916656301548
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 3.414775147136477,
+          "chamfer_px": 2.529142684967384,
+          "cost_px": 3.382836471751503,
+          "crowd_center_uv": [
+            2158.0932342099472,
+            889.1982886086048
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            2154.7657240560784,
+            889.9653384644816
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 3.238819417395204,
+          "chamfer_px": 2.090881583905862,
+          "cost_px": 2.900586438254663,
+          "crowd_center_uv": [
+            1801.574521346831,
+            749.3021119883363
+          ],
+          "crowd_index": 27,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1798.3368620300146,
+            749.3887916671991
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 3.923997212774271,
+          "chamfer_px": 1.91325995697879,
+          "cost_px": 2.894259260172358,
+          "crowd_center_uv": [
+            1848.4720235475352,
+            602.0069837973151
+          ],
+          "crowd_index": 24,
+          "frame": "NET_ARG_231908_frame9",
+          "frame_index": 9,
+          "gt_center_uv": [
+            1844.992139992765,
+            603.8203134890978
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays/NET_ARG_231908_frame9_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 398.84417014772856,
+          "chamfer_px": 342.35162106494454,
+          "cost_px": 442.0626636018767,
+          "crowd_index": 36,
+          "gt_id": 1
+        },
+        {
+          "center_px": 148.97395689834917,
+          "chamfer_px": 135.19199528564582,
+          "cost_px": 172.4354845102331,
+          "crowd_index": 11,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 2,
+      "unmatched_crowd_indices": [
+        0,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        14,
+        15,
+        16,
+        17,
+        20,
+        25,
+        26,
+        36
+      ],
+      "unmatched_gt_ids": [
+        1,
+        3
+      ]
+    }
+  ],
+  "mean_accepted_cost_px": 4.362140073522921,
+  "median_accepted_cost_px": 2.900586438254663,
+  "num_frames": 10,
+  "overlay_root": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_matching/overlays",
+  "package_root": "/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream",
+  "scene": "NET_ARG_231908",
+  "total_accepted": 195,
+  "total_crowd": 374,
+  "total_gt": 210
+}

@@ -1,0 +1,792 @@
+{
+  "algorithm": "scipy.optimize.linear_sum_assignment",
+  "assignment_name": "linear sum assignment / Hungarian-style bipartite matching",
+  "contact_sheet": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/frame01_quant/crowd3d_matching/contact_sheet.jpg",
+  "cost": {
+    "center_weight": 0.25,
+    "max_cost_px": 90.0,
+    "trim_ratio": 0.8,
+    "type": "2D robust bidirectional nearest-joint distance"
+  },
+  "frame_range": [
+    0,
+    2
+  ],
+  "frames": [
+    {
+      "accepted_count": 20,
+      "crowd_count": 39,
+      "frame": "NET_ARG_231908_frame0",
+      "frame_index": 0,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 6.289100805365175,
+          "chamfer_px": 3.1338870144017172,
+          "cost_px": 4.706162215743011,
+          "crowd_center_uv": [
+            324.6978635116362,
+            864.5301496478874
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            327.85433461865796,
+            869.969770874644
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 4.600758767901937,
+          "chamfer_px": 2.3126989343212343,
+          "cost_px": 3.4628886262967185,
+          "crowd_center_uv": [
+            1461.2644644723812,
+            651.155810718805
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1457.4776051376236,
+            653.768601873717
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 6.123554553090944,
+          "chamfer_px": 2.160594808819326,
+          "cost_px": 3.691483447092062,
+          "crowd_center_uv": [
+            1593.0252582388864,
+            468.0652985908616
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1591.0185213184657,
+            473.85070499809876
+          ],
+          "gt_id": 3
+        },
+        {
+          "center_px": 4.578264138116496,
+          "chamfer_px": 2.6424955006759525,
+          "cost_px": 3.7870615352050763,
+          "crowd_center_uv": [
+            470.2978571502256,
+            596.0357726191131
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            465.77088460445407,
+            596.719162762585
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 0.9631317138770942,
+          "chamfer_px": 1.1241778694940523,
+          "cost_px": 1.3649607979633258,
+          "crowd_center_uv": [
+            1269.1556791923415,
+            598.6647803078235
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1268.27338959698,
+            599.0510286323412
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.8791851278260125,
+          "chamfer_px": 1.9341538400396043,
+          "cost_px": 2.6539501219961075,
+          "crowd_center_uv": [
+            1779.9048126650528,
+            598.6568715270137
+          ],
+          "crowd_index": 19,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1778.2813887665554,
+            601.0347280925117
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 6.518312540401729,
+          "chamfer_px": 2.986101722039212,
+          "cost_px": 4.615679857139645,
+          "crowd_center_uv": [
+            2317.797965036312,
+            951.3364627462038
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            2313.521069720326,
+            956.2554631355571
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 2.3338848649180113,
+          "chamfer_px": 1.8159425964511127,
+          "cost_px": 2.3994138126806153,
+          "crowd_center_uv": [
+            1806.0703950264085,
+            719.2005933304907
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1803.7652243774055,
+            719.5655684552163
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 3.8011670611653035,
+          "chamfer_px": 3.262183676290771,
+          "cost_px": 4.212475441582097,
+          "crowd_center_uv": [
+            886.4664074535101,
+            1071.326765893211
+          ],
+          "crowd_index": 37,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            890.0960895714514,
+            1070.1979263343785
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 3.2495148041860435,
+          "chamfer_px": 1.7837373732709145,
+          "cost_px": 2.5961160743174254,
+          "crowd_center_uv": [
+            1042.1685395576585,
+            643.8026630240427
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1041.6684305858364,
+            647.0134631546841
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 2.348814829337946,
+          "chamfer_px": 1.5382889557640942,
+          "cost_px": 2.125492663098581,
+          "crowd_center_uv": [
+            866.7178722972601,
+            595.5966117751431
+          ],
+          "crowd_index": 2,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            868.2403246115066,
+            597.385206210269
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 1.3458679712921802,
+          "chamfer_px": 1.2728128124299751,
+          "cost_px": 1.6092798052530202,
+          "crowd_center_uv": [
+            1167.7697547590228,
+            675.7866236727002
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1168.808200821501,
+            676.6427722412756
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 7.867287057002454,
+          "chamfer_px": 3.369621146630892,
+          "cost_px": 5.336442910881505,
+          "crowd_center_uv": [
+            1962.5911108742298,
+            703.9295086927817
+          ],
+          "crowd_index": 30,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1955.4925226727044,
+            707.3213004290831
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 1.8423683666576816,
+          "chamfer_px": 3.02350212398711,
+          "cost_px": 3.48409421565153,
+          "crowd_center_uv": [
+            1928.2644318056778,
+            949.8648862167144
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1928.0581099499918,
+            951.6956654197662
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 15.187336610500687,
+          "chamfer_px": 6.792944807235058,
+          "cost_px": 10.58977895986023,
+          "crowd_center_uv": [
+            860.8808860241527,
+            1036.9281031648877
+          ],
+          "crowd_index": 36,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            847.4129966072868,
+            1043.9474441578675
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 65.35889264477967,
+          "chamfer_px": 38.57999843506455,
+          "cost_px": 54.91972159625947,
+          "crowd_center_uv": [
+            1683.6075181558099,
+            530.0582894338688
+          ],
+          "crowd_index": 11,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1718.7971186087134,
+            585.1352979557271
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 0.1973258798005565,
+          "chamfer_px": 1.119990534779745,
+          "cost_px": 1.169322004729884,
+          "crowd_center_uv": [
+            1555.0239962725573,
+            538.7102609553807
+          ],
+          "crowd_index": 7,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1554.984120521711,
+            538.9035157802455
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 5.438049377043473,
+          "chamfer_px": 3.040412510291599,
+          "cost_px": 4.399924854552467,
+          "crowd_center_uv": [
+            2142.5164124394805,
+            882.1310794454225
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            2146.5770658773317,
+            885.7481880538044
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 4.133798989993337,
+          "chamfer_px": 2.23705272519739,
+          "cost_px": 3.270502472695724,
+          "crowd_center_uv": [
+            1810.2032333159111,
+            747.437627228213
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1806.8708089824156,
+            749.8836938976227
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 5.6359166366397915,
+          "chamfer_px": 2.4886599426723617,
+          "cost_px": 3.8976391018323095,
+          "crowd_center_uv": [
+            1853.8093811894807,
+            600.9196038044674
+          ],
+          "crowd_index": 20,
+          "frame": "NET_ARG_231908_frame0",
+          "frame_index": 0,
+          "gt_center_uv": [
+            1848.401507204764,
+            602.5065679819384
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/frame01_quant/crowd3d_matching/overlays/NET_ARG_231908_frame0_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 359.3926862050102,
+          "chamfer_px": 310.1317301482235,
+          "cost_px": 399.97990169947604,
+          "crowd_index": 10,
+          "gt_id": 1
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        12,
+        13,
+        14,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        34,
+        38
+      ],
+      "unmatched_gt_ids": [
+        1
+      ]
+    },
+    {
+      "accepted_count": 20,
+      "crowd_count": 37,
+      "frame": "NET_ARG_231908_frame1",
+      "frame_index": 1,
+      "gt_count": 21,
+      "matches": [
+        {
+          "center_px": 4.244315677654345,
+          "chamfer_px": 2.469946340599943,
+          "cost_px": 3.5310252600135295,
+          "crowd_center_uv": [
+            325.6534002599582,
+            866.4182403994279
+          ],
+          "crowd_index": 28,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            327.5609788985272,
+            870.2097255054592
+          ],
+          "gt_id": 0
+        },
+        {
+          "center_px": 6.104779577811922,
+          "chamfer_px": 3.288636897484391,
+          "cost_px": 4.8148317919373715,
+          "crowd_center_uv": [
+            1653.8834899042693,
+            930.4522240867077
+          ],
+          "crowd_index": 31,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1650.372545441049,
+            935.4463809394559
+          ],
+          "gt_id": 1
+        },
+        {
+          "center_px": 3.946989575505708,
+          "chamfer_px": 2.2541942697807906,
+          "cost_px": 3.2409416636572175,
+          "crowd_center_uv": [
+            1460.1754700566682,
+            651.5458949988996
+          ],
+          "crowd_index": 18,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1456.930553245894,
+            653.792946756271
+          ],
+          "gt_id": 2
+        },
+        {
+          "center_px": 1.6691597928033552,
+          "chamfer_px": 1.6860690165601355,
+          "cost_px": 2.1033589647609743,
+          "crowd_center_uv": [
+            466.2140752228213,
+            597.8357672892826
+          ],
+          "crowd_index": 0,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            464.89923058036226,
+            596.8075270546544
+          ],
+          "gt_id": 4
+        },
+        {
+          "center_px": 1.6661970138592819,
+          "chamfer_px": 1.4245262182962986,
+          "cost_px": 1.841075471761119,
+          "crowd_center_uv": [
+            1269.8949885838467,
+            598.8436365261883
+          ],
+          "crowd_index": 17,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1268.264390726354,
+            599.186219532383
+          ],
+          "gt_id": 5
+        },
+        {
+          "center_px": 2.8258374973301303,
+          "chamfer_px": 1.8221158089627516,
+          "cost_px": 2.5285751832952843,
+          "crowd_center_uv": [
+            1779.81718853158,
+            598.9903057259573
+          ],
+          "crowd_index": 20,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1777.8400689470761,
+            601.0093044158747
+          ],
+          "gt_id": 6
+        },
+        {
+          "center_px": 6.298897732362426,
+          "chamfer_px": 3.013831640522019,
+          "cost_px": 4.588556073612626,
+          "crowd_center_uv": [
+            2317.4627393265846,
+            951.8840632908781
+          ],
+          "crowd_index": 33,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            2312.933323698224,
+            956.2613348963787
+          ],
+          "gt_id": 7
+        },
+        {
+          "center_px": 2.4417261208391596,
+          "chamfer_px": 1.851283554789016,
+          "cost_px": 2.461715084998806,
+          "crowd_center_uv": [
+            1805.7481912962148,
+            719.52597604671
+          ],
+          "crowd_index": 25,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1803.3064946569395,
+            719.5139772576018
+          ],
+          "gt_id": 8
+        },
+        {
+          "center_px": 3.535385981491415,
+          "chamfer_px": 3.1267680947683205,
+          "cost_px": 4.0106145901411745,
+          "crowd_center_uv": [
+            886.4867046517386,
+            1071.1779011471172
+          ],
+          "crowd_index": 34,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            889.8076716549828,
+            1069.9654110640693
+          ],
+          "gt_id": 9
+        },
+        {
+          "center_px": 2.248156227925755,
+          "chamfer_px": 1.4065256054179174,
+          "cost_px": 1.968564662399356,
+          "crowd_center_uv": [
+            1041.5237435354313,
+            644.6150985502861
+          ],
+          "crowd_index": 15,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1041.576637651896,
+            646.862632451611
+          ],
+          "gt_id": 10
+        },
+        {
+          "center_px": 1.1865734711252527,
+          "chamfer_px": 1.4356025087448003,
+          "cost_px": 1.7322458765261135,
+          "crowd_center_uv": [
+            867.7356997207856,
+            596.1624678490867
+          ],
+          "crowd_index": 3,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            867.9728993768474,
+            597.325091143857
+          ],
+          "gt_id": 11
+        },
+        {
+          "center_px": 0.6631452317944889,
+          "chamfer_px": 1.1952947107999345,
+          "cost_px": 1.3610810187485567,
+          "crowd_center_uv": [
+            1168.6378242600133,
+            676.0730384504292
+          ],
+          "crowd_index": 16,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1168.4133240044548,
+            676.6970266183506
+          ],
+          "gt_id": 12
+        },
+        {
+          "center_px": 7.421165021363402,
+          "chamfer_px": 3.2214898982955202,
+          "cost_px": 5.076781153636371,
+          "crowd_center_uv": [
+            1961.3045585524867,
+            704.4006674323283
+          ],
+          "crowd_index": 27,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1954.3499536248357,
+            706.9904860697237
+          ],
+          "gt_id": 13
+        },
+        {
+          "center_px": 4.840546696580905,
+          "chamfer_px": 3.0090707152948557,
+          "cost_px": 4.219207389440082,
+          "crowd_center_uv": [
+            1929.0988322513203,
+            947.8469934597821
+          ],
+          "crowd_index": 32,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1926.3489879623269,
+            951.8306160207271
+          ],
+          "gt_id": 14
+        },
+        {
+          "center_px": 15.381426414994474,
+          "chamfer_px": 7.117061502768504,
+          "cost_px": 10.962418106517122,
+          "crowd_center_uv": [
+            859.2494609993948,
+            1035.7695561798525
+          ],
+          "crowd_index": 35,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            846.0138329763795,
+            1043.6057816357886
+          ],
+          "gt_id": 15
+        },
+        {
+          "center_px": 2.362380977308264,
+          "chamfer_px": 1.6794759042239051,
+          "cost_px": 2.2700711485509713,
+          "crowd_center_uv": [
+            1718.8316650390625,
+            582.9691660706426
+          ],
+          "crowd_index": 10,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1717.9136066724313,
+            585.1458637339405
+          ],
+          "gt_id": 16
+        },
+        {
+          "center_px": 2.8994539956544,
+          "chamfer_px": 1.7698870152732749,
+          "cost_px": 2.494750514186875,
+          "crowd_center_uv": [
+            1558.3238147144586,
+            538.4734196192782
+          ],
+          "crowd_index": 9,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1555.4800562245534,
+            539.0389911213964
+          ],
+          "gt_id": 18
+        },
+        {
+          "center_px": 4.555438841682419,
+          "chamfer_px": 2.4274966352413903,
+          "cost_px": 3.566356345661995,
+          "crowd_center_uv": [
+            2144.2009896291815,
+            882.0375331824933
+          ],
+          "crowd_index": 29,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            2146.815709941298,
+            885.7678496207751
+          ],
+          "gt_id": 19
+        },
+        {
+          "center_px": 3.8643564576007896,
+          "chamfer_px": 2.0680816544760976,
+          "cost_px": 3.034170768876295,
+          "crowd_center_uv": [
+            1809.4621839926276,
+            747.9233518788512
+          ],
+          "crowd_index": 26,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1806.071042975696,
+            749.776299108182
+          ],
+          "gt_id": 20
+        },
+        {
+          "center_px": 5.484477042841315,
+          "chamfer_px": 2.4635119817163407,
+          "cost_px": 3.8346312424266698,
+          "crowd_center_uv": [
+            1853.383115096831,
+            601.121513259243
+          ],
+          "crowd_index": 21,
+          "frame": "NET_ARG_231908_frame1",
+          "frame_index": 1,
+          "gt_center_uv": [
+            1848.085099532236,
+            602.5394411526007
+          ],
+          "gt_id": 21
+        }
+      ],
+      "overlay": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/frame01_quant/crowd3d_matching/overlays/NET_ARG_231908_frame1_matching.jpg",
+      "rejected_assignments": [
+        {
+          "center_px": 106.80702687479999,
+          "chamfer_px": 92.63451980121368,
+          "cost_px": 119.33627651991368,
+          "crowd_index": 11,
+          "gt_id": 3
+        }
+      ],
+      "rejected_count": 1,
+      "unmatched_crowd_indices": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        19,
+        22,
+        23,
+        24,
+        30,
+        36
+      ],
+      "unmatched_gt_ids": [
+        3
+      ]
+    }
+  ],
+  "mean_accepted_cost_px": 4.848334070649483,
+  "median_accepted_cost_px": 3.473491420974124,
+  "num_frames": 2,
+  "overlay_root": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/frame01_quant/crowd3d_matching/overlays",
+  "package_root": "/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream",
+  "scene": "NET_ARG_231908",
+  "total_accepted": 40,
+  "total_crowd": 76,
+  "total_gt": 42
+}

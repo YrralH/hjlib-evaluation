@@ -1,0 +1,75 @@
+{
+  "contact_sheet": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_visual/contact_sheet.jpg",
+  "frames": [
+    {
+      "frame": "NET_ARG_231908_frame0",
+      "has_depth": true,
+      "patch_count": 70,
+      "person_count_after_scene_merge": 39
+    },
+    {
+      "frame": "NET_ARG_231908_frame1",
+      "has_depth": true,
+      "patch_count": 73,
+      "person_count_after_scene_merge": 37
+    },
+    {
+      "frame": "NET_ARG_231908_frame2",
+      "has_depth": true,
+      "patch_count": 66,
+      "person_count_after_scene_merge": 33
+    },
+    {
+      "frame": "NET_ARG_231908_frame3",
+      "has_depth": true,
+      "patch_count": 67,
+      "person_count_after_scene_merge": 38
+    },
+    {
+      "frame": "NET_ARG_231908_frame4",
+      "has_depth": true,
+      "patch_count": 71,
+      "person_count_after_scene_merge": 38
+    },
+    {
+      "frame": "NET_ARG_231908_frame5",
+      "has_depth": true,
+      "patch_count": 76,
+      "person_count_after_scene_merge": 36
+    },
+    {
+      "frame": "NET_ARG_231908_frame6",
+      "has_depth": true,
+      "patch_count": 71,
+      "person_count_after_scene_merge": 40
+    },
+    {
+      "frame": "NET_ARG_231908_frame7",
+      "has_depth": true,
+      "patch_count": 71,
+      "person_count_after_scene_merge": 38
+    },
+    {
+      "frame": "NET_ARG_231908_frame8",
+      "has_depth": true,
+      "patch_count": 68,
+      "person_count_after_scene_merge": 38
+    },
+    {
+      "frame": "NET_ARG_231908_frame9",
+      "has_depth": true,
+      "patch_count": 63,
+      "person_count_after_scene_merge": 37
+    },
+    {
+      "frame": "NET_ARG_231908_frame10",
+      "has_depth": false,
+      "patch_count": 64,
+      "person_count_after_scene_merge": 43
+    }
+  ],
+  "manifest": "/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream/manifest.csv",
+  "num_frames": 11,
+  "package_root": "/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream",
+  "side_by_side_root": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/crowd3d_visual/side_by_side"
+}

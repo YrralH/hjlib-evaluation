@@ -1,0 +1,947 @@
+{
+  "contact_sheet": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/three_model_visual/contact_sheet.jpg",
+  "crowd3d_package_root": "/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream",
+  "frames": [
+    0,
+    1
+  ],
+  "overlays": {
+    "NET_ARG_231908_frame0": {
+      "abla_v1": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/overlays/abla_v1/NET_ARG_231908_frame0.png",
+      "crowd3d": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/overlays/crowd3d/NET_ARG_231908_frame0.png",
+      "v18agg": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/overlays/v18agg/NET_ARG_231908_frame0.png"
+    },
+    "NET_ARG_231908_frame1": {
+      "abla_v1": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/overlays/abla_v1/NET_ARG_231908_frame1.png",
+      "crowd3d": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/overlays/crowd3d/NET_ARG_231908_frame1.png",
+      "v18agg": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/overlays/v18agg/NET_ARG_231908_frame1.png"
+    }
+  },
+  "projection_stats": [
+    {
+      "frame_index": 0,
+      "image_height": 1425,
+      "image_width": 2533,
+      "method": "abla_v1",
+      "persons": {
+        "0": {
+          "depth_max": 56.94740648001442,
+          "depth_min": 56.24079443384889,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            347.14918992733504,
+            922.3794097794691
+          ],
+          "xy_min": [
+            304.9808262326827,
+            828.3535910161648
+          ]
+        },
+        "11": {
+          "depth_max": 82.75487859561531,
+          "depth_min": 82.07916959352036,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            880.7597629263607,
+            639.7782735816556
+          ],
+          "xy_min": [
+            855.0624187368842,
+            569.801563307712
+          ]
+        },
+        "12": {
+          "depth_max": 73.01170482564909,
+          "depth_min": 72.38479027159637,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1181.9338329841212,
+            723.9976312225585
+          ],
+          "xy_min": [
+            1151.4444711313647,
+            647.7749257335176
+          ]
+        },
+        "13": {
+          "depth_max": 69.89968959758622,
+          "depth_min": 69.24020279385459,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1969.4856525611349,
+            755.8555527697607
+          ],
+          "xy_min": [
+            1941.547699953298,
+            672.2232189678605
+          ]
+        },
+        "14": {
+          "depth_max": 52.07937775259228,
+          "depth_min": 51.35461805260471,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1957.040932998217,
+            1009.6695062837591
+          ],
+          "xy_min": [
+            1907.6925121580457,
+            907.0863094360162
+          ]
+        },
+        "15": {
+          "depth_max": 47.5313589265232,
+          "depth_min": 46.95355074443668,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            872.3067520107518,
+            1111.296340472156
+          ],
+          "xy_min": [
+            834.4972502637378,
+            991.8290512180236
+          ]
+        },
+        "16": {
+          "depth_max": 84.97901092406974,
+          "depth_min": 84.22671064469759,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1731.991664173294,
+            624.4690273449062
+          ],
+          "xy_min": [
+            1706.8218615500089,
+            556.4212537092901
+          ]
+        },
+        "18": {
+          "depth_max": 92.04057437619835,
+          "depth_min": 91.19136072577601,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1562.3773167783163,
+            577.4630294688475
+          ],
+          "xy_min": [
+            1539.3987806274752,
+            512.6687585226812
+          ]
+        },
+        "2": {
+          "depth_max": 76.15319625540037,
+          "depth_min": 75.60837668477991,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1474.153046816172,
+            693.2394806171862
+          ],
+          "xy_min": [
+            1442.8856940308983,
+            618.9432235503662
+          ]
+        },
+        "20": {
+          "depth_max": 66.15929330339998,
+          "depth_min": 65.505752918381,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1823.7946923526824,
+            798.4308062440875
+          ],
+          "xy_min": [
+            1793.2513021671111,
+            712.0593848239611
+          ]
+        },
+        "21": {
+          "depth_max": 82.39289184246331,
+          "depth_min": 81.59761010195152,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1862.4211716158702,
+            642.7136268143829
+          ],
+          "xy_min": [
+            1837.266277203259,
+            574.7229543229635
+          ]
+        },
+        "7": {
+          "depth_max": 51.90114112958224,
+          "depth_min": 51.11977218642406,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            2336.260663932008,
+            1015.6675160349583
+          ],
+          "xy_min": [
+            2288.994795826264,
+            911.4631977639905
+          ]
+        },
+        "9": {
+          "depth_max": 46.3237681707438,
+          "depth_min": 45.59797681568792,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            920.1810713372614,
+            1144.5196669425577
+          ],
+          "xy_min": [
+            846.8593429798485,
+            1025.0044309324028
+          ]
+        }
+      },
+      "scene": "NET_ARG_231908"
+    },
+    {
+      "frame_index": 0,
+      "image_height": 1425,
+      "image_width": 2533,
+      "method": "v18agg",
+      "persons": {
+        "0": {
+          "depth_max": 57.49354204985437,
+          "depth_min": 56.72126289803917,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            348.7517146059227,
+            917.9918825743102
+          ],
+          "xy_min": [
+            304.10786989661676,
+            822.0982180141411
+          ]
+        },
+        "11": {
+          "depth_max": 83.55875838326563,
+          "depth_min": 82.61437264092336,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            882.4125714431174,
+            633.7273426156595
+          ],
+          "xy_min": [
+            856.2106957054042,
+            562.9241553521629
+          ]
+        },
+        "12": {
+          "depth_max": 73.75414820336233,
+          "depth_min": 72.9237897470781,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1182.5993237614532,
+            718.3669468133086
+          ],
+          "xy_min": [
+            1154.8412830226735,
+            640.9614379408093
+          ]
+        },
+        "13": {
+          "depth_max": 70.50405839673547,
+          "depth_min": 69.79120094918576,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1971.747927862843,
+            749.8445300725923
+          ],
+          "xy_min": [
+            1945.7090967790887,
+            668.9278206557557
+          ]
+        },
+        "14": {
+          "depth_max": 52.55172275370289,
+          "depth_min": 51.86444358692174,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1953.8894474158149,
+            1004.2381903815308
+          ],
+          "xy_min": [
+            1907.4026826990323,
+            902.1868073089396
+          ]
+        },
+        "15": {
+          "depth_max": 47.74822072610375,
+          "depth_min": 47.136470432745014,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            869.2417655332058,
+            1104.288135258584
+          ],
+          "xy_min": [
+            830.5544256916185,
+            985.1232176203869
+          ]
+        },
+        "16": {
+          "depth_max": 85.45488925959529,
+          "depth_min": 84.61638230388334,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1734.3737285671082,
+            622.0125113280561
+          ],
+          "xy_min": [
+            1706.385409015019,
+            553.2398332086452
+          ]
+        },
+        "18": {
+          "depth_max": 92.69999020711094,
+          "depth_min": 91.74239785350642,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1564.0647925084731,
+            574.6995575993527
+          ],
+          "xy_min": [
+            1542.7287619128304,
+            510.0147761711128
+          ]
+        },
+        "2": {
+          "depth_max": 76.51404207355174,
+          "depth_min": 75.87248704263753,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1473.0330451870282,
+            693.9003505469572
+          ],
+          "xy_min": [
+            1443.0545376398964,
+            617.8164912152486
+          ]
+        },
+        "20": {
+          "depth_max": 66.80188512395426,
+          "depth_min": 66.19974506556369,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1820.9836099884872,
+            793.9793565930909
+          ],
+          "xy_min": [
+            1791.434947024465,
+            706.3932009970247
+          ]
+        },
+        "21": {
+          "depth_max": 83.20835685817178,
+          "depth_min": 82.28147470714663,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1862.6499547503463,
+            638.8802014471893
+          ],
+          "xy_min": [
+            1834.574150789832,
+            569.5745730471173
+          ]
+        },
+        "7": {
+          "depth_max": 52.63319141575022,
+          "depth_min": 51.693048064188815,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            2336.224082466548,
+            1008.4206332027259
+          ],
+          "xy_min": [
+            2289.3240331216975,
+            903.1344553782441
+          ]
+        },
+        "9": {
+          "depth_max": 46.723995209310225,
+          "depth_min": 46.00746800657558,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            921.5067896949873,
+            1132.5299625646635
+          ],
+          "xy_min": [
+            843.92340815023,
+            1012.923922336454
+          ]
+        }
+      },
+      "scene": "NET_ARG_231908"
+    },
+    {
+      "frame_index": 1,
+      "image_height": 1425,
+      "image_width": 2533,
+      "method": "abla_v1",
+      "persons": {
+        "0": {
+          "depth_max": 56.85943855838381,
+          "depth_min": 56.16064357592669,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            348.1093710000473,
+            924.1796180285531
+          ],
+          "xy_min": [
+            306.31727941405035,
+            829.8086090833621
+          ]
+        },
+        "11": {
+          "depth_max": 82.7839005449753,
+          "depth_min": 82.10582398603165,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            880.8815389964795,
+            639.415895142534
+          ],
+          "xy_min": [
+            855.338834599642,
+            569.5278112780245
+          ]
+        },
+        "12": {
+          "depth_max": 73.04496775584431,
+          "depth_min": 72.4127390135,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1182.1453013261023,
+            723.8110719320521
+          ],
+          "xy_min": [
+            1151.170873128466,
+            647.7836390401662
+          ]
+        },
+        "13": {
+          "depth_max": 69.88600609558662,
+          "depth_min": 69.20771118890968,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1968.2235428592978,
+            756.0107016079833
+          ],
+          "xy_min": [
+            1940.4710836542465,
+            672.6115546944787
+          ]
+        },
+        "14": {
+          "depth_max": 52.03121317204805,
+          "depth_min": 51.30107241743453,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1950.4350410946918,
+            1012.8936000171091
+          ],
+          "xy_min": [
+            1903.000876930636,
+            908.5894047173008
+          ]
+        },
+        "15": {
+          "depth_max": 47.50325669087252,
+          "depth_min": 46.91980677531129,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            868.7760092815853,
+            1110.938317462973
+          ],
+          "xy_min": [
+            832.8159323422412,
+            992.0411765850358
+          ]
+        },
+        "16": {
+          "depth_max": 85.0532674039812,
+          "depth_min": 84.24038600550081,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1730.731117667038,
+            624.6591228043217
+          ],
+          "xy_min": [
+            1704.9859797859413,
+            556.7961333405535
+          ]
+        },
+        "18": {
+          "depth_max": 91.95290829278542,
+          "depth_min": 91.09165642467441,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1563.5719557294606,
+            578.0072303005912
+          ],
+          "xy_min": [
+            1540.7549989160134,
+            513.2456469763989
+          ]
+        },
+        "2": {
+          "depth_max": 76.03176100760422,
+          "depth_min": 75.49764641988591,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1472.541740040415,
+            694.3014879843072
+          ],
+          "xy_min": [
+            1441.7915553443895,
+            620.0188091770707
+          ]
+        },
+        "20": {
+          "depth_max": 66.06197243767329,
+          "depth_min": 65.43946721432233,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1823.4839739931815,
+            799.604443993932
+          ],
+          "xy_min": [
+            1793.0632943158432,
+            713.162455299043
+          ]
+        },
+        "21": {
+          "depth_max": 82.37525192267084,
+          "depth_min": 81.58423871053232,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1861.8149617801166,
+            642.9133719840117
+          ],
+          "xy_min": [
+            1836.6026107555228,
+            574.8709759209202
+          ]
+        },
+        "7": {
+          "depth_max": 51.90426217601963,
+          "depth_min": 51.08191836913946,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            2335.323577651922,
+            1015.6536606452728
+          ],
+          "xy_min": [
+            2289.459525521327,
+            911.8425050093321
+          ]
+        },
+        "9": {
+          "depth_max": 46.332056235236415,
+          "depth_min": 45.554542280532544,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            919.8907114739715,
+            1145.1021633231517
+          ],
+          "xy_min": [
+            847.7089547502399,
+            1025.6564322066445
+          ]
+        }
+      },
+      "scene": "NET_ARG_231908"
+    },
+    {
+      "frame_index": 1,
+      "image_height": 1425,
+      "image_width": 2533,
+      "method": "v18agg",
+      "persons": {
+        "0": {
+          "depth_max": 57.45395716731331,
+          "depth_min": 56.67100580941802,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            348.7131188653753,
+            918.8852810834248
+          ],
+          "xy_min": [
+            304.8447119834594,
+            822.4733281484832
+          ]
+        },
+        "11": {
+          "depth_max": 83.54671894439672,
+          "depth_min": 82.59055184486549,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            882.379053914692,
+            633.7442465191314
+          ],
+          "xy_min": [
+            856.5638175501052,
+            562.8848764216403
+          ]
+        },
+        "12": {
+          "depth_max": 73.74035363203842,
+          "depth_min": 72.88315585513502,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1182.6529014850314,
+            718.5386301041691
+          ],
+          "xy_min": [
+            1154.4116532529824,
+            641.2540788155774
+          ]
+        },
+        "13": {
+          "depth_max": 70.51569602070265,
+          "depth_min": 69.76230691527267,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1971.3304650078344,
+            749.7252611421261
+          ],
+          "xy_min": [
+            1943.61607175615,
+            668.7079627509804
+          ]
+        },
+        "14": {
+          "depth_max": 52.47565776225006,
+          "depth_min": 51.83021696123817,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1947.4665801306492,
+            1006.5316099634973
+          ],
+          "xy_min": [
+            1904.5682314880416,
+            902.0908455735469
+          ]
+        },
+        "15": {
+          "depth_max": 47.73011882653233,
+          "depth_min": 47.100104618532825,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            866.1976280130096,
+            1104.0598681482124
+          ],
+          "xy_min": [
+            828.1377428832632,
+            984.8077472125843
+          ]
+        },
+        "16": {
+          "depth_max": 85.46793846875185,
+          "depth_min": 84.57782966988981,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1733.320619907898,
+            622.570254735007
+          ],
+          "xy_min": [
+            1704.5468261505614,
+            553.6616280603646
+          ]
+        },
+        "18": {
+          "depth_max": 92.68857348568426,
+          "depth_min": 91.71239982009637,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1564.806639831107,
+            574.435347338003
+          ],
+          "xy_min": [
+            1543.636849736526,
+            509.86507045320144
+          ]
+        },
+        "2": {
+          "depth_max": 76.49216699781776,
+          "depth_min": 75.85673018497724,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1471.8987752212001,
+            693.73886905423
+          ],
+          "xy_min": [
+            1441.9222274933625,
+            617.8460850330894
+          ]
+        },
+        "20": {
+          "depth_max": 66.7911160431609,
+          "depth_min": 66.1922246865436,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1820.6472063462138,
+            794.2659352116357
+          ],
+          "xy_min": [
+            1791.3540861512465,
+            706.4009008575225
+          ]
+        },
+        "21": {
+          "depth_max": 83.20317329596377,
+          "depth_min": 82.26843004304557,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            1862.0847798050352,
+            639.0672139396428
+          ],
+          "xy_min": [
+            1834.0187184588149,
+            569.4460452998146
+          ]
+        },
+        "7": {
+          "depth_max": 52.63000620767279,
+          "depth_min": 51.65329309360963,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            2335.1052542240786,
+            1010.8262411968624
+          ],
+          "xy_min": [
+            2290.160245464155,
+            903.8515141183009
+          ]
+        },
+        "9": {
+          "depth_max": 46.73597816855039,
+          "depth_min": 45.988263336269455,
+          "in_image_ratio": 1.0,
+          "num_finite": 54,
+          "num_front": 54,
+          "num_in_image": 54,
+          "num_joints": 54,
+          "xy_max": [
+            921.4551134062693,
+            1132.707498801894
+          ],
+          "xy_min": [
+            844.0355572455693,
+            1013.5869015182822
+          ]
+        }
+      },
+      "scene": "NET_ARG_231908"
+    }
+  ],
+  "scene": "NET_ARG_231908",
+  "side_by_side": [
+    "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/three_model_visual/side_by_side/NET_ARG_231908_frame0_three_models.jpg",
+    "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/three_model_visual/side_by_side/NET_ARG_231908_frame1_three_models.jpg"
+  ]
+}

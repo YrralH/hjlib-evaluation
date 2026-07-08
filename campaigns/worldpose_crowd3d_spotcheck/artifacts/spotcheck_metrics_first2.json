@@ -1,0 +1,565 @@
+{
+  "label_dump_root": "/data2/hj/Data_Process/__As_Single_Bbox_hjlib__",
+  "metric_name": "SMPL_24_full",
+  "num_selected_frames": 2,
+  "per_person_frame": [
+    {
+      "frame_index": 802,
+      "id_person": 1,
+      "method": "abla_v1",
+      "mpjpe_mm": 362.6552955665096,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0001_0000__p01__0000037_0001122.pkl",
+      "tmpjpe_mm": 46.161630789142926
+    },
+    {
+      "frame_index": 802,
+      "id_person": 5,
+      "method": "abla_v1",
+      "mpjpe_mm": 155.07146402040453,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0005_0000__p05__0000015_0001122.pkl",
+      "tmpjpe_mm": 45.92907477456124
+    },
+    {
+      "frame_index": 802,
+      "id_person": 6,
+      "method": "abla_v1",
+      "mpjpe_mm": 421.21435539622917,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0006_0000__p06__0000000_0001122.pkl",
+      "tmpjpe_mm": 44.38871093087429
+    },
+    {
+      "frame_index": 802,
+      "id_person": 7,
+      "method": "abla_v1",
+      "mpjpe_mm": 452.5676639132626,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0007_0001__p07__0000792_0001122.pkl",
+      "tmpjpe_mm": 66.050711859039
+    },
+    {
+      "frame_index": 802,
+      "id_person": 8,
+      "method": "abla_v1",
+      "mpjpe_mm": 264.06935940586055,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0008_0000__p08__0000576_0000812.pkl",
+      "tmpjpe_mm": 48.06949037647732
+    },
+    {
+      "frame_index": 802,
+      "id_person": 11,
+      "method": "abla_v1",
+      "mpjpe_mm": 153.22801449250474,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0011_0000__p11__0000000_0001122.pkl",
+      "tmpjpe_mm": 58.755723664970915
+    },
+    {
+      "frame_index": 802,
+      "id_person": 12,
+      "method": "abla_v1",
+      "mpjpe_mm": 102.7549355098888,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0012_0001__p12__0000750_0001122.pkl",
+      "tmpjpe_mm": 63.35960660335215
+    },
+    {
+      "frame_index": 802,
+      "id_person": 13,
+      "method": "abla_v1",
+      "mpjpe_mm": 488.26536512190535,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0013_0001__p13__0000708_0001122.pkl",
+      "tmpjpe_mm": 91.00549095666092
+    },
+    {
+      "frame_index": 802,
+      "id_person": 14,
+      "method": "abla_v1",
+      "mpjpe_mm": 52228.400383557215,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0014_0001__p14__0000802_0001122.pkl",
+      "tmpjpe_mm": 136.07820221860786
+    },
+    {
+      "frame_index": 802,
+      "id_person": 15,
+      "method": "abla_v1",
+      "mpjpe_mm": 137.42404963976063,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0015_0000__p15__0000739_0001122.pkl",
+      "tmpjpe_mm": 64.81011934058357
+    },
+    {
+      "frame_index": 802,
+      "id_person": 16,
+      "method": "abla_v1",
+      "mpjpe_mm": 319.4176858791589,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0016_0000__p16__0000000_0001122.pkl",
+      "tmpjpe_mm": 50.10278827386555
+    },
+    {
+      "frame_index": 802,
+      "id_person": 18,
+      "method": "abla_v1",
+      "mpjpe_mm": 155.94249366164803,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0018_0000__p18__0000011_0001122.pkl",
+      "tmpjpe_mm": 107.78419550627554
+    },
+    {
+      "frame_index": 802,
+      "id_person": 20,
+      "method": "abla_v1",
+      "mpjpe_mm": 382.35370067129406,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0020_0000__p20__0000000_0001122.pkl",
+      "tmpjpe_mm": 44.463944283223455
+    },
+    {
+      "frame_index": 802,
+      "id_person": 21,
+      "method": "abla_v1",
+      "mpjpe_mm": 159.14127556470538,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0021_0001__p21__0000798_0001122.pkl",
+      "tmpjpe_mm": 66.1970173155984
+    },
+    {
+      "frame_index": 802,
+      "id_person": 22,
+      "method": "abla_v1",
+      "mpjpe_mm": 218.84539885298483,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0022_0000__p22__0000000_0001122.pkl",
+      "tmpjpe_mm": 26.7863059838859
+    },
+    {
+      "frame_index": 498,
+      "id_person": 2,
+      "method": "abla_v1",
+      "mpjpe_mm": 200.24336584094473,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0002_0001__p02__0000352_0001109.pkl",
+      "tmpjpe_mm": 67.24908365284081
+    },
+    {
+      "frame_index": 498,
+      "id_person": 5,
+      "method": "abla_v1",
+      "mpjpe_mm": 429.19631404128927,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0005_0000__p05__0000000_0001109.pkl",
+      "tmpjpe_mm": 49.5762414831072
+    },
+    {
+      "frame_index": 498,
+      "id_person": 6,
+      "method": "abla_v1",
+      "mpjpe_mm": 363.1812692509682,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0006_0001__p06__0000311_0001109.pkl",
+      "tmpjpe_mm": 43.98707690462028
+    },
+    {
+      "frame_index": 498,
+      "id_person": 7,
+      "method": "abla_v1",
+      "mpjpe_mm": 406.50719542476253,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0007_0000__p07__0000408_0001109.pkl",
+      "tmpjpe_mm": 58.709306286553215
+    },
+    {
+      "frame_index": 498,
+      "id_person": 8,
+      "method": "abla_v1",
+      "mpjpe_mm": 90.127879786302,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0008_0000__p08__0000000_0001109.pkl",
+      "tmpjpe_mm": 29.028752800505412
+    },
+    {
+      "frame_index": 498,
+      "id_person": 9,
+      "method": "abla_v1",
+      "mpjpe_mm": 192.03020829795733,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0009_0001__p09__0000186_0001109.pkl",
+      "tmpjpe_mm": 65.48429656837813
+    },
+    {
+      "frame_index": 498,
+      "id_person": 11,
+      "method": "abla_v1",
+      "mpjpe_mm": 372.77758993059655,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0011_0000__p11__0000498_0001109.pkl",
+      "tmpjpe_mm": 41.48830764246478
+    },
+    {
+      "frame_index": 498,
+      "id_person": 12,
+      "method": "abla_v1",
+      "mpjpe_mm": 765.9105975319779,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0012_0000__p12__0000000_0001109.pkl",
+      "tmpjpe_mm": 81.95446742150668
+    },
+    {
+      "frame_index": 498,
+      "id_person": 14,
+      "method": "abla_v1",
+      "mpjpe_mm": 446.8050630421017,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0014_0001__p14__0000310_0001109.pkl",
+      "tmpjpe_mm": 59.5631106392294
+    },
+    {
+      "frame_index": 498,
+      "id_person": 15,
+      "method": "abla_v1",
+      "mpjpe_mm": 288.452977020104,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0015_0000__p15__0000000_0001109.pkl",
+      "tmpjpe_mm": 52.376062906969686
+    },
+    {
+      "frame_index": 498,
+      "id_person": 17,
+      "method": "abla_v1",
+      "mpjpe_mm": 378.3340914299413,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0017_0000__p17__0000000_0001109.pkl",
+      "tmpjpe_mm": 63.440773066773964
+    },
+    {
+      "frame_index": 498,
+      "id_person": 18,
+      "method": "abla_v1",
+      "mpjpe_mm": 261.1701651699424,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0018_0000__p18__0000000_0001109.pkl",
+      "tmpjpe_mm": 47.82577224640545
+    },
+    {
+      "frame_index": 498,
+      "id_person": 19,
+      "method": "abla_v1",
+      "mpjpe_mm": 384.1816690615012,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0019_0000__p19__0000000_0001109.pkl",
+      "tmpjpe_mm": 57.01341273050082
+    },
+    {
+      "frame_index": 498,
+      "id_person": 20,
+      "method": "abla_v1",
+      "mpjpe_mm": 245.33938101359595,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0020_0001__p20__0000361_0001109.pkl",
+      "tmpjpe_mm": 60.799821479366635
+    },
+    {
+      "frame_index": 498,
+      "id_person": 21,
+      "method": "abla_v1",
+      "mpjpe_mm": 625.8237970868907,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0021_0000__p21__0000000_0001109.pkl",
+      "tmpjpe_mm": 49.56953615971682
+    },
+    {
+      "frame_index": 802,
+      "id_person": 1,
+      "method": "v18agg",
+      "mpjpe_mm": 321.5181189180318,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0001_0000__p01__0000037_0001122.pkl",
+      "tmpjpe_mm": 61.72888479349436
+    },
+    {
+      "frame_index": 802,
+      "id_person": 5,
+      "method": "v18agg",
+      "mpjpe_mm": 588.1251268979137,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0005_0000__p05__0000015_0001122.pkl",
+      "tmpjpe_mm": 47.01349311031303
+    },
+    {
+      "frame_index": 802,
+      "id_person": 6,
+      "method": "v18agg",
+      "mpjpe_mm": 271.57581607637906,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0006_0000__p06__0000000_0001122.pkl",
+      "tmpjpe_mm": 57.55449026583259
+    },
+    {
+      "frame_index": 802,
+      "id_person": 7,
+      "method": "v18agg",
+      "mpjpe_mm": 280.67353068175765,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0007_0001__p07__0000792_0001122.pkl",
+      "tmpjpe_mm": 49.291221933320436
+    },
+    {
+      "frame_index": 802,
+      "id_person": 8,
+      "method": "v18agg",
+      "mpjpe_mm": 458.2485106236889,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0008_0000__p08__0000576_0000812.pkl",
+      "tmpjpe_mm": 54.418110570810214
+    },
+    {
+      "frame_index": 802,
+      "id_person": 11,
+      "method": "v18agg",
+      "mpjpe_mm": 304.4814689172632,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0011_0000__p11__0000000_0001122.pkl",
+      "tmpjpe_mm": 51.46462446678862
+    },
+    {
+      "frame_index": 802,
+      "id_person": 12,
+      "method": "v18agg",
+      "mpjpe_mm": 596.0404645179344,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0012_0001__p12__0000750_0001122.pkl",
+      "tmpjpe_mm": 75.31127257567493
+    },
+    {
+      "frame_index": 802,
+      "id_person": 13,
+      "method": "v18agg",
+      "mpjpe_mm": 346.58707464974566,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0013_0001__p13__0000708_0001122.pkl",
+      "tmpjpe_mm": 115.84389004578404
+    },
+    {
+      "frame_index": 802,
+      "id_person": 14,
+      "method": "v18agg",
+      "mpjpe_mm": 385.2900972914964,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0014_0001__p14__0000802_0001122.pkl",
+      "tmpjpe_mm": 96.46365691836418
+    },
+    {
+      "frame_index": 802,
+      "id_person": 15,
+      "method": "v18agg",
+      "mpjpe_mm": 356.4786973219662,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0015_0000__p15__0000739_0001122.pkl",
+      "tmpjpe_mm": 108.621690344887
+    },
+    {
+      "frame_index": 802,
+      "id_person": 16,
+      "method": "v18agg",
+      "mpjpe_mm": 509.4088080964445,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0016_0000__p16__0000000_0001122.pkl",
+      "tmpjpe_mm": 46.68406072181658
+    },
+    {
+      "frame_index": 802,
+      "id_person": 18,
+      "method": "v18agg",
+      "mpjpe_mm": 678.1062574193702,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0018_0000__p18__0000011_0001122.pkl",
+      "tmpjpe_mm": 105.35626465074952
+    },
+    {
+      "frame_index": 802,
+      "id_person": 20,
+      "method": "v18agg",
+      "mpjpe_mm": 739.4678896932661,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0020_0000__p20__0000000_0001122.pkl",
+      "tmpjpe_mm": 44.50457140200647
+    },
+    {
+      "frame_index": 802,
+      "id_person": 21,
+      "method": "v18agg",
+      "mpjpe_mm": 391.7615866183868,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0021_0001__p21__0000798_0001122.pkl",
+      "tmpjpe_mm": 76.56038016744803
+    },
+    {
+      "frame_index": 802,
+      "id_person": 22,
+      "method": "v18agg",
+      "mpjpe_mm": 453.0430999835695,
+      "scene": "NET_ARG_004304",
+      "segment_file": "NET_ARG_004304__0022_0000__p22__0000000_0001122.pkl",
+      "tmpjpe_mm": 39.472520328705556
+    },
+    {
+      "frame_index": 498,
+      "id_person": 2,
+      "method": "v18agg",
+      "mpjpe_mm": 672.919287308519,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0002_0001__p02__0000352_0001109.pkl",
+      "tmpjpe_mm": 73.49541689976617
+    },
+    {
+      "frame_index": 498,
+      "id_person": 5,
+      "method": "v18agg",
+      "mpjpe_mm": 130.72672094682818,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0005_0000__p05__0000000_0001109.pkl",
+      "tmpjpe_mm": 59.71368809510974
+    },
+    {
+      "frame_index": 498,
+      "id_person": 6,
+      "method": "v18agg",
+      "mpjpe_mm": 589.288923572242,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0006_0001__p06__0000311_0001109.pkl",
+      "tmpjpe_mm": 56.83102580830818
+    },
+    {
+      "frame_index": 498,
+      "id_person": 7,
+      "method": "v18agg",
+      "mpjpe_mm": 159.506788907569,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0007_0000__p07__0000408_0001109.pkl",
+      "tmpjpe_mm": 64.90006658970377
+    },
+    {
+      "frame_index": 498,
+      "id_person": 8,
+      "method": "v18agg",
+      "mpjpe_mm": 527.9778519624364,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0008_0000__p08__0000000_0001109.pkl",
+      "tmpjpe_mm": 54.38571496671365
+    },
+    {
+      "frame_index": 498,
+      "id_person": 9,
+      "method": "v18agg",
+      "mpjpe_mm": 526.7715824959563,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0009_0001__p09__0000186_0001109.pkl",
+      "tmpjpe_mm": 70.64790843749482
+    },
+    {
+      "frame_index": 498,
+      "id_person": 11,
+      "method": "v18agg",
+      "mpjpe_mm": 128.08912465360265,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0011_0000__p11__0000498_0001109.pkl",
+      "tmpjpe_mm": 57.046481896663394
+    },
+    {
+      "frame_index": 498,
+      "id_person": 12,
+      "method": "v18agg",
+      "mpjpe_mm": 196.99969634717573,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0012_0000__p12__0000000_0001109.pkl",
+      "tmpjpe_mm": 105.30259061375278
+    },
+    {
+      "frame_index": 498,
+      "id_person": 14,
+      "method": "v18agg",
+      "mpjpe_mm": 391.89062081346145,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0014_0001__p14__0000310_0001109.pkl",
+      "tmpjpe_mm": 57.462112006713085
+    },
+    {
+      "frame_index": 498,
+      "id_person": 15,
+      "method": "v18agg",
+      "mpjpe_mm": 578.1404386036808,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0015_0000__p15__0000000_0001109.pkl",
+      "tmpjpe_mm": 40.62674117861306
+    },
+    {
+      "frame_index": 498,
+      "id_person": 17,
+      "method": "v18agg",
+      "mpjpe_mm": 114.28270348726355,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0017_0000__p17__0000000_0001109.pkl",
+      "tmpjpe_mm": 103.30471361353388
+    },
+    {
+      "frame_index": 498,
+      "id_person": 18,
+      "method": "v18agg",
+      "mpjpe_mm": 613.5136442666682,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0018_0000__p18__0000000_0001109.pkl",
+      "tmpjpe_mm": 60.946825285696725
+    },
+    {
+      "frame_index": 498,
+      "id_person": 19,
+      "method": "v18agg",
+      "mpjpe_mm": 136.63939332160882,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0019_0000__p19__0000000_0001109.pkl",
+      "tmpjpe_mm": 63.2005471492643
+    },
+    {
+      "frame_index": 498,
+      "id_person": 20,
+      "method": "v18agg",
+      "mpjpe_mm": 585.3185017058183,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0020_0001__p20__0000361_0001109.pkl",
+      "tmpjpe_mm": 95.98110561698347
+    },
+    {
+      "frame_index": 498,
+      "id_person": 21,
+      "method": "v18agg",
+      "mpjpe_mm": 388.98552753539013,
+      "scene": "NET_ARG_222226",
+      "segment_file": "NET_ARG_222226__0021_0000__p21__0000000_0001109.pkl",
+      "tmpjpe_mm": 68.76630703391224
+    }
+  ],
+  "selection_path": "/data3/hj/home/hj/Repo/Code_as_Libs/hjlib-evaluation/campaigns/worldpose_crowd3d_spotcheck/artifacts/selected_worldpose_frames.json",
+  "summaries": [
+    {
+      "method": "abla_v1",
+      "mpjpe_mm": 2048.3811001727404,
+      "num_person_frames": 30,
+      "pred_joints_key": "joints_54_world",
+      "tmpjpe_mm": 59.600301162201944
+    },
+    {
+      "method": "v18agg",
+      "mpjpe_mm": 414.06191178784786,
+      "num_person_frames": 30,
+      "pred_joints_key": "joints_54_world",
+      "tmpjpe_mm": 68.76334591627418
+    }
+  ],
+  "unit": "mm"
+}
