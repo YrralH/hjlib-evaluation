@@ -136,9 +136,11 @@ smoke)deferred(narrow scenes below split,vis-only)。
 2. [migration.md](migration.md) —— 从 monolith 迁出的 port 表 / divergence / 测试状态。
 3. [jta_protocol_parity_and_standup.md](jta_protocol_parity_and_standup.md) —— campaign 02
    标准 eval standup / JTA parity 的实测驻地(读数和阶段计划)。
-4. `hjlib-dataset-assembly/docs/design/validity_filtering_analysis.md` —— 本 initiative
+4. [testing_protocol_from_monolith.md](testing_protocol_from_monolith.md) —— monolith
+   test filter 设计复盘 / 当前筛选逻辑 / 筛选比例驻地。
+5. `hjlib-dataset-assembly/docs/design/validity_filtering_analysis.md` —— 本 initiative
    设计 SSOT(§5 四层架构 / §6 track 2)。
-5. [test.md](test.md) —— 测试两棵树本仓如何实例化。
+6. [test.md](test.md) —— 测试两棵树本仓如何实例化。
 
 ## Dump prediction field contract
 
