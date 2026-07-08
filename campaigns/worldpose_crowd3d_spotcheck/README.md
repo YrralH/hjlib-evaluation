@@ -19,6 +19,27 @@ layer.
 This directory is intentionally campaign-local. If the experiment becomes reusable, move
 stable readers/visualizers to their owning hjlib package later.
 
+## Local Environment Contract
+
+The commands below are local reproduction commands for this frozen campaign, not
+the public `hjlib-evaluation` package contract. The scripts intentionally stay
+outside `src/`, `test_smoke/`, and `test/`; they are not covered by the repo
+`pyrightconfig.json`, and their extra imports are not added to
+`pyproject.toml`.
+
+Assumptions:
+
+- run in the `hjlib_py312` environment on the Code_as_Libs workstation;
+- sibling hjlib repos exist at the local `Code_as_Libs/` layout injected by the
+  scripts;
+- `opencv-python`, `scipy`, and the relevant hjlib sibling packages are already
+  installed in that environment;
+- data roots listed below exist on this machine.
+
+If this campaign becomes reusable, first move stable code into the owning hjlib
+package, declare its dependencies/pins, and add it to the normal type/test
+surface.
+
 ## Known Inputs
 
 - a00 dump:
