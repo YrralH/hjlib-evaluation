@@ -8,15 +8,15 @@ person-frame to the final MPJPE / T-MPJPE mean.
 
 from __future__ import annotations
 
-import argparse
 import json
 import re
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Sequence, Set, Tuple
+from typing import Annotated, Any, Dict, Iterable, List, Sequence, Set, Tuple
 
 import numpy as np
+import typer
 
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -439,23 +439,20 @@ def build_result(
     }
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--scene', default=DEFAULT_SCENE)
-    parser.add_argument('--label-dump-root', type=Path, default=DEFAULT_LABEL_DUMP_ROOT)
-    parser.add_argument('--pred-joints-key', default=DEFAULT_PRED_JOINTS_KEY)
-    parser.add_argument('--out-root', type=Path, default=None)
-    args = parser.parse_args()
-
+def main(
+        scene: Annotated[str, typer.Option(help='WorldPose scene name.')] = DEFAULT_SCENE,
+        label_dump_root: Annotated[Path, typer.Option(help='WorldPose label dump root.')] = DEFAULT_LABEL_DUMP_ROOT,
+        pred_joints_key: Annotated[str, typer.Option(help='Prediction joint field to evaluate.')] = DEFAULT_PRED_JOINTS_KEY,
+        out_root: Annotated[Path | None, typer.Option(help='Output root; defaults under campaign artifacts.')] = None,
+    ) -> None:
     ensure_import_paths()
-    out_root = args.out_root
     if out_root is None:
-        out_root = ARTIFACT_ROOT / 'sequence_quant' / args.scene
+        out_root = ARTIFACT_ROOT / 'sequence_quant' / scene
     out_root.mkdir(parents=True, exist_ok=True)
     out_json = out_root / 'metrics.json'
     out_md = out_root / 'metrics.md'
 
-    result = build_result(args.scene, args.pred_joints_key, args.label_dump_root)
+    result = build_result(scene, pred_joints_key, label_dump_root)
     result['json_name'] = out_json.name
 
     out_json.write_text(json.dumps(result, indent=2, sort_keys=True), encoding='utf-8')
@@ -481,4 +478,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    typer.run(main)

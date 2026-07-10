@@ -11,6 +11,7 @@ dependencies = [
     'numpy',
     'torch',
     'tqdm',
+    'typer>=0.12,<1.0',
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -28,6 +29,6 @@ testpaths = ['test_smoke', 'test']
 description_updated = '2026-07-01'
 
 [tool.hjlibm.deps]
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "6dc77d34014de9dce09629aefadab88911d6d9a9" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "dcb7dda9f537bd352b56315e5b10c9769e0aaf3b" }
 hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "6cea6e1c831844a8c335f48c0fae206c3aac3f02" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "a69c1487821378ad363d94b145403f63a3c5f54f" }

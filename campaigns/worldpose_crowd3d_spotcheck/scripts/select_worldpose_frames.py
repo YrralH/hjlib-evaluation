@@ -12,13 +12,13 @@ import os
 import os.path as osp
 import re
 import sys
-import argparse
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Annotated, Any, Dict, Iterable, List, Literal, Tuple
 
 import cv2
 import numpy as np
+import typer
 
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -443,15 +443,12 @@ def write_markdown(chosen: List[Frame_Candidate], path_md: Path) -> None:
     path_md.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--num-frames', type=int, default=DEFAULT_NUM_FRAMES)
-    parser.add_argument('--min-persons', type=int, default=DEFAULT_MIN_PERSONS)
-    parser.add_argument('--render', action='store_true',
-                        help='also render original-frame GT overlay PNGs')
-    parser.add_argument('--render-mode', choices=('raw', 'gt', 'pred2d'), default='raw')
-    args = parser.parse_args()
-
+def main(
+        num_frames: Annotated[int, typer.Option(help='Number of diverse frames to select.')] = DEFAULT_NUM_FRAMES,
+        min_persons: Annotated[int, typer.Option(help='Minimum covered people required per candidate frame.')] = DEFAULT_MIN_PERSONS,
+        render: Annotated[bool, typer.Option(help='Also render original-frame GT overlay PNGs.')] = False,
+        render_mode: Annotated[Literal['raw', 'gt', 'pred2d'], typer.Option(help='Overlay rendering mode.')] = 'raw',
+    ) -> None:
     ensure_import_paths()
 
     ARTIFACT_ROOT.mkdir(parents=True, exist_ok=True)
@@ -459,19 +456,19 @@ def main() -> None:
 
     path_selection_dump = METHOD_DUMP_DIRS[SELECTION_METHOD]
     segments = load_segments(path_selection_dump)
-    candidates = candidate_frames_from_segments(segments, args.min_persons)
-    assert candidates, 'no candidates found at min_persons=%d' % args.min_persons
-    chosen = choose_diverse_candidates(candidates, args.num_frames)
+    candidates = candidate_frames_from_segments(segments, min_persons)
+    assert candidates, 'no candidates found at min_persons=%d' % min_persons
+    chosen = choose_diverse_candidates(candidates, num_frames)
 
-    if args.render:
+    if render:
         path_root, path_undistort = resolve_worldpose_paths()
         assert path_undistort is not None, 'render needs an undistorted frame directory'
         ds = None
-        if args.render_mode in ('gt', 'pred2d'):
+        if render_mode in ('gt', 'pred2d'):
             from hjlib_dataset_std.datasets.worldpose.worldpose import WorldPose_Std
             ds = WorldPose_Std(path_data_root=path_root, path_undistort_frames=path_undistort)
         projection_stats_by_method: Dict[str, List[Dict[str, Any]]] = {}
-        if args.render_mode == 'pred2d':
+        if render_mode == 'pred2d':
             assert ds is not None
             for method_name, path_dump_dir in METHOD_DUMP_DIRS.items():
                 method_overlay_root = OVERLAY_ROOT / method_name
@@ -488,7 +485,7 @@ def main() -> None:
                 projection_stats_by_method[method_name] = method_stats
         else:
             for cand in chosen:
-                if args.render_mode == 'gt':
+                if render_mode == 'gt':
                     assert ds is not None
                     image = render_overlay(ds, cand)
                 else:
@@ -496,7 +493,7 @@ def main() -> None:
                 path_png = OVERLAY_ROOT / ('%s__frame_%07d.png' % (cand.scene, cand.frame_index))
                 ok = cv2.imwrite(str(path_png), image)
                 assert ok, 'cv2.imwrite failed: %s' % path_png
-        if args.render_mode == 'pred2d':
+        if render_mode == 'pred2d':
             for method_name, method_stats in projection_stats_by_method.items():
                 path_stats = ARTIFACT_ROOT / ('projection_stats_%s.json' % method_name)
                 path_stats.write_text(
@@ -512,13 +509,13 @@ def main() -> None:
     print('selected %d frames' % len(chosen))
     print('json: %s' % path_json)
     print('md: %s' % (ARTIFACT_ROOT / 'selected_worldpose_frames.md'))
-    if args.render:
+    if render:
         print('overlays: %s' % OVERLAY_ROOT)
-    if args.render and args.render_mode == 'pred2d':
+    if render and render_mode == 'pred2d':
         for method_name in METHOD_DUMP_DIRS:
             print('projection stats %s: %s' % (
                 method_name, ARTIFACT_ROOT / ('projection_stats_%s.json' % method_name)))
 
 
 if __name__ == '__main__':
-    main()
+    typer.run(main)

@@ -6,17 +6,17 @@ This is a campaign-local exploratory matcher. It intentionally evaluates only
 
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 import re
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Annotated, Any, Dict, List, Sequence, Tuple
 
 import cv2
 import numpy as np
+import typer
 from scipy.optimize import linear_sum_assignment
 
 
@@ -517,38 +517,34 @@ def write_markdown(summary: Dict[str, Any], path_md: Path) -> None:
     path_md.write_text('\n'.join(lines), encoding='utf-8')
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--package-root', type=Path, default=DEFAULT_PACKAGE_ROOT)
-    parser.add_argument('--out-root', type=Path, default=DEFAULT_OUTPUT_ROOT)
-    parser.add_argument('--frame-start', type=int, default=0)
-    parser.add_argument('--frame-end', type=int, default=10,
-                        help='exclusive end; default evaluates frame0-frame9')
-    parser.add_argument('--max-cost-px', type=float, default=90.0)
-    parser.add_argument('--trim-ratio', type=float, default=0.8)
-    parser.add_argument('--center-weight', type=float, default=0.25)
-    parser.add_argument('--worldpose-root', type=Path, default=DEFAULT_WORLDPOSE_ROOT)
-    parser.add_argument('--worldpose-undistort-frames', type=Path,
-                        default=DEFAULT_WORLDPOSE_UNDISTORT_FRAMES)
-    args = parser.parse_args()
-
+def main(
+        package_root: Annotated[Path, typer.Option(help='Crowd3D downstream package root.')] = DEFAULT_PACKAGE_ROOT,
+        out_root: Annotated[Path, typer.Option(help='Output directory.')] = DEFAULT_OUTPUT_ROOT,
+        frame_start: Annotated[int, typer.Option(help='Inclusive first frame index.')] = 0,
+        frame_end: Annotated[int, typer.Option(help='Exclusive end; default evaluates frame0-frame9.')] = 10,
+        max_cost_px: Annotated[float, typer.Option(help='Maximum accepted matching cost in pixels.')] = 90.0,
+        trim_ratio: Annotated[float, typer.Option(help='Chamfer nearest-distance trim ratio.')] = 0.8,
+        center_weight: Annotated[float, typer.Option(help='Center-distance cost weight.')] = 0.25,
+        worldpose_root: Annotated[Path, typer.Option(help='WorldPose raw data root.')] = DEFAULT_WORLDPOSE_ROOT,
+        worldpose_undistort_frames: Annotated[Path, typer.Option(help='WorldPose undistorted frame directory.')] = DEFAULT_WORLDPOSE_UNDISTORT_FRAMES,
+    ) -> None:
     ensure_import_paths()
-    args.out_root.mkdir(parents=True, exist_ok=True)
+    out_root.mkdir(parents=True, exist_ok=True)
     summary = compute_matches(
-        package_root=args.package_root,
-        output_root=args.out_root,
-        frame_start=args.frame_start,
-        frame_end=args.frame_end,
-        max_cost_px=args.max_cost_px,
-        trim_ratio=args.trim_ratio,
-        center_weight=args.center_weight,
-        worldpose_root=args.worldpose_root,
-        worldpose_undistort_frames=args.worldpose_undistort_frames,
+        package_root=package_root,
+        output_root=out_root,
+        frame_start=frame_start,
+        frame_end=frame_end,
+        max_cost_px=max_cost_px,
+        trim_ratio=trim_ratio,
+        center_weight=center_weight,
+        worldpose_root=worldpose_root,
+        worldpose_undistort_frames=worldpose_undistort_frames,
     )
 
-    path_json = args.out_root / 'matches.json'
-    path_csv = args.out_root / 'matches.csv'
-    path_md = args.out_root / 'matches.md'
+    path_json = out_root / 'matches.json'
+    path_csv = out_root / 'matches.csv'
+    path_md = out_root / 'matches.md'
     path_json.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding='utf-8')
     write_csv(summary, path_csv)
     write_markdown(summary, path_md)
@@ -568,4 +564,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    typer.run(main)

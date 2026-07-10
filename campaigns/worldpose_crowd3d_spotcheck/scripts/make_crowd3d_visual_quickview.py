@@ -7,14 +7,14 @@ we can inspect the result set before choosing a matching policy.
 
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 from pathlib import Path
-from typing import Dict, List
+from typing import Annotated, Dict, List
 
 import cv2
 import numpy as np
+import typer
 
 
 WORK_ROOT = Path(__file__).resolve().parents[1]
@@ -138,26 +138,24 @@ def build_contact_sheet(frame_panels: List[np.ndarray]) -> np.ndarray:
     return np.concatenate(out_rows, axis=0)
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--package-root', type=Path, default=DEFAULT_PACKAGE_ROOT)
-    parser.add_argument('--out-root', type=Path, default=DEFAULT_OUTPUT_ROOT)
-    parser.add_argument('--panel-width', type=int, default=520)
-    parser.add_argument('--panel-height', type=int, default=292)
-    args = parser.parse_args()
-
-    manifest_path = args.package_root / 'manifest.csv'
+def main(
+        package_root: Annotated[Path, typer.Option(help='Crowd3D downstream package root.')] = DEFAULT_PACKAGE_ROOT,
+        out_root: Annotated[Path, typer.Option(help='Output directory.')] = DEFAULT_OUTPUT_ROOT,
+        panel_width: Annotated[int, typer.Option(help='Panel width in pixels.')] = 520,
+        panel_height: Annotated[int, typer.Option(help='Panel height in pixels.')] = 292,
+    ) -> None:
+    manifest_path = package_root / 'manifest.csv'
     rows = read_manifest(manifest_path)
-    side_by_side_root = args.out_root / 'side_by_side'
+    side_by_side_root = out_root / 'side_by_side'
     side_by_side_root.mkdir(parents=True, exist_ok=True)
 
     frame_panels: List[np.ndarray] = []
     for row in rows:
         panel = build_frame_panel(
-            args.package_root,
+            package_root,
             row,
-            args.panel_width,
-            args.panel_height,
+            panel_width,
+            panel_height,
         )
         frame_panels.append(panel)
         path_out = side_by_side_root / ('%s_side_by_side.jpg' % row['frame'])
@@ -165,12 +163,12 @@ def main() -> None:
         assert ok, 'cv2.imwrite failed: %s' % path_out
 
     contact = build_contact_sheet(frame_panels)
-    path_contact = args.out_root / 'contact_sheet.jpg'
+    path_contact = out_root / 'contact_sheet.jpg'
     ok = cv2.imwrite(str(path_contact), contact)
     assert ok, 'cv2.imwrite failed: %s' % path_contact
 
     summary = {
-        'package_root': str(args.package_root),
+        'package_root': str(package_root),
         'manifest': str(manifest_path),
         'num_frames': len(rows),
         'side_by_side_root': str(side_by_side_root),
@@ -185,7 +183,7 @@ def main() -> None:
             for row in rows
         ],
     }
-    path_summary = args.out_root / 'summary.json'
+    path_summary = out_root / 'summary.json'
     path_summary.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding='utf-8')
 
     print('frames: %d' % len(rows))
@@ -195,4 +193,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    typer.run(main)

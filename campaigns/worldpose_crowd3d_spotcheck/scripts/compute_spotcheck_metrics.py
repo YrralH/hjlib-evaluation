@@ -7,14 +7,14 @@ configured monolith method dumps.
 
 from __future__ import annotations
 
-import argparse
 import json
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Sequence
+from typing import Annotated, Any, Dict, List, Sequence
 
 import numpy as np
+import typer
 
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -208,32 +208,29 @@ def write_markdown(result: Dict[str, Any], path_md: Path, path_json: Path) -> No
     path_md.write_text('\n'.join(lines), encoding='utf-8')
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--selection', type=Path, default=DEFAULT_SELECTION_PATH)
-    parser.add_argument('--max-frames', type=int, default=None,
-                        help='evaluate only the first N selected frames')
-    parser.add_argument('--label-dump-root', type=Path, default=DEFAULT_LABEL_DUMP_ROOT)
-    parser.add_argument('--pred-joints-key', default=DEFAULT_PRED_JOINTS_KEY)
-    parser.add_argument('--out-json', type=Path, default=DEFAULT_OUTPUT_JSON)
-    parser.add_argument('--out-md', type=Path, default=DEFAULT_OUTPUT_MD)
-    args = parser.parse_args()
-
+def main(
+        selection: Annotated[Path, typer.Option(help='Selected-frame JSON path.')] = DEFAULT_SELECTION_PATH,
+        max_frames: Annotated[int | None, typer.Option(help='Evaluate only the first N selected frames.')] = None,
+        label_dump_root: Annotated[Path, typer.Option(help='WorldPose label dump root.')] = DEFAULT_LABEL_DUMP_ROOT,
+        pred_joints_key: Annotated[str, typer.Option(help='Prediction joint field to evaluate.')] = DEFAULT_PRED_JOINTS_KEY,
+        out_json: Annotated[Path, typer.Option(help='Output JSON path.')] = DEFAULT_OUTPUT_JSON,
+        out_md: Annotated[Path, typer.Option(help='Output markdown path.')] = DEFAULT_OUTPUT_MD,
+    ) -> None:
     ensure_import_paths()
-    selected_frames = load_selected_frames(args.selection)
-    selected_frames = maybe_limit_selected_frames(selected_frames, args.max_frames)
+    selected_frames = load_selected_frames(selection)
+    selected_frames = maybe_limit_selected_frames(selected_frames, max_frames)
     result = compute_metrics(
         selected_frames,
-        args.pred_joints_key,
-        args.label_dump_root,
-        args.selection,
+        pred_joints_key,
+        label_dump_root,
+        selection,
     )
 
-    args.out_json.write_text(
+    out_json.write_text(
         json.dumps(result, indent=2, sort_keys=True),
         encoding='utf-8',
     )
-    write_markdown(result, args.out_md, args.out_json)
+    write_markdown(result, out_md, out_json)
 
     for row in result['summaries']:
         print('%s %s: n=%d MPJPE=%.2fmm T-MPJPE=%.2fmm' % (
@@ -243,9 +240,9 @@ def main() -> None:
             float(row['mpjpe_mm']),
             float(row['tmpjpe_mm']),
         ))
-    print('json: %s' % args.out_json)
-    print('md: %s' % args.out_md)
+    print('json: %s' % out_json)
+    print('md: %s' % out_md)
 
 
 if __name__ == '__main__':
-    main()
+    typer.run(main)
