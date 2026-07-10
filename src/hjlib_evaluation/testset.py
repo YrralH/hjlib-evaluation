@@ -90,6 +90,71 @@ class TestSet:
     def get_test_segment(self, flat_index: int) -> Test_Segment:
         return self.test_segments[flat_index]
 
+    def make_fixed_window_testset(
+            self,
+            length_window: int,
+            length_overlap: int = 0,
+            tail_policy: str = 'drop',
+        ) -> 'TestSet':
+        '''Return a derived fixed-window subset without mutating this TestSet.
+
+        The divider stores sequence-local coordinates while `Test_Segment`
+        stores scene-level original frame coordinates. This method updates both
+        together so inference dumps and GT lookup remain aligned.
+        '''
+        if length_window <= 0:
+            raise ValueError('length_window must be positive: %d' % length_window)
+        if length_overlap < 0:
+            raise ValueError('length_overlap must be non-negative: %d' % length_overlap)
+        if length_overlap >= length_window:
+            raise ValueError(
+                'length_overlap must be smaller than length_window: %d >= %d'
+                % (length_overlap, length_window)
+            )
+        if tail_policy != 'drop':
+            raise ValueError("unsupported tail_policy %r; only 'drop' is implemented" % tail_policy)
+
+        stride = length_window - length_overlap
+        subset_ranges: List[tuple[str, str, int, int]] = []
+        subset_test_segments: List[Test_Segment] = []
+        for index_segment, segment in enumerate(self.test_segments):
+            info = self.divider.get_seq_info(index_segment)
+            scene_offset = (
+                segment.index_frame_original_start
+                - info.index_within_singleseq_start
+            )
+            window_start = info.index_within_singleseq_start
+            while window_start + length_window <= info.index_within_singleseq_end:
+                window_end = window_start + length_window
+                subset_ranges.append((info.name_scene, info.name_seq, window_start, window_end))
+                subset_test_segments.append(replace(
+                    segment,
+                    index_frame_original_start=scene_offset + window_start,
+                    index_frame_original_end=scene_offset + window_end,
+                ))
+                window_start += stride
+
+        subset_filter_stats = self.filter_stats
+        if subset_filter_stats is not None:
+            subset_lengths = [segment.length for segment in subset_test_segments]
+            subset_filter_stats = replace(
+                subset_filter_stats,
+                test_segment_count = len(subset_test_segments),
+                shortest_segment   = min(subset_lengths) if subset_lengths else 0,
+                longest_segment    = max(subset_lengths) if subset_lengths else 0,
+                total_frames       = sum(subset_lengths),
+            )
+        return TestSet(
+            name_dataset=self.name_dataset,
+            policy=self.policy,
+            split=self.split,
+            divider=Filtered_Sub_Seq_Divider(subset_ranges),
+            test_segments=subset_test_segments,
+            path_root_label=self.path_root_label,
+            fps=self.fps,
+            filter_stats=subset_filter_stats,
+        )
+
     def restrict_to_scenes(self, kept_scenes: Iterable[str]) -> None:
         '''Mutate in place to keep only segments whose name_scene is in kept_scenes.
 

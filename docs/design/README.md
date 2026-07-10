@@ -141,6 +141,8 @@ smoke)deferred(narrow scenes below split,vis-only)。
 5. `hjlib-dataset-assembly/docs/design/validity_filtering_analysis.md` —— 本 initiative
    设计 SSOT(§5 四层架构 / §6 track 2)。
 6. [test.md](test.md) —— 测试两棵树本仓如何实例化。
+7. [fixed_window_testset.md](fixed_window_testset.md) —— `TestSet.make_fixed_window_testset(...)`
+   的 fixed-window subset contract; cached-fusion eval consumes this API from experiments.
 
 ## Dump prediction field contract
 
