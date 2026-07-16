@@ -11,6 +11,15 @@
 默认归约字段是 `pred['joints_54_world']`,即 monolith 等价的 dump-side tamed
 协议;如需诊断 no-invalid-tame raw 输出,显式传 `pred_joints_key='joints_54_world_raw'`。
 
+真实数据测试与 dump 归约脚本使用 tracked contract 配置本机 roots：
+
+```bash
+cp test/local_setting_test.py.example test/local_setting_test.py
+```
+
+复制后只编辑本机 runtime。不要把另一台机器的完整 runtime 复制过来，也不要把
+真实路径或秘密写入 tracked example。`test_smoke/` 不需要这份 runtime。
+
 ## 决策树:我该调哪个
 
 ```

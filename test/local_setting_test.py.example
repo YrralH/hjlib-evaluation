@@ -1,0 +1,12 @@
+'''Per-machine settings for real-data evaluation tests.
+
+Copy this tracked, placeholder-only contract to ``local_setting_test.py`` and
+replace values locally. The runtime file is gitignored. Do not put real host
+paths or secrets in this example.
+'''
+
+
+PATH_DUMP_ROOT_HJLIB = '/abs/path/to/hjlib/__As_Single_Bbox_hjlib__'
+PATH_FILTER_STATS_BASE = '/abs/path/to/filter_stats'
+PATH_JTA_EXT_DATA_ROOT = '/abs/path/to/JTA-Ext'
+PATH_INFERENCE_DUMPS_BASE = '/abs/path/to/inference_dumps'

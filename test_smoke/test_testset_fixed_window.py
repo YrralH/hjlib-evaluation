@@ -54,7 +54,7 @@ def build_testset() -> TestSet:
     )
 
 
-def main() -> None:
+def smoke_test_testset_fixed_window() -> None:
     original = build_testset()
     subset = original.make_fixed_window_testset(
         length_window=120,
@@ -103,4 +103,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    smoke_test_testset_fixed_window()

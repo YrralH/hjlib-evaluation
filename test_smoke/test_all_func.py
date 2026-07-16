@@ -16,12 +16,14 @@ sys.path.insert(0, osp.dirname(osp.abspath(__file__)))
 from test_testset import smoke_test_testset
 from test_gt import smoke_test_gt
 from test_eval_pred_field import smoke_test_eval_pred_field
+from test_testset_fixed_window import smoke_test_testset_fixed_window
 
 
 def main() -> None:
     smoke_test_testset()
     smoke_test_gt()
     smoke_test_eval_pred_field()
+    smoke_test_testset_fixed_window()
     print('test_all_func: all smoke tests passed')
 
 
