@@ -33,6 +33,10 @@ cp test/local_setting_test.py.example test/local_setting_test.py
 
 我只想看测试集构成 / 接线 sanity?
 └─ testset.summary()  或  Tester(...).stage_list_segments()
+
+我已经有每帧 scalar residual + 最终 bool mask?
+└─ summarize_trajectory_residuals(...)，再用 reduce_trajectory_residual_summaries(...)
+   做 trajectory-weighted macro 与 valid-frame-weighted micro 归约。
 ```
 
 ## 端到端示例(评已有 dump —— 迁移 / parity 主路径)
@@ -85,6 +89,8 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `GT_Provider_Base` / `Network_Driver_Base` | per-dataset GT / 推理 driver 的 ABC |
 | `TestSet_Builder` / `TestSet_Builder_Base` | 配好的测试集 builder(一般经 `get_testset_builder` 取实例)/ 其 ABC |
 | `compute_jitter(joints (T,J,3), fps)` | 绝对 jerk 平滑度(m/s^3) |
+| `summarize_trajectory_residuals(residual, valid_frame_mask)` | 对 caller 已定义的 scalar residual population 计算 count/sum/mean/median/p95/MSE/RMSE；详见 [trajectory_residual.md](trajectory_residual.md) |
+| `reduce_trajectory_residual_summaries(summaries)` | 从 sufficient statistics 精确计算 trajectory-weighted macro 与 frame-weighted micro mean/MSE |
 
 ## 常见注意
 

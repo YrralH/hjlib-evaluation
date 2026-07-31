@@ -20,6 +20,12 @@ from hjlib_evaluation.testset import Filter_Stats, TestSet
 from hjlib_evaluation.testset_builder import TestSet_Builder
 from hjlib_evaluation.testset_builder_base import TestSet_Builder_Base
 from hjlib_evaluation.tester import Tester, build_segment_tag, list_dump_segment_tags, path_pkl_for_segment
+from hjlib_evaluation.trajectory_residual import (
+    Trajectory_Residual_Reduction,
+    Trajectory_Residual_Summary,
+    reduce_trajectory_residual_summaries,
+    summarize_trajectory_residuals,
+)
 
 __all__ = [
     'Eval_Meta',
@@ -33,6 +39,8 @@ __all__ = [
     'TestSet_Builder_Base',
     'Test_Segment',
     'Tester',
+    'Trajectory_Residual_Reduction',
+    'Trajectory_Residual_Summary',
     'build_segment_tag',
     'build_test_assembly',
     'compute_jitter',
@@ -42,4 +50,6 @@ __all__ = [
     'list_dump_segment_tags',
     'load_inference_dump',
     'path_pkl_for_segment',
+    'reduce_trajectory_residual_summaries',
+    'summarize_trajectory_residuals',
 ]

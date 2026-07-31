@@ -6,7 +6,8 @@
 
 定位:**与 hjlib-trainer 对称的执行层**。trainer 编排训练,本仓编排评测;上面由
 `hjlib-experiments` 编排。本仓**不持有任何模型 / 数据集定义**,只做评测 harness +
-per-dataset GT/testset 接线。
+per-dataset GT/testset 接线；另提供 unit-neutral scalar trajectory residual
+summary/reduction leaf API。
 
 > 从 monolith `lib_dynamic_hvip/test/protocol_dynamic/` 迁出(见
 > [docs/design/migration.md](docs/design/migration.md))。**端口 Phase 1-5 done**(脚手架 +
