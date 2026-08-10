@@ -37,5 +37,6 @@ hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std, hjlib-skeleto
 - [docs/usage/](docs/usage/) —— 怎么调用(评已有 dump / 评新 ckpt 的端到端流程)
 - [docs/design/](docs/design/) —— 怎么修改(四层架构 + 与 assembly 的 divider 注入接线 +
   迁移记录)
+- [campaigns/](campaigns/) —— 跨 task 的持久工作状态与交付入口
 - GitHub remote:`YrralH/hjlib-evaluation`(建仓后)
 - family 入口:[../CLAUDE.md](../CLAUDE.md)
