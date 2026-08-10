@@ -51,8 +51,8 @@ current.
   [`hj-tpa-crowd4d` Campaign 01](../../../hj-tpa-crowd4d/campaigns/01_virtualcrowd_dataset_crosscheck/)
 - Author evaluation evidence owner:
   [`hj-tpa-crowd4d` Campaign 02](../../../hj-tpa-crowd4d/campaigns/02_crowd4d_author_evaluation_audit/)
-- Family TPA owner contract:
-  [`hjlibm/docs/structure/third_party_adaptation.md`](../../../hjlibm/docs/structure/third_party_adaptation.md)
+- Family TPA knowledge:
+  [`hjlib-agent/tpa-knowledge`](../../../hjlib-agent/backend/memory/workspaces/Code_as_Libs/tpa-knowledge.md)
 
 The two predecessor campaigns remain independently deliverable; this campaign
 consumes frozen evidence rather than mirroring their live status.

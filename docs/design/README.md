@@ -127,7 +127,7 @@ smoke)deferred(narrow scenes below split,vis-only)。
   family memory `pyright-override`。
 - 字符串 `'%s' % x` 单引号;注释英文标点;缩进 4 空格整数倍。
 - 命名:类名实词大写+蛇形 / acronym 整段大写;禁 `utils_` 前缀。见
-  `hjlib-cc/docs/code_style/naming.md`。
+  family memory `naming-style`（canonical owner=`hjlib-agent`）。
 - 测试两棵树 `test_smoke/`(无数据)vs `test/`(真实数据 FAIL-not-skip),见
   `hjlib_standard/test_layout.md` 与 [test.md](test.md)。
 
