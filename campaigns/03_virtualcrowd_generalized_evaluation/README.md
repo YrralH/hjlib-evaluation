@@ -2,14 +2,14 @@
 
 ## Status
 
-- State: draft
+- State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: campaign boundary recorded; concrete code/file architecture
-  awaits user direction and execution is not active.
-- Next authorized action: after the relevant dataset identity and author
-  baseline are frozen and the user activates this campaign, establish a
-  task-specific Layered Design residence for the first evidence-based layer.
+- Current focus: reconstruct and verify the supplied Crowd4D/DyCrowd evaluator's
+  logic before defining any HJ-owned evaluation contract.
+- Next authorized action: complete the active Author Evaluator Logic Analysis
+  task's Mathematical Architecture from frozen evidence and read-only
+  inspection of the supplied evaluator.
 
 ## Goal And Boundary
 
@@ -39,11 +39,14 @@ method-native parsing into `hjlib-evaluation`.
 
 ## Task Structure
 
-Task decomposition is deliberately deferred until activation. Campaign 01 and
-02 are evidence sources, not a predeclared task plan for this campaign. Each
-substantial mathematical, code-architecture, or evaluation-workflow layer will
-receive its own Layered Design residence and review only when that layer becomes
-current.
+| Task | State | Purpose |
+| --- | --- | --- |
+| [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | active | Reconstruct inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as a verified mathematical baseline |
+
+Later task decomposition remains deliberately deferred. Campaign 01 and 02 are
+evidence sources, not a predeclared implementation plan. Each later substantial
+mathematical, code-architecture, or evaluation-workflow layer will receive its
+own Layered Design residence and review only when it becomes current.
 
 ## Inputs And Relationships
 
@@ -68,3 +71,6 @@ consumes frozen evidence rather than mirroring their live status.
 - 2026-08-09: User clarified that adapter architecture means the concrete
   `hj-tpa-*` code/file residence pattern. Removed the mistaken data-flow
   outline; concrete Code Architecture remains deferred for user direction.
+- 2026-08-11: User activated Campaign 03 and selected author-evaluator logic
+  analysis as its first task. Created a task-specific Mathematical Architecture
+  residence; no generalized API or implementation is authorized yet.
