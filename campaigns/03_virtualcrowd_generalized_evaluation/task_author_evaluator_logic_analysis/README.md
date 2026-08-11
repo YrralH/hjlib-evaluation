@@ -14,11 +14,10 @@ inference, or treat the supplied package as verified official source.
 
 ## Status
 
-- State: active
-- Next action type: analysis
-- Next authorized action: populate and review the Mathematical Architecture in
-  the linked design residence using frozen Campaign 01/02 evidence and
-  read-only inspection of the supplied evaluator.
+- State: complete
+- Next action type: none
+- Next authorized action: none; return to the campaign for a user-directed
+  choice of the next task.
 - Blocker: none for analysis. Unverified official source identity remains a
   boundary on provenance claims, not a blocker to documenting the identified
   evaluation package's behavior.
@@ -57,14 +56,27 @@ inference, or treat the supplied package as verified official source.
 - 2026-08-11: User activated Campaign 03 and selected this analysis as its
   first task. The analysis boundary includes both mathematical semantics and
   execution flow but excludes generalized API and implementation design.
+- 2026-08-11: Completed the Mathematical Architecture against identified
+  evaluator sources, frozen eight-scene results, paper parity, and read-only
+  artifact structure evidence. The initial dedicated review found two Critical
+  fidelity errors; both were corrected, focused re-review found no remaining
+  Critical, and its sole new Concern was also fixed.
+- 2026-08-11: The accepted baseline records the native schemas, joint/coordinate
+  representations, greedy OKS matching, frame metrics, Crowd4D/DyCrowd tracking
+  repair delta, temporal reductions, aggregation, edge behavior, and legacy
+  semantics that must not silently become an HJ public contract.
 
 ## Artifacts
 
-- No new runtime artifact yet. Durable conclusions belong in the linked design
-  residence; large or third-party artifacts remain at their existing owners.
+- The accepted Mathematical Architecture is the durable task artifact in the
+  linked design residence.
+- The disposable read-only structure probe remains at
+  `tmp/2026-08-11/scratch/af412758_crowd4d-evaluator-shapes.py` outside every
+  Git repository. Large and third-party artifacts remain at their existing
+  owners.
 
 ## Handoff
 
-After the Mathematical Architecture is accepted, return to the campaign for a
-user-directed decision on the next task. Do not infer authorization to design
+The Mathematical Architecture is accepted. Return to the campaign for a
+user-directed decision on the next task; do not infer authorization to design
 or implement the generalized evaluator.

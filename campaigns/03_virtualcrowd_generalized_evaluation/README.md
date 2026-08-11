@@ -5,11 +5,10 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: reconstruct and verify the supplied Crowd4D/DyCrowd evaluator's
-  logic before defining any HJ-owned evaluation contract.
-- Next authorized action: complete the active Author Evaluator Logic Analysis
-  task's Mathematical Architecture from frozen evidence and read-only
-  inspection of the supplied evaluator.
+- Current focus: none; the first task established the supplied evaluator's
+  accepted fidelity baseline.
+- Next authorized action: none. The user must select and activate the next
+  evidence-based task; no generalized API or implementation is implied.
 
 ## Goal And Boundary
 
@@ -41,7 +40,7 @@ method-native parsing into `hjlib-evaluation`.
 
 | Task | State | Purpose |
 | --- | --- | --- |
-| [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | active | Reconstruct inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as a verified mathematical baseline |
+| [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | complete | Reconstructed inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as an accepted mathematical baseline |
 
 Later task decomposition remains deliberately deferred. Campaign 01 and 02 are
 evidence sources, not a predeclared implementation plan. Each later substantial
@@ -74,3 +73,7 @@ consumes frozen evidence rather than mirroring their live status.
 - 2026-08-11: User activated Campaign 03 and selected author-evaluator logic
   analysis as its first task. Created a task-specific Mathematical Architecture
   residence; no generalized API or implementation is authorized yet.
+- 2026-08-11: Completed the first task after dedicated Mathematical
+  Architecture review, correction of two Critical fidelity findings, and a
+  focused re-review. Campaign 03 remains active without an authorized second
+  task.
