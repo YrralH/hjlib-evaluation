@@ -570,3 +570,10 @@ scene/profile and must not report a parity success.
   explicit comparison-complete versus parity-exact verdicts, and mismatch
   serialization; removed duplicate/dead execution and camera paths and expanded
   the synthetic transaction gates before focused re-review.
+- 2026-08-12: First focused re-review accepted those fixes but found two further
+  Critical gaps in prediction preflight and result artifacts; both were fixed.
+  Second focused re-review accepted them and found one final raw-value evidence
+  gap. After adding raw means and complete 216-cell delta records, the user
+  explicitly authorized a third focused review; it accepted the disposition
+  with no new Critical. Mathematical Architecture, Code Architecture, and the
+  implementation are accepted, and T2 is complete.

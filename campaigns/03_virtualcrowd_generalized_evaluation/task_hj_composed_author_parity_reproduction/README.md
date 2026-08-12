@@ -14,12 +14,11 @@ or decide which legacy protocol choices are scientifically preferable.
 
 ## Status
 
-- State: active, implementation complete; final review/commit in progress
-- Current layer: implementation verification
-- Next action type: close-out
-- Next authorized action: finish focused implementation re-review and publish
-  the accepted cross-repository commits. Mathematical and Code Architecture are
-  accepted.
+- State: complete
+- Current layer: none
+- Next action type: none
+- Next authorized action: none. Return to the campaign for user review; the
+  corrected-protocol task remains Draft until explicitly activated.
 - Blocker: none. The preferred cross-repository dependency direction remains
   revisable if the concrete reuse or ownership analysis disproves it.
 
@@ -72,9 +71,14 @@ or decide which legacy protocol choices are scientifically preferable.
   `0.9856499999999998`, which renders `0.9856` in the current runtime. This is
   recorded as frozen-token drift, not parity success and not an HJ association
   mismatch.
+- 2026-08-12: The authorized third focused implementation review accepted the
+  final raw-evidence disposition with no new Critical. The tracked comparison
+  contains raw HJ values, rendered and oracle tokens, absolute deltas, and exact
+  verdicts for all 216 cells. T2 is complete.
 
 ## Handoff
 
-Finish implementation re-review and commit publication. Evidence is owned at
+Evidence is owned at
 [`hj-tpa-crowd4d` Campaign 03 mirror](../../../../hj-tpa-crowd4d/campaigns/03_hj_composed_author_parity/).
-Do not activate the draft reviewed-protocol task as a side effect.
+Return to the campaign for user review. Do not activate the draft reviewed-
+protocol task without explicit user approval.

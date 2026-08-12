@@ -13,7 +13,7 @@ and record every semantic delta and resulting metric delta.
 - Next action type: user approval
 - Next authorized action: none. The user must explicitly activate this task
   after reviewing the completed author-parity evidence.
-- Blocker: T2 publication and user review are not complete.
+- Blocker: user review and explicit activation are not complete. T2 is complete.
 
 ## Activation Gate
 

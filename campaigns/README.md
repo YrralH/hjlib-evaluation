@@ -6,7 +6,7 @@ shape remain in place and are not silently reclassified.
 
 | Campaign | Status | Purpose |
 | --- | --- | --- |
-| [03 VirtualCrowd generalized evaluation](03_virtualcrowd_generalized_evaluation/) | active | Analyze the author evaluator first, then build an HJ-owned, method-neutral evaluation path from the verified semantics |
+| [03 VirtualCrowd generalized evaluation](03_virtualcrowd_generalized_evaluation/) | awaiting user review | Author logic and HJ-composed parity are complete; corrected protocol remains Draft pending explicit activation |
 
 Existing legacy residence:
 

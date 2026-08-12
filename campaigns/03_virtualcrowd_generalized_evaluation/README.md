@@ -5,10 +5,9 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: HJ-composed author-parity reproduction close-out.
-- Next authorized action: complete T2's focused implementation re-review and
-  cross-repository publication. The reviewed-protocol task remains draft and
-  requires separate user activation.
+- Current focus: awaiting user review of completed author-parity evidence.
+- Next authorized action: none. The reviewed-protocol task remains Draft and
+  requires explicit user activation.
 
 ## Goal And Boundary
 
@@ -41,7 +40,7 @@ method-native parsing into `hjlib-evaluation`.
 | Task | State | Purpose |
 | --- | --- | --- |
 | [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | complete | Reconstructed inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as an accepted mathematical baseline |
-| [HJ-composed author-parity reproduction](task_hj_composed_author_parity_reproduction/) | active | Reproduce the two frozen author workflows with HJ-owned composition while isolating Crowd4D-native protocol in its TPA adapter |
+| [HJ-composed author-parity reproduction](task_hj_composed_author_parity_reproduction/) | complete | Reproduced both author workflows with HJ-owned composition and classified the sole frozen-token drift |
 | [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | draft | After user review, replace selected legacy semantics and freeze a separate corrected result set without overwriting author parity |
 
 Campaign 01 and 02 are evidence sources, not implementation dependencies. The
@@ -84,3 +83,8 @@ consumes frozen evidence rather than mirroring their live status.
   preferred, revisable dependency direction: Crowd4D-specific orchestration
   stays in the TPA, while only method-neutral primitives may enter the stable
   library. Registered corrected-protocol work as draft T3 pending user review.
+- 2026-08-12: Completed T2 after three explicitly authorized focused
+  implementation reviews. All 216 cells have raw comparison evidence;
+  Crowd4D is 108/108 exact and DyCrowd is 107/108 exact with one classified
+  rounding-boundary frozen-token drift. Campaign 03 now awaits user review and
+  does not implicitly activate Draft T3.
