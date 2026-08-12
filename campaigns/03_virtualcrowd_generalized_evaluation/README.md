@@ -5,10 +5,10 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: none; the first task established the supplied evaluator's
-  accepted fidelity baseline.
-- Next authorized action: none. The user must select and activate the next
-  evidence-based task; no generalized API or implementation is implied.
+- Current focus: HJ-composed author-parity reproduction.
+- Next authorized action: complete and review the current task's Layered Design,
+  then implement and verify both author workflows. The reviewed-protocol task
+  remains draft and requires separate user activation.
 
 ## Goal And Boundary
 
@@ -41,11 +41,13 @@ method-native parsing into `hjlib-evaluation`.
 | Task | State | Purpose |
 | --- | --- | --- |
 | [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | complete | Reconstructed inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as an accepted mathematical baseline |
+| [HJ-composed author-parity reproduction](task_hj_composed_author_parity_reproduction/) | active | Reproduce the two frozen author workflows with HJ-owned composition while isolating Crowd4D-native protocol in its TPA adapter |
+| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | draft | After user review, replace selected legacy semantics and freeze a separate corrected result set without overwriting author parity |
 
-Later task decomposition remains deliberately deferred. Campaign 01 and 02 are
-evidence sources, not a predeclared implementation plan. Each later substantial
-mathematical, code-architecture, or evaluation-workflow layer will receive its
-own Layered Design residence and review only when it becomes current.
+Campaign 01 and 02 are evidence sources, not implementation dependencies. The
+active task has its own Layered Design residence. The draft task is a durable
+placeholder only: it has no implementation authority and will not receive a
+design residence until the user activates it.
 
 ## Inputs And Relationships
 
@@ -77,3 +79,8 @@ consumes frozen evidence rather than mirroring their live status.
   Architecture review, correction of two Critical fidelity findings, and a
   focused re-review. Campaign 03 remains active without an authorized second
   task.
+- 2026-08-12: User activated HJ-composed author-parity reproduction as T2 and
+  required Layered Design. Recorded `hj-tpa-crowd4d -> hjlib-evaluation` as the
+  preferred, revisable dependency direction: Crowd4D-specific orchestration
+  stays in the TPA, while only method-neutral primitives may enter the stable
+  library. Registered corrected-protocol work as draft T3 pending user review.

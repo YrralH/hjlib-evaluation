@@ -31,6 +31,7 @@ from hjlib_dataset_assembly.dataset_builder.dataset_registry import get_dataset_
 from hjlib_evaluation.dump_reader import load_inference_dump
 from hjlib_evaluation.eval_meta import Eval_Meta, Metric_Spec_3D
 from hjlib_evaluation.gt_provider_base import GT_Provider_Base
+from hjlib_evaluation.joint_error import compute_joint_position_errors
 from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import TestSet
 
@@ -176,10 +177,15 @@ def _compute_one_metric(
     _assert_no_nan(gt_root,   'GT',   metric.name, 'root_indices',  seg)
     _assert_no_nan(pred_root, 'pred', metric.name, 'root_indices',  seg)
 
-    mpjpe_mm = float(np.linalg.norm(gt_sub - pred_sub, axis=2).mean()) * scale_mm
-    tmpjpe_mm = float(np.linalg.norm(
-        (gt_sub - gt_root) - (pred_sub - pred_root), axis=2,
-    ).mean()) * scale_mm
+    mpjpe_mm = float(
+        compute_joint_position_errors(pred_sub, gt_sub).mean()
+    ) * scale_mm
+    tmpjpe_mm = float(
+        compute_joint_position_errors(
+            pred_sub - pred_root,
+            gt_sub - gt_root,
+        ).mean()
+    ) * scale_mm
 
     pred_sub_m = pred_sub if scale_mm == 1000.0 else pred_sub / 1000.0
     gt_sub_m = gt_sub if scale_mm == 1000.0 else gt_sub / 1000.0

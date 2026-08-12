@@ -14,6 +14,8 @@ from hjlib_evaluation.eval_meta import Eval_Meta, Metric_Spec_2D_OKS, Metric_Spe
 from hjlib_evaluation.eval_reducer import compute_jitter, eval_dumps_against_gt
 from hjlib_evaluation.get_by_dataset import get_gt_provider, get_testset_builder
 from hjlib_evaluation.gt_provider_base import GT_Provider_Base
+from hjlib_evaluation.joint_error import compute_joint_position_errors
+from hjlib_evaluation.keypoint_oks import compute_keypoint_oks_matrix
 from hjlib_evaluation.network_driver_base import Network_Driver_Base
 from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import Filter_Stats, TestSet
@@ -44,6 +46,8 @@ __all__ = [
     'build_segment_tag',
     'build_test_assembly',
     'compute_jitter',
+    'compute_joint_position_errors',
+    'compute_keypoint_oks_matrix',
     'eval_dumps_against_gt',
     'get_gt_provider',
     'get_testset_builder',

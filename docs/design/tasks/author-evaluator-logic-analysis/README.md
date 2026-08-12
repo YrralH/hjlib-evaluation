@@ -385,6 +385,34 @@ artifacts, but not that every legacy edge behavior is desirable or official.
 Paper Table 4's Crowd4D PCOD `96.57` remains inconsistent with Table 2 and the
 fresh/bundled value `95.57`; no evaluator-logic explanation is evidenced.
 
+### GT-MOT protocol interpretation addendum
+
+The user's phrase “不重不漏” refers to the prediction artifacts stored on disk
+and presented to the evaluator, not to the evaluator's matched metric pairs.
+All active stored prediction columns enter the supplied evaluator; that fact
+does not imply that every GT or prediction contributes to every metric.
+
+The user also reports the author's intended interface as GT-MOT input, for which
+there should theoretically be no identity-matching step. That stated intent is
+not the supplied implementation's behavior. Both workflows still perform the
+per-frame greedy OKS association described above. `--use-gt-mot` only changes
+the later temporal identity repair; it does not bypass frame association.
+
+A read-only artifact probe verified that, for every active Crowd4D prediction
+across all eight scenes, the stored `idxs` value belongs to the current GT
+`track_id` domain and is stable per prediction column. In sampled first/last
+frames, 1,695 accepted OKS pairs agreed with the stored identity in 1,685 cases
+and disagreed in 10. The supplied evaluator ignores `idxs`, so those conflicts
+show that geometry matching is not merely a redundant re-expression of the
+stored Crowd4D identity. DyCrowd's `idxs` convention is not yet established
+well enough to use as a direct GT-ID contract.
+
+This addendum changes protocol interpretation, not the documented execution
+baseline: the author-parity task must first reproduce the supplied matching and
+repair behavior exactly. Any direct-ID or otherwise corrected GT-MOT protocol
+belongs to a separately reviewed result profile and must retain the author
+baseline alongside it.
+
 ### Observed non-contract behavior and unresolved intent
 
 The following behavior must not silently become an HJ public contract:
@@ -440,3 +468,7 @@ task.
   input remained implicit; made that input explicit. No Critical or other open
   finding remains, and the Mathematical Architecture is accepted as the
   supplied-evaluator fidelity baseline.
+- 2026-08-12: Clarified the user-defined distinction between complete stored
+  prediction output and matched metric pairs. Added the user-reported GT-MOT
+  intent, verified Crowd4D `idxs` evidence, and preserved geometric association
+  as author-parity behavior rather than accepting it as the reviewed protocol.

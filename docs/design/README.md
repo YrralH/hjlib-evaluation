@@ -99,6 +99,8 @@ src/hjlib_evaluation/
     testset_builder.py     TestSet_Builder(单一泛型,合并 monolith wp/jta/jta_ext;读 washed filter store)
     eval_meta.py           Eval_Meta / Metric_Spec_3D / Metric_Spec_2D_OKS(评测契约)
     eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
+    joint_error.py         method-neutral unreduced per-joint Euclidean errors
+    keypoint_oks.py        method-neutral pairwise OKS matrix leaf
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
     dump_reader.py         load_inference_dump(qualname-routing unpickler,读 monolith 真 dump 零 monolith import;legacy bare name→canonical 归一,FIX-1)
     gt_provider_base.py    GT_Provider_Base(ABC;joints/param/eval_meta 抽象,camera/ground/video deferred→raise)
