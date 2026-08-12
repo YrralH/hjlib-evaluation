@@ -5,10 +5,10 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: HJ-composed author-parity reproduction.
-- Next authorized action: complete and review the current task's Layered Design,
-  then implement and verify both author workflows. The reviewed-protocol task
-  remains draft and requires separate user activation.
+- Current focus: HJ-composed author-parity reproduction close-out.
+- Next authorized action: complete T2's focused implementation re-review and
+  cross-repository publication. The reviewed-protocol task remains draft and
+  requires separate user activation.
 
 ## Goal And Boundary
 

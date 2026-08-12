@@ -310,7 +310,6 @@ hj-tpa-crowd4d
   -> hjlib-dataset-raw    faithful released VirtualCrowd JSON reader
   -> hjlib-smpl           neutral SMPL vertices, SMPL-54, raw H36M-17
   -> hjlib-skeleton       SMPL-54 to COCO-17 name mapping
-  -> hjlib-camera         camera-frame perspective projection
   -> hjlib-geometry       temporal second difference
 ```
 
@@ -425,25 +424,27 @@ Crowd4D source tree.
 `prediction_geometry.py` builds `SMPL_Full` from the exact explicit author model
 file and extra regressor, calls `build_smpl_param_with_scale_batch_from_flat`
 and `forward_smpl_joints_from_param`, and does not know the regressor row mapping.
-It verifies the SMPL54->COCO17 mapping length is 17. Perspective projection uses
-the public HJ camera API. The author-compatible ground formula remains a named
-TPA operation because the existing HJ helper intentionally differs in dtype and
-degenerate-plane failure policy. Final parity, not assumed intermediate bitwise
-equivalence, is the acceptance gate.
+It verifies the SMPL54->COCO17 mapping length is 17. Perspective projection
+remains a named TPA compatibility operation: the stable HJ camera primitive is
+mathematically equivalent on these intrinsics, but matrix multiplication changes
+the floating-point operation order and does not preserve the frozen author
+tokens. The author-compatible ground formula likewise remains TPA-local because
+the existing HJ helper intentionally differs in dtype and degenerate-plane
+failure policy. These are explicit parity exceptions, not proposed stable APIs.
 
 ### CLI and output transaction
 
 The package exposes one flat Typer command:
 
 ```text
-hj-tpa-crowd4d-author-parity
+hj-tpa-crowd4d
   --path-supplied-residence <identified Crowd4D package root>
   --path-dataset-root <released VirtualCrowd root>
-  --path-crowd4d-prediction-root <root>
-  --path-dycrowd-prediction-root <root>
+  --path-crowd4d-predictions <root>
+  --path-dycrowd-predictions <root>
   --path-smpl-model <SMPL_NEUTRAL.pkl>
-  --path-extra-regressor <J_regressor_extra.npy>
-  --path-h36m-regressor <J_regressor_h36m.npy>
+  --path-extra9-regressor <J_regressor_extra.npy>
+  --path-h36m17-regressor <J_regressor_h36m.npy>
   --path-crowd4d-oracle <tracked Campaign 02 fresh table>
   --path-dycrowd-oracle <tracked Campaign 02 fresh table>
   --path-output-root <new/existing external output directory>
@@ -469,13 +470,16 @@ the TPA-owned tracked residence as a separate normal git-reviewed change:
 
 ```text
 evidence/author_parity/
-  crowd4d_results.txt
-  dycrowd_results.txt
-  comparison.json
-  receipt.json
+  crowd4d_summary.json
+  dycrowd_summary.json
+  comparison_receipt.json
+  dycrowd_scene2_matched_ratio_diagnostic.json
 ```
 
-Large inputs, per-frame arrays, traces, and transient staging remain external.
+The tracked comparison receipt binds the full external operation receipt and
+summaries by SHA-256 while retaining the input/runtime/source and verdict
+essentials needed for cold review. Large inputs, full per-frame arrays, traces,
+and transient staging remain external.
 The cross-owner task ledger links this evidence; it does not duplicate it in
 `hjlib-evaluation`.
 
@@ -523,7 +527,8 @@ The real-data gate is complete only when:
 2. the released label hashes equal the author-bundle hashes already frozen by
    Campaign 01;
 3. both eight-scene runs finish and comparison accounts for 216/216 cells;
-4. every HJ token equals its corresponding fresh-author token;
+4. every non-exact HJ token is classified with raw evidence; an exact profile
+   is labeled exact, while a classified drift is never labeled parity success;
 5. no input/supplied file content or behavior-relevant metadata changed;
 6. tracked evidence hashes match the promoted external run artifacts.
 
@@ -555,3 +560,13 @@ scene/profile and must not report a parity success.
   contracts and one output-transaction Concern. Added explicit supplied-
   residence and two hash-verified oracle paths, made the CLI a single external
   evidence transaction, and separated tracked absorption into normal git review.
+- 2026-08-12: Implemented and ran the HJ-composed profiles. Full comparison is
+  complete for 216/216 cells with identical supplied-residence manifests.
+  Crowd4D is exact in 108/108. DyCrowd is exact in 107/108; its sole
+  `scene2 / matched ratio` drift is classified by identical HJ/current-author
+  200-frame populations and raw mean, not hidden as parity success.
+- 2026-08-12: Implementation review found four Critical transaction/comparison
+  defects. Fixed atomic sibling staging and promotion, pre-write containment,
+  explicit comparison-complete versus parity-exact verdicts, and mismatch
+  serialization; removed duplicate/dead execution and camera paths and expanded
+  the synthetic transaction gates before focused re-review.

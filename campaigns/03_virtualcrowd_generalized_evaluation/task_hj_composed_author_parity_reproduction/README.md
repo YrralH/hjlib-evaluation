@@ -14,11 +14,12 @@ or decide which legacy protocol choices are scientifically preferable.
 
 ## Status
 
-- State: active
-- Current layer: Code Architecture review
-- Next action type: Layered Design
-- Next authorized action: complete Code Architecture review; implement only
-  after that layer is accepted. Mathematical Architecture is accepted.
+- State: active, implementation complete; final review/commit in progress
+- Current layer: implementation verification
+- Next action type: close-out
+- Next authorized action: finish focused implementation re-review and publish
+  the accepted cross-repository commits. Mathematical and Code Architecture are
+  accepted.
 - Blocker: none. The preferred cross-repository dependency direction remains
   revisable if the concrete reuse or ownership analysis disproves it.
 
@@ -61,8 +62,19 @@ or decide which legacy protocol choices are scientifically preferable.
   fidelity gaps; all were corrected and focused re-review accepted every
   disposition with no new Critical. Boundary review's stale TPA entrance
   Critical and H36M second-truth Concern were likewise fixed and accepted.
+- 2026-08-12: Implemented the stable OKS/joint-error leaves, raw H36M owner
+  forward, and Crowd4D-native author profile package. The formal isolated
+  16-scene operation compared all 216 cells with an unchanged supplied manifest:
+  Crowd4D is exact in 108/108 and DyCrowd is exact in 107/108.
+- 2026-08-12: Classified the sole DyCrowd difference at `scene2 / matched ratio`:
+  the frozen token is `0.9857`, while HJ and a current read-only supplied-
+  evaluator run have identical 200-frame populations and identical raw mean
+  `0.9856499999999998`, which renders `0.9856` in the current runtime. This is
+  recorded as frozen-token drift, not parity success and not an HJ association
+  mismatch.
 
 ## Handoff
 
-Finish the task-specific Layered Design and its reviews. Do not activate the
-draft reviewed-protocol task as a side effect of author-parity implementation.
+Finish implementation re-review and commit publication. Evidence is owned at
+[`hj-tpa-crowd4d` Campaign 03 mirror](../../../../hj-tpa-crowd4d/campaigns/03_hj_composed_author_parity/).
+Do not activate the draft reviewed-protocol task as a side effect.
