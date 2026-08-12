@@ -68,8 +68,10 @@ The implementation must provide:
 3. an eight-scene Crowd4D run and an eight-scene DyCrowd run using external
    artifacts with a before/after supplied-residence identity check;
 4. a machine-readable 216-cell comparison and human-readable tables;
-5. receipts containing repository revisions, runtime/package identity, input
-   identities, output hashes, profile/options, and explicit parity verdicts.
+5. receipts containing exact TPA source-file hashes, runtime/package identity,
+   input identities, output hashes, profile/options, and explicit parity
+   verdicts. The tracked evidence commit identifies the TPA revision, while its
+   exact `pyproject.toml` pins bind dependency revisions.
 
 Displayed four-decimal cell equality is the primary author-parity criterion.
 Raw values must also be retained wherever available so rounding cannot conceal
@@ -415,8 +417,9 @@ Prediction and GT graphs are scoped to one scene at a time so the eight large
 JSON files and prediction artifacts are not simultaneously resident.
 
 `native_prediction.py` accepts only contained regular files below explicitly
-provided prediction roots and validates all required keys/shapes before model
-work. It uses Torch deserialization only on the explicitly user-supplied trusted
+provided prediction roots, validates required keys and person/frame axes before
+model work, and lets the owning SMPL/camera operations reject their trailing
+parameter/intrinsic shapes. It uses Torch deserialization only on the explicitly user-supplied trusted
 research artifact roots; the CLI and usage docs must state that `.pt` loading is
 unsafe for untrusted files. The package never imports from the supplied
 Crowd4D source tree.
@@ -447,7 +450,7 @@ hj-tpa-crowd4d
   --path-h36m17-regressor <J_regressor_h36m.npy>
   --path-crowd4d-oracle <tracked Campaign 02 fresh table>
   --path-dycrowd-oracle <tracked Campaign 02 fresh table>
-  --path-output-root <new/existing external output directory>
+  --path-output-root <new external output directory>
 ```
 
 Import and `--help` perform no large-data access or model loading. Before any
@@ -496,17 +499,16 @@ and diff review apply like any other repository edit.
 - `hjlib-evaluation/test_smoke/`: OKS shapes/masks/known values/empty GT or
   prediction axes; joint-error known values, dtype, shape, non-finite policy;
   existing reducer regression and master runner.
-- `hj-tpa-crowd4d/test_smoke/`: synthetic native schema, H36M absolute/local
-  split, greedy collision/no-second-choice case, both repair modes, short-track
-  missing coverage, PPDS/PCOD/legacy ACCEL, aggregation/rounding, CLI help and
-  output-transaction failure.
+- `hj-tpa-crowd4d/test_smoke/`: greedy collision/no-second-choice case, both
+  repair modes, PPDS/PCOD boundary behavior, similarity/legacy ACCEL, score,
+  token formatting/mismatch evidence, input containment, direct-symlink rejection,
+  and output-transaction failure/success.
 - `hjlib-smpl/test_smoke/`: raw H36M model-space output, identical affine
   scale/translation application across vertices/joints, variant shapes, missing
   regressor failure, and unchanged legacy forward outputs.
-- `hj-tpa-crowd4d/test/`: configured real-data operation that runs both full
-  profiles and asserts the tracked 216-cell comparison. Explicit CLI paths are
-  also the canonical evidence-generation path and do not require modifying a
-  shared local setting.
+- `hj-tpa-crowd4d/test/`: configured real-data label byte-identity check. The
+  explicit-path CLI, not the ordinary test tree, is the canonical full-profile
+  evidence operation and does not require modifying a shared local setting.
 
 Every modified Python repository runs focused/full pytest as applicable and
 strict Pyright with the `hjlib_py312` Python path. The final real-data operation
@@ -516,10 +518,11 @@ changes.
 ## Smoke-Test Standard
 
 The data-free and real-data split is fixed by Code Architecture. Synthetic
-smoke must independently prove the collision behavior, two identity-repair
-modes, unmatched penalties, alignment dtype convention, compact-time ACCEL,
-nominal-slot temporal reduction, and 4-decimal token comparison rather than
-only exercising an end-to-end happy path.
+smoke proves collision behavior, two identity-repair modes, unmatched penalties,
+alignment dtype/layout, legacy ACCEL, mapped-column token comparison, input
+boundaries, and transaction failure rather than only exercising an end-to-end
+happy path. The explicit-path full operation is the gate for compact-time and
+nominal-slot temporal reduction plus all 216 four-decimal cells.
 
 The real-data gate is complete only when:
 
@@ -533,8 +536,10 @@ The real-data gate is complete only when:
 6. tracked evidence hashes match the promoted external run artifacts.
 
 If one scene fails, the operation may stop without running later scenes, as the
-user permitted for full testing. The receipt must identify the first incomplete
-scene/profile and must not report a parity success.
+user permitted for full testing. The atomic transaction removes staging and
+leaves no final output or receipt, so an incomplete run cannot report parity
+success; the failing subprocess and scene arguments remain visible in the
+command error.
 
 ## Modification History
 

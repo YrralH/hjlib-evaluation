@@ -44,9 +44,9 @@ method-native parsing into `hjlib-evaluation`.
 | [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | draft | After user review, replace selected legacy semantics and freeze a separate corrected result set without overwriting author parity |
 
 Campaign 01 and 02 are evidence sources, not implementation dependencies. The
-active task has its own Layered Design residence. The draft task is a durable
-placeholder only: it has no implementation authority and will not receive a
-design residence until the user activates it.
+completed T2 retains its accepted Layered Design residence. The draft task is a
+durable placeholder only: it has no implementation authority and will not
+receive a design residence until the user activates it.
 
 ## Inputs And Relationships
 
