@@ -5,9 +5,12 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: awaiting user review of completed author-parity evidence.
-- Next authorized action: none. The reviewed-protocol task remains Draft and
-  requires explicit user activation.
+- Current focus: next-session attended planning check for the reviewed protocol.
+- Next authorized action: in the next session, summarize the completed T2
+  baseline and proposed T3 decision surface to the user, then confirm scope,
+  protocol choices, ordering, and completion criteria. This confirmation does
+  not activate T3 or authorize a Layered Design/code change; activation remains
+  an explicit subsequent user decision.
 
 ## Goal And Boundary
 
@@ -88,3 +91,6 @@ consumes frozen evidence rather than mirroring their live status.
   Crowd4D is 108/108 exact and DyCrowd is 107/108 exact with one classified
   rounding-boundary frozen-token drift. Campaign 03 now awaits user review and
   does not implicitly activate Draft T3.
+- 2026-08-13: Handed the campaign to the next session at the T3 planning
+  boundary. The next session must begin with an attended situation check and
+  must not infer activation from this handoff.
