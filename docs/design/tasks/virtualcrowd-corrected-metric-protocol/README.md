@@ -25,7 +25,7 @@ The protocol has two immutable views:
 
 1. `GT_VISIBLE`: the 177,315 released GT-present person-frame keys whose
    COCO-17 source visibility contains at least one `0.5` or `1`.
-2. `C4D_DYCROWD_COMMON`: the frozen 167,497-key intersection of `GT_VISIBLE`,
+2. `C4D_DYCROWD_COMMON`: the frozen 167,243-key intersection of `GT_VISIBLE`,
    valid Crowd4D output support, and valid DyCrowd output support. Its identity
    is frozen by manifest and is never recomputed for later methods.
 
@@ -701,7 +701,7 @@ evaluate-corrected
 
 The first command deterministically intersects GT-visible keys with valid
 Crowd4D and DyCrowd occurrences under the accepted identity maps, writes the
-167,497-key manifest in canonical `(scene, frame_id, track_id)` order, and
+167,243-key manifest in canonical `(scene, frame_id, track_id)` order, and
 binds all source identities. Its freeze receipt binds the manifest file
 identity and content digest. The second requires both that immutable manifest
 and its freeze receipt; a self-resigned replacement manifest is rejected. It
@@ -830,7 +830,7 @@ may produce corrected numeric results.
    transaction receipts, and portable tests.
 6. Run strict Pyright and portable smoke in leaf-first dependency order:
    `hjlib-geometry`, then `hjlib-evaluation`, then `hj-tpa-crowd4d`.
-7. Freeze the real common-view manifest and check its expected 167,497 unique
+7. Freeze the real common-view manifest and check its expected 167,243 unique
    keys before any corrected metric reduction.
 8. Run the corrected two-method evaluation once, reconcile schema/counts and
    named invalid predicates, and only then promote results into Campaign 03

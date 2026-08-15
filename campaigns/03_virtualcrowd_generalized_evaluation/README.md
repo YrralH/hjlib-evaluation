@@ -5,10 +5,10 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: reconcile the real common-view count gate.
-- Next authorized action: user decision on whether the direct-identity
-  167,243-key intersection supersedes the pre-mapping 167,497 expectation. No
-  corrected metric reduction runs before that decision.
+- Current focus: complete the confirmed 167,243-key common freeze and corrected
+  two-method evaluation.
+- Next authorized action: run the receipt-bound freeze, then one corrected
+  metric transaction against that exact manifest.
 
 ## Goal And Boundary
 
@@ -42,7 +42,7 @@ method-native parsing into `hjlib-evaluation`.
 | --- | --- | --- |
 | [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | complete | Reconstructed inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as an accepted mathematical baseline |
 | [HJ-composed author-parity reproduction](task_hj_composed_author_parity_reproduction/) | complete | Reproduced both author workflows with HJ-owned composition and classified the sole frozen-token drift |
-| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | active: common-count reconciliation | Reviewed implementation passes all portable gates; the real direct-identity intersection is 167,243 rather than the frozen pre-run expectation 167,497 |
+| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | active: corrected real-data execution | User accepted the observed 167,243 direct-identity common set; freeze and corrected evaluation are in progress |
 | [Native output and scene semantics audit](task_native_output_and_scene_semantics_audit/) | complete | Accepted both methods' scene/world support and classified inactive dense human buffers as invalid evaluation padding |
 
 Campaign 01 and 02 are evidence sources, not implementation dependencies. The
@@ -132,6 +132,10 @@ consumes frozen evidence rather than mirroring their live status.
   177,315 GT-visible, and 167,243 common keys without SMPL arithmetic. Labeled
   this concrete predicate `common_view_expected_count_mismatch`; no corrected
   metric reduction ran.
+- 2026-08-15: User accepted the observed 167,243 direct-identity intersection
+  as the corrected common-set count and asked that it remain a simple raw fact,
+  without adding a registry or stronger safety/approval mechanism. Resumed the
+  existing freeze/evaluation operation with only the count/document correction.
 - 2026-08-13: Completed the bounded T3 first work package. Reviewed and accepted
   all 909 DyCrowd mapping edges, including focused visual checks of eight
   globally displaced edges and their seven row-local owners; reran T2 with

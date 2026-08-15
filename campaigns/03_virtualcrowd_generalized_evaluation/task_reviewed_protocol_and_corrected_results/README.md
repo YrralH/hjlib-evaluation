@@ -14,14 +14,12 @@ renaming, or any other later protocol change.
 
 ## Status
 
-- State: active; common-count reconciliation
-- Current layer: reviewed implementation, failed exact-count evidence gate
-- Next action type: decide whether the observed direct-identity 167,243-key set
-  replaces the earlier 167,497 pre-mapping expectation
-- Next authorized action: no corrected metrics until the common-view count is
-  explicitly reconciled and then frozen with receipt-bound unchanged inputs.
-- Blocker: common-view count requires user reconciliation. The earlier five
-  direct-identity work-package completion criteria remain satisfied.
+- State: active; corrected real-data execution
+- Current layer: confirmed direct-identity common manifest and corrected run
+- Next action type: freeze the confirmed 167,243-key set, then run corrected
+  metrics once against that exact manifest
+- Next authorized action: complete the receipt-bound freeze and evaluation.
+- Blocker: none.
 
 ### Observed real-gate predicate
 
@@ -43,7 +41,9 @@ and exact `(scene, frame_id, GT track_id)` intersection. This proves the 254
 difference is not a metric-validity filter or SMPL failure. The earlier
 `167,497` value was fixed before the final direct-identity adapter existed; its
 exact association basis is not durably evidenced, so it is not silently
-replaced here.
+replaced here. The user subsequently accepted `167,243` as the corrected
+direct-identity common count. This is only the observed raw set fact; it does
+not create a registry, generic invalid taxonomy, or extra approval mechanism.
 
 ### Accepted native-output prerequisite
 
@@ -66,10 +66,10 @@ The corrected profile will keep two distinct, immutable evaluation views.
    positives. Report person-frame precision, recall, and F1 separately from
    geometric quality. Geometric metrics consume valid matched support only and
    receive no fixed missing-pose substitution.
-2. **Frozen Crowd4D/DyCrowd common-support profile.** Freeze the 167,497
+2. **Frozen Crowd4D/DyCrowd common-support profile.** Freeze the 167,243
    `(scene, frame_id, GT track_id)` cells in the intersection of the GT-visible
    population, valid Crowd4D support, and valid DyCrowd support. This excludes
-   9,818 GT-visible person-frames (`5.54%`) and must be explicitly described as
+   10,072 GT-visible person-frames (`5.68%`) and must be explicitly described as
    a method-derived paired-quality subset. It is frozen once and is never
    recomputed when another method is added.
 
