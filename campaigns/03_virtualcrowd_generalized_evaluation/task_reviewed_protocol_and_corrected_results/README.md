@@ -14,11 +14,10 @@ renaming, or any other later protocol change.
 
 ## Status
 
-- State: active; corrected real-data execution
-- Current layer: confirmed direct-identity common manifest and corrected run
-- Next action type: freeze the confirmed 167,243-key set, then run corrected
-  metrics once against that exact manifest
-- Next authorized action: complete the receipt-bound freeze and evaluation.
+- State: complete
+- Current layer: corrected implementation and real-data results accepted
+- Next action type: none; await a separately authorized follow-up task
+- Next authorized action: none.
 - Blocker: none.
 
 ### Observed real-gate predicate
@@ -44,6 +43,33 @@ exact association basis is not durably evidenced, so it is not silently
 replaced here. The user subsequently accepted `167,243` as the corrected
 direct-identity common count. This is only the observed raw set fact; it does
 not create a registry, generic invalid taxonomy, or extra approval mechanism.
+
+### Corrected real-data result
+
+The second freeze completed with exactly `167,243` canonical common-view keys.
+Its manifest SHA-256 is
+`1126680d81a505522162397a2ed169ba0cf9625175c8ca03986df2e24dacda74`;
+the receipt reports `status=complete`, and no failure residence exists. The
+subsequent receipt-bound evaluation completed all four method/view profiles
+without a concrete invalid or degenerate case.
+
+Both methods use direct GT-MOT identity pairing. `GT_VISIBLE` geometry remains
+conditional on valid paired outputs and reports completeness separately;
+`C4D_DYCROWD_COMMON` uses the same frozen support for both methods. The compact
+tracked numeric record is owned by the TPA
+[corrected-evaluation evidence](../../../../hj-tpa-crowd4d/campaigns/03_hj_composed_author_parity/evidence/corrected_evaluation/).
+The full external outputs remain at
+`tmp/2026-08-15/task/virtualcrowd-corrected-real-evaluation/`.
+
+Completeness on `GT_VISIBLE` is:
+
+| Method | TP | FN | FP | Precision | Recall | F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Crowd4D | 169,847 | 7,468 | 0 | 1.000000 | 0.957883 | 0.978488 |
+| DyCrowd | 171,997 | 5,318 | 0 | 1.000000 | 0.970008 | 0.984776 |
+
+The common-view `ACCEL-WORLD` support is exactly `165,427` consecutive triples
+for each method. Matching/completeness does not enter any metric reduction.
 
 ### Accepted native-output prerequisite
 

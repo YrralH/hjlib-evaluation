@@ -6,7 +6,7 @@ shape remain in place and are not silently reclassified.
 
 | Campaign | Status | Purpose |
 | --- | --- | --- |
-| [03 VirtualCrowd generalized evaluation](03_virtualcrowd_generalized_evaluation/) | T3 corrected adapter implementation active | Implement the accepted corrected protocol after completing reviewed mathematics, code architecture, and generic metric facilities |
+| [03 VirtualCrowd generalized evaluation](03_virtualcrowd_generalized_evaluation/) | complete | Reviewed, implemented, and ran the corrected two-view Crowd4D/DyCrowd evaluation with separate completeness |
 
 Existing legacy residence:
 
