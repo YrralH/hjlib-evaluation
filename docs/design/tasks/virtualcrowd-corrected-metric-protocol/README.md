@@ -702,8 +702,11 @@ evaluate-corrected
 The first command deterministically intersects GT-visible keys with valid
 Crowd4D and DyCrowd occurrences under the accepted identity maps, writes the
 167,497-key manifest in canonical `(scene, frame_id, track_id)` order, and
-binds all source identities. The second requires that immutable manifest; it
-does not recompute or shrink it.
+binds all source identities. Its freeze receipt binds the manifest file
+identity and content digest. The second requires both that immutable manifest
+and its freeze receipt; a self-resigned replacement manifest is rejected. It
+does not recompute or shrink the view, and every per-scene manifest key must
+resolve to exactly one current GT row.
 
 `Corrected_Crowd4D_Adapter` composes the existing trusted loader,
 `Crowd4D_SMPL_Adapter`, Crowd4D native `idxs`, and accepted DyCrowd mapping.
@@ -723,7 +726,11 @@ silently switching coordinate definitions.
 
 Each method/scene runs in a short-lived subprocess so SMPL/native heaps are
 released. Workers write only normalized summary JSON inside a transaction
-staging root. The parent validates the complete `2 methods x 8 scenes x 2
+staging root. Each worker loads its native scene once for both identity and
+normalization. Evaluation copies the receipt-validated manifest into staging
+and all workers consume that fixed copy. The parent compares all input file
+identities before and after the worker grid, including full manifest digests
+of the reviewed DyCrowd draft/SVG and review residences, validates the complete `2 methods x 8 scenes x 2
 views` grid, reduces through `hjlib-evaluation`, writes machine-readable
 results plus one compact comparison table, publishes the two named
 `accel_exact_consecutive_triple_count` values per method, binds the common

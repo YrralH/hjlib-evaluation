@@ -5,10 +5,9 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: implement the TPA-owned corrected adapter/profile against the
-  accepted stable metric schema.
-- Next authorized action: add portable adapter/common-manifest/transaction
-  gates. Do not run corrected evaluation until those gates pass.
+- Current focus: freeze and verify the exact real common-view manifest.
+- Next authorized action: require exactly 167,497 unique canonical keys and a
+  receipt-bound unchanged-input gate before any corrected metric reduction.
 
 ## Goal And Boundary
 
@@ -42,7 +41,7 @@ method-native parsing into `hjlib-evaluation`.
 | --- | --- | --- |
 | [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | complete | Reconstructed inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as an accepted mathematical baseline |
 | [HJ-composed author-parity reproduction](task_hj_composed_author_parity_reproduction/) | complete | Reproduced both author workflows with HJ-owned composition and classified the sole frozen-token drift |
-| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | active: corrected adapter implementation | Mathematical and Code Architecture are accepted; generic geometry/evaluation facilities pass portable gates |
+| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | active: corrected implementation verification | Stable facilities and the TPA adapter/transaction pass portable gates; implementation review and real manifest gate remain |
 | [Native output and scene semantics audit](task_native_output_and_scene_semantics_audit/) | complete | Accepted both methods' scene/world support and classified inactive dense human buffers as invalid evaluation padding |
 
 Campaign 01 and 02 are evidence sources, not implementation dependencies. The
@@ -118,6 +117,14 @@ consumes frozen evidence rather than mirroring their live status.
   per-scene evaluator, reduction, serialization, and smoke gates in
   `hjlib-evaluation`. TPA adapter implementation is next; no corrected real-data
   evaluation has run yet.
+- 2026-08-15: Implemented the TPA-owned scene normalization, frozen-common-view
+  operation, corrected scene workers/reduction transaction, separate failure
+  evidence, and two flat CLI commands. Focused and full portable smoke, the
+  explicit master runner, and strict Pyright pass; real corrected evaluation
+  still awaits the exact common-manifest gate.
+- 2026-08-15: Closed TPA Mathematical and Code Architecture implementation
+  review at zero Critical and zero Concern. Portable verification is complete;
+  the real common-manifest freeze is now the active gate.
 - 2026-08-13: Completed the bounded T3 first work package. Reviewed and accepted
   all 909 DyCrowd mapping edges, including focused visual checks of eight
   globally displaced edges and their seven row-local owners; reran T2 with

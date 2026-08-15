@@ -14,12 +14,11 @@ renaming, or any other later protocol change.
 
 ## Status
 
-- State: active; corrected adapter implementation
-- Current layer: accepted implementation architecture
-- Next action type: implement and portable-test the TPA normalization,
-  common-manifest, worker, and transaction boundary
-- Next authorized action: complete adapter smoke gates. Do not run corrected
-  real-data evaluation until those gates pass.
+- State: active; real common-manifest gate
+- Current layer: reviewed implementation, external evidence production
+- Next action type: freeze and verify the exact real common manifest
+- Next authorized action: run corrected metrics only after the frozen manifest
+  has exactly 167,497 unique canonical keys and all bindings validate.
 - Blocker: none. All five first-work-package completion criteria remain
   satisfied.
 
