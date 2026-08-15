@@ -5,9 +5,10 @@
 - State: active
 - Owner: `hjlib-evaluation`
 - Crowd4D native-integration owner: `hj-tpa-crowd4d`
-- Current focus: freeze and verify the exact real common-view manifest.
-- Next authorized action: require exactly 167,497 unique canonical keys and a
-  receipt-bound unchanged-input gate before any corrected metric reduction.
+- Current focus: reconcile the real common-view count gate.
+- Next authorized action: user decision on whether the direct-identity
+  167,243-key intersection supersedes the pre-mapping 167,497 expectation. No
+  corrected metric reduction runs before that decision.
 
 ## Goal And Boundary
 
@@ -41,7 +42,7 @@ method-native parsing into `hjlib-evaluation`.
 | --- | --- | --- |
 | [Author evaluator logic analysis](task_author_evaluator_logic_analysis/) | complete | Reconstructed inputs, normalization, matching, metrics, reduction, and Crowd4D/DyCrowd path differences as an accepted mathematical baseline |
 | [HJ-composed author-parity reproduction](task_hj_composed_author_parity_reproduction/) | complete | Reproduced both author workflows with HJ-owned composition and classified the sole frozen-token drift |
-| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | active: corrected implementation verification | Stable facilities and the TPA adapter/transaction pass portable gates; implementation review and real manifest gate remain |
+| [Reviewed protocol and corrected results](task_reviewed_protocol_and_corrected_results/) | active: common-count reconciliation | Reviewed implementation passes all portable gates; the real direct-identity intersection is 167,243 rather than the frozen pre-run expectation 167,497 |
 | [Native output and scene semantics audit](task_native_output_and_scene_semantics_audit/) | complete | Accepted both methods' scene/world support and classified inactive dense human buffers as invalid evaluation padding |
 
 Campaign 01 and 02 are evidence sources, not implementation dependencies. The
@@ -125,6 +126,12 @@ consumes frozen evidence rather than mirroring their live status.
 - 2026-08-15: Closed TPA Mathematical and Code Architecture implementation
   review at zero Critical and zero Concern. Portable verification is complete;
   the real common-manifest freeze is now the active gate.
+- 2026-08-15: The first real freeze correctly failed its exact-count gate:
+  167,243 direct-identity common keys were observed versus the frozen 167,497
+  expectation. An independent set-only probe reproduced 178,938 GT-present,
+  177,315 GT-visible, and 167,243 common keys without SMPL arithmetic. Labeled
+  this concrete predicate `common_view_expected_count_mismatch`; no corrected
+  metric reduction ran.
 - 2026-08-13: Completed the bounded T3 first work package. Reviewed and accepted
   all 909 DyCrowd mapping edges, including focused visual checks of eight
   globally displaced edges and their seven row-local owners; reran T2 with

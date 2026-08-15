@@ -14,13 +14,36 @@ renaming, or any other later protocol change.
 
 ## Status
 
-- State: active; real common-manifest gate
-- Current layer: reviewed implementation, external evidence production
-- Next action type: freeze and verify the exact real common manifest
-- Next authorized action: run corrected metrics only after the frozen manifest
-  has exactly 167,497 unique canonical keys and all bindings validate.
-- Blocker: none. All five first-work-package completion criteria remain
-  satisfied.
+- State: active; common-count reconciliation
+- Current layer: reviewed implementation, failed exact-count evidence gate
+- Next action type: decide whether the observed direct-identity 167,243-key set
+  replaces the earlier 167,497 pre-mapping expectation
+- Next authorized action: no corrected metrics until the common-view count is
+  explicitly reconciled and then frozen with receipt-bound unchanged inputs.
+- Blocker: common-view count requires user reconciliation. The earlier five
+  direct-identity work-package completion criteria remain satisfied.
+
+### Observed real-gate predicate
+
+The first real common-manifest freeze stopped before metric reduction with the
+specific label `common_view_expected_count_mismatch`: expected `167,497`,
+observed `167,243` (`-254`). The success staging tree was deleted and separate
+failure evidence was promoted. A second read-only set probe, independent of
+SMPL forwarding and metric code, exactly reproduced:
+
+```text
+GT-present       178,938
+GT-visible       177,315
+direct-ID common 167,243
+```
+
+The probe uses the accepted final semantics: COCO-17 native visibility,
+Crowd4D active `idxs`, active DyCrowd columns under the accepted static mapping,
+and exact `(scene, frame_id, GT track_id)` intersection. This proves the 254
+difference is not a metric-validity filter or SMPL failure. The earlier
+`167,497` value was fixed before the final direct-identity adapter existed; its
+exact association basis is not durably evidenced, so it is not silently
+replaced here.
 
 ### Accepted native-output prerequisite
 
