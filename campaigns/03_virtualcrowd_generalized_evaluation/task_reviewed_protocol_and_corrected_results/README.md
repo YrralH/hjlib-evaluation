@@ -2,15 +2,16 @@
 
 ## Purpose And Boundary
 
-Define separately named HJ-reviewed result profiles after author parity. The
-first authorized work package changes only identity pairing: both Crowd4D and
-DyCrowd are treated as GT-MOT inputs, while the existing author metric,
-penalty, temporal, aggregation, and display mathematics remain unchanged.
+Own the complete T3 path from separately named direct-GT-MOT compatibility
+profiles through the reviewed corrected protocol and real-data results.
 Preserve all T2 author-parity outputs and receipts unchanged.
 
-This first package does not decide visibility-aware OKS, gap-aware
-acceleration, presence-aware denominators, coordinate corrections, metric
-renaming, or any other later protocol change.
+The historical first work package changed only identity pairing while keeping
+the author metric and reduction mathematics. Later user-authorized packages
+audited native scene semantics, selected visibility/completeness and corrected
+metric contracts, implemented them in their method-neutral and TPA owners, and
+produced the final two-view results recorded below. This task does not rerun
+Crowd4D or DyCrowd inference or modify supplied research artifacts.
 
 ## Status
 
