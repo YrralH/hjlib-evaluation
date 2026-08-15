@@ -16,8 +16,8 @@ inference, or treat the supplied package as verified official source.
 
 - State: complete
 - Next action type: none
-- Next authorized action: none; return to the campaign for a user-directed
-  choice of the next task.
+- Next authorized action: none; the campaign consumed this handoff and is
+  complete.
 - Blocker: none for analysis. Unverified official source identity remains a
   boundary on provenance claims, not a blocker to documenting the identified
   evaluation package's behavior.

@@ -17,8 +17,8 @@ or decide which legacy protocol choices are scientifically preferable.
 - State: complete
 - Current layer: none
 - Next action type: none
-- Next authorized action: none. Return to the campaign for user review; the
-  corrected-protocol task remains Draft until explicitly activated.
+- Next authorized action: none; the downstream corrected-protocol task consumed
+  this handoff and is complete.
 - Blocker: none. The preferred cross-repository dependency direction remains
   revisable if the concrete reuse or ownership analysis disproves it.
 

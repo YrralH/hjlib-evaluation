@@ -44,9 +44,10 @@ method-native parsing into `hjlib-evaluation`.
 | [Native output and scene semantics audit](task_native_output_and_scene_semantics_audit/) | complete | Accepted both methods' scene/world support and classified inactive dense human buffers as invalid evaluation padding |
 
 Campaign 01 and 02 are evidence sources, not implementation dependencies. The
-completed T2 retains its accepted Layered Design residence. T3 was explicitly
-activated on 2026-08-13 with one bounded first work package; later metric and
-reduction corrections remain deferred and do not block that package.
+completed T2 retains its accepted Layered Design residence. T3 began with one
+bounded direct-GT-MOT work package, then advanced only through separately
+authorized audit, protocol, implementation, and real-evaluation packages. All
+registered T3 packages are complete; later work requires a new scope.
 
 ## Inputs And Relationships
 

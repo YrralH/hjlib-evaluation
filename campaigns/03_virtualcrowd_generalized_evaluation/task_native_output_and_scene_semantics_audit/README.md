@@ -36,8 +36,8 @@ evaluation.
 - State: complete
 - Result: both methods carry user-accepted scene/world support, while
   `track_flag == False` dense values are not valid evaluation outputs.
-- Next authorized action: return to the reviewed-protocol task and freeze the
-  corrected profile requirements before Layered Design.
+- Next authorized action: none; the downstream reviewed-protocol task consumed
+  this handoff and is complete.
 - Blocker: none.
 
 ## Required Questions
@@ -229,6 +229,6 @@ be silently converted into a pose by reading those cells.
 
 ## Handoff
 
-Return to the reviewed-protocol task for corrected metric/reduction
-requirements. Any nontrivial reusable implementation still requires its own
-Layered Design before code changes.
+The downstream reviewed-protocol task consumed this handoff and completed its
+corrected metric/reduction work. Any future nontrivial reusable implementation
+requires a separately scoped Layered Design before code changes.
