@@ -25,8 +25,9 @@ pip install -e .
 
 ```
 hjlib-experiments → { hjlib-evaluation, hjlib-network, vis 仓 }
-hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std, hjlib-skeleton }   # 已 pin
-                    （+ hjlib-network / hjlib-smpl / hjlib-geometry:live driver / 2D-OKS 落地时再 pin）
+hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
+                      hjlib-skeleton, hjlib-geometry }   # 已 pin
+                    （+ hjlib-network / hjlib-smpl:live driver 落地时再 pin）
 ```
 
 已核实 **无环**:assembly / dataset-std / skeleton 均纯下游(network 不反向依赖)。详见
@@ -38,5 +39,8 @@ hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std, hjlib-skeleto
 - [docs/design/](docs/design/) —— 怎么修改(四层架构 + 与 assembly 的 divider 注入接线 +
   迁移记录)
 - [campaigns/](campaigns/) —— 跨 task 的持久工作状态与交付入口
+- Corrected crowd metric public schema and leaves are documented in
+  [docs/usage/](docs/usage/) and the Campaign 03
+  [Layered Design](docs/design/tasks/virtualcrowd-corrected-metric-protocol/README.md).
 - GitHub remote:`YrralH/hjlib-evaluation`(建仓后)
 - family 入口:[../CLAUDE.md](../CLAUDE.md)

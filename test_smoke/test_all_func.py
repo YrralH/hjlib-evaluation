@@ -19,9 +19,11 @@ from test_metric_leaves import smoke_test_metric_leaves
 from test_eval_pred_field import smoke_test_eval_pred_field
 from test_testset_fixed_window import smoke_test_testset_fixed_window
 from test_trajectory_residual import smoke_test_trajectory_residual
+from test_corrected_crowd import smoke_test_corrected_crowd
 
 
 def main() -> None:
+    smoke_test_corrected_crowd()
     smoke_test_testset()
     smoke_test_gt()
     smoke_test_metric_leaves()

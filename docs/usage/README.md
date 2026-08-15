@@ -93,6 +93,15 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `compute_keypoint_oks_matrix(reference_xy, target_xy, areas, sigmas, valid)` | method-neutral `(G,P)` OKS matrix；不持有 bbox/epsilon/matching/aggregation policy |
 | `summarize_trajectory_residuals(residual, valid_frame_mask)` | 对 caller 已定义的 scalar residual population 计算 count/sum/mean/median/p95/MSE/RMSE；详见 [trajectory_residual.md](trajectory_residual.md) |
 | `reduce_trajectory_residual_summaries(summaries)` | 从 sufficient statistics 精确计算 trajectory-weighted macro 与 frame-weighted micro mean/MSE |
+| `Corrected_Crowd_Sequence` / `evaluate_corrected_crowd_sequence(...)` | 校验一个 normalized crowd scene，并产生可跨 scene 精确归约的 immutable summary |
+| `reduce_corrected_crowd_summaries(...)` | 按 lexical scene order 合并 full/common 两个 view；输出独立 completeness、15 个 corrected metrics 与具名 ACCEL triple count |
+| `compute_ppds_scores(...)` / `compute_pcod_3class_matches(...)` | 未归约的 unordered-pair crowd-layout leaves |
+| `compute_joint_acceleration_errors(...)` | 未归约的 3D vector acceleration residual，单位继承输入/frame² |
+| `corrected_crowd_summary_to_json(...)` / `corrected_crowd_summary_from_json(...)` | Stable versioned worker-summary JSON round trip |
+
+Corrected crowd input/output 的精确 shape、单位、view/metric order、invalid
+contract 与 empty=`None` 语义见
+[VirtualCrowd corrected protocol](../design/tasks/virtualcrowd-corrected-metric-protocol/README.md)。
 
 ## 常见注意
 

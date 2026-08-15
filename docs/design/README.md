@@ -25,16 +25,16 @@
 ```
 hjlib-experiments → { hjlib-evaluation, hjlib-network, vis 仓 }      # app/编排层
 hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
-                      hjlib-skeleton }                  # 执行层(本仓);已 pin
-                  ( + hjlib-network / hjlib-smpl / hjlib-geometry )  # 设计终态;live driver / 2D-OKS 落地时再 pin
+                      hjlib-skeleton, hjlib-geometry }  # 执行层(本仓);已 pin
+                  ( + hjlib-network / hjlib-smpl )      # live driver 落地时再 pin
 ```
 
 > dep 图增补(2026-06-24,用户确认):设计 SSOT 原列 `{assembly, network} (+smpl/geometry)`;
 > Phase 3 GT provider 需 raw 数据集 GT(JTA 22-joint + WP joints/param),故加
 > **hjlib-dataset-std**(raw GT 访问)+ **hjlib-skeleton**(JTA-22→SMPL-54 joint name map)。
-> **当前 `[tool.hjlibm.deps]` 只 pin 了 assembly / dataset-std / skeleton**;network / smpl /
-> geometry 是设计终态依赖,但 eval-on-dumps + verbatim-numpy reducer 不 import 它们,待 live
-> network_driver(DIV-10)/ 2D-OKS metrics 落地时再 pin。仍无环(std/skeleton 纯下游;network 不反依赖)。
+> `[tool.hjlibm.deps]` pin assembly / dataset-std / skeleton / geometry。
+> geometry supplies corrected crowd point-registration fits; network / smpl
+> remain deferred to live network_driver. Dependency direction remains acyclic.
 
 - 与 **hjlib-trainer 对称**:都是执行层(消费 network + assembly),`hjlib-experiments`
   在其上编排。trainer 是 model-/dataset-agnostic 的纯 leaf;evaluation 因为要做
@@ -147,6 +147,9 @@ smoke)deferred(narrow scenes below split,vis-only)。
 7. [fixed_window_testset.md](fixed_window_testset.md) —— `TestSet.make_fixed_window_testset(...)`
    的 fixed-window subset contract; cached-fusion eval consumes this API from experiments.
 8. [trajectory_residual.md](trajectory_residual.md) —— generic scalar residual summary/reduction 的数学与 ownership 边界。
+9. [VirtualCrowd corrected metric protocol](tasks/virtualcrowd-corrected-metric-protocol/README.md)
+   —— Campaign 03 T3 的 reviewed population、completeness、metric 与
+   reduction 数学，以及后续 Code Architecture residence。
 
 ## Dump prediction field contract
 

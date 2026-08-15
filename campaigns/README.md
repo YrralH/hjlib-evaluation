@@ -6,7 +6,7 @@ shape remain in place and are not silently reclassified.
 
 | Campaign | Status | Purpose |
 | --- | --- | --- |
-| [03 VirtualCrowd generalized evaluation](03_virtualcrowd_generalized_evaluation/) | awaiting user review | Author logic and HJ-composed parity are complete; corrected protocol remains Draft pending explicit activation |
+| [03 VirtualCrowd generalized evaluation](03_virtualcrowd_generalized_evaluation/) | T3 corrected adapter implementation active | Implement the accepted corrected protocol after completing reviewed mathematics, code architecture, and generic metric facilities |
 
 Existing legacy residence:
 
