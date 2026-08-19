@@ -42,5 +42,11 @@ hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
 - Corrected crowd metric public schema and leaves are documented in
   [docs/usage/](docs/usage/) and the Campaign 03
   [Layered Design](docs/design/tasks/virtualcrowd-corrected-metric-protocol/README.md).
+- The additive selected-population API used by the three-method VirtualCrowd
+  comparison is documented in
+  [corrected_crowd_selected_population.md](docs/usage/corrected_crowd_selected_population.md).
+- Stable VirtualCrowd default/native profile names and their composition are
+  documented in
+  [virtualcrowd_evaluation_profiles.md](docs/usage/virtualcrowd_evaluation_profiles.md).
 - GitHub remote:`YrralH/hjlib-evaluation`(建仓后)
 - family 入口:[../CLAUDE.md](../CLAUDE.md)

@@ -100,8 +100,12 @@ src/hjlib_evaluation/
     eval_meta.py           Eval_Meta / Metric_Spec_3D / Metric_Spec_2D_OKS(评测契约)
     eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
     joint_error.py         method-neutral unreduced per-joint Euclidean errors
+    joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
+    joint_jerk.py          method-neutral GT-relative joint jerk residuals
     keypoint_oks.py        method-neutral pairwise OKS matrix leaf
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
+    corrected_crowd_population.py named additive selected-population mask
+    corrected_crowd_world_dynamics.py additive exact-window world dynamics summary/result
     dump_reader.py         load_inference_dump(qualname-routing unpickler,读 monolith 真 dump 零 monolith import;legacy bare name→canonical 归一,FIX-1)
     gt_provider_base.py    GT_Provider_Base(ABC;joints/param/eval_meta 抽象,camera/ground/video deferred→raise)
     network_driver_base.py Network_Driver_Base(ABC,infer(dict_item)->dict;live driver deferred)
@@ -150,6 +154,17 @@ smoke)deferred(narrow scenes below split,vis-only)。
 9. [VirtualCrowd corrected metric protocol](tasks/virtualcrowd-corrected-metric-protocol/README.md)
    —— Campaign 03 T3 的 reviewed population、completeness、metric 与
    reduction 数学，以及后续 Code Architecture residence。
+10. [VirtualCrowd corrected selected population](tasks/virtualcrowd-corrected-population-profile/README.md)
+    —— 在不改变 legacy corrected schema/result 的前提下，定义
+    `C4D_DYCROWD_COMMON_COCO17_VISIBLE_GE9` 的 mask、selected-view schema 与
+    exact reduction boundary。
+11. [Corrected-crowd world dynamics](tasks/corrected-crowd-world-dynamics/README.md)
+    —— additive `ACC-JOINT` / `ACC-ROOT` / `JERK-JOINT` / `JERK-ROOT`
+    GT-relative world-space temporal metrics、reference status 与 exact-window
+    reduction boundary。
+12. [VirtualCrowd evaluation profiles](tasks/virtualcrowd-evaluation-profiles/README.md)
+    —— 区分 population / association / metric / complete evaluation profile，
+    冻结 `VC_HJ_DEFAULT_V1` 与 `VC_CROWD4D_NATIVE_V1` 的名字、组成和比较边界。
 
 ## Dump prediction field contract
 
@@ -168,6 +183,21 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 应作为 protocol redesign 单独落地,不得默默替换默认 `joints_54_world` 口径。
 
 ## State of the world
+
+- Data-free smoke: 44 passed on 2026-08-20. The changed corrected/dynamics
+  modules and test use strict targeted pyright with 0 errors.
+
+- **2026-08-19 corrected world dynamics**：新增独立 schema-v1 dynamics
+  summary/result，不改变原 15-metric corrected schema-v1。GroupRec 在同一
+  159,405-occurrence population 上完成 8 scenes：156,263 acceleration triples、
+  154,883 jerk quadruples；重新发布的 legacy result 与接受版本 SHA-256
+  `f7c36b7...c2c36` byte-identical。
+
+- **2026-08-19 GroupRec three-method corrected evaluation**：新增 additive
+  selected-population contract；旧 167,243-key common manifest/result 未改写。
+  `C4D_DYCROWD_COMMON_COCO17_VISIBLE_GE9` 精确包含 159,405 occurrences，三种
+  method 均完成 8 scenes、159,405 matched occurrences 与 156,263 acceleration
+  triples 的同口径 reduction。完整 provenance/result 见 Campaign 04。
 
 - **2026-06-30 field-select eval**:`eval_dumps_against_gt(..., pred_joints_key=...)` 与
   `Tester.stage_eval(..., pred_joints_key=...)` 支持同一套 TestSet/GT 同时读
@@ -209,6 +239,10 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## What's open
 
+- **VirtualCrowd profile registry/schema migration（long-term pending）**:
+  `VC_HJ_DEFAULT_V1` 与 `VC_CROWD4D_NATIVE_V1` 已有稳定设计 residence，但 Python
+  registry、versioned result/receipt identity 和 method capability declarations 尚未实现；
+  legacy corrected schema-v1 与 native fidelity artifacts 不原地改写。
 - **Phase 6 parity + behavior**:已在 `hjlib-migration-tests/evaluation/` 落地并跑绿(capstone
   end-to-end wp×2+jta×2 + enumeration/GT 含 jta_ext + behavior;monolith 侧经 `py312th280cu128`
   subprocess 跑活的——本仓 env 进不去 monolith 重栈 yacs)。**只差 SHA pin**:待 assembly + eval commit

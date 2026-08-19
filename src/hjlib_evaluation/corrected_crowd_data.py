@@ -13,6 +13,7 @@ from hjlib_geometry import fit_similarity_registration
 
 
 CORRECTED_CROWD_SCHEMA_VERSION = 1
+CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION = 1
 CORRECTED_CROWD_VIEWS = ('GT_VISIBLE', 'C4D_DYCROWD_COMMON')
 CORRECTED_CROWD_METRICS = (
     'MPJPE-WORLD',
@@ -399,6 +400,161 @@ class Corrected_Crowd_Result:
             raise ValueError('triple counts must be non-negative exact ints')
 
 
+def validate_corrected_crowd_selected_view_name(view_name: str) -> str:
+    '''Validate a non-legacy name for an independently selected GT view.'''
+    if type(view_name) is not str or not view_name:
+        raise ValueError('selected corrected crowd view name must be non-empty')
+    if view_name in CORRECTED_CROWD_VIEWS:
+        raise ValueError('selected corrected crowd view name is reserved by legacy schema')
+    return view_name
+
+
+def validate_exact_consecutive_window_support(
+    matched_count: int,
+    triple_count: int,
+    quadruple_count: int | None = None,
+) -> None:
+    '''Validate derivative-window support against matched occurrences.'''
+    if triple_count > max(matched_count - 2, 0):
+        raise ValueError('triple count exceeds matched exact-window support')
+    if quadruple_count is None:
+        return
+    if quadruple_count > max(matched_count - 3, 0):
+        raise ValueError('quadruple count exceeds matched exact-window support')
+    if quadruple_count > 0 and quadruple_count >= triple_count:
+        raise ValueError('quadruple count must be smaller than triple count')
+
+
+@dataclass(frozen=True, slots=True)
+class Corrected_Crowd_Selected_View_Sequence_Summary:
+    '''Sufficient statistics for one explicitly selected GT population.'''
+
+    schema_version: int
+    scene_id: str
+    view_name: str
+    selected_gt_count: int
+    matched_selected_count: int
+    metric_sample_sums: Float_Array
+    metric_sample_counts: Int_Array
+    accel_exact_consecutive_triple_count: int
+
+    def __post_init__(self) -> None:
+        if type(self.schema_version) is not int:
+            raise TypeError('schema_version must be an exact int')
+        if self.schema_version != CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION:
+            raise ValueError('unsupported selected corrected crowd schema version')
+        if type(self.scene_id) is not str or not self.scene_id:
+            raise ValueError('scene_id must be non-empty')
+        validate_corrected_crowd_selected_view_name(self.view_name)
+        for name in ('selected_gt_count', 'matched_selected_count'):
+            value = getattr(self, name)
+            if type(value) is not int or value < 0:
+                raise ValueError('%s must be a non-negative exact int' % name)
+        if self.matched_selected_count > self.selected_gt_count:
+            raise ValueError('matched_selected_count cannot exceed selected_gt_count')
+        if (
+            type(self.accel_exact_consecutive_triple_count) is not int
+            or self.accel_exact_consecutive_triple_count < 0
+        ):
+            raise ValueError('triple count must be a non-negative exact int')
+        validate_exact_consecutive_window_support(
+            self.matched_selected_count,
+            self.accel_exact_consecutive_triple_count,
+        )
+        sums = float_array(self.metric_sample_sums, 'metric_sample_sums')
+        counts = int_array(self.metric_sample_counts, 'metric_sample_counts')
+        shape = (len(CORRECTED_CROWD_METRICS),)
+        require_shape(sums, shape, 'metric_sample_sums')
+        require_shape(counts, shape, 'metric_sample_counts')
+        if np.any(counts < 0) or np.any(sums < 0.0):
+            raise ValueError('selected summary statistics must be non-negative')
+        if np.any((counts == 0) & (sums != 0.0)):
+            raise ValueError('empty metric populations must have zero sum')
+        expected_joint_count = 24 * self.matched_selected_count
+        if np.any(counts[:10] != expected_joint_count):
+            raise ValueError('joint metric counts differ from matched support')
+        if counts[13] != self.matched_selected_count:
+            raise ValueError('OKS metric count differs from matched support')
+        pair_counts = counts[10:13]
+        if not np.all(pair_counts == pair_counts[0]):
+            raise ValueError('pair metric counts must share one population')
+        max_pair_count = (
+            self.matched_selected_count * (self.matched_selected_count - 1) // 2
+        )
+        if pair_counts[0] > max_pair_count:
+            raise ValueError('pair metric count exceeds matched support')
+        expected_accel_count = 24 * self.accel_exact_consecutive_triple_count
+        if counts[14] != expected_accel_count:
+            raise ValueError('ACCEL metric count differs from triple support')
+        object.__setattr__(self, 'metric_sample_sums', sums)
+        object.__setattr__(self, 'metric_sample_counts', counts)
+
+
+@dataclass(frozen=True, slots=True)
+class Corrected_Crowd_Selected_View_Result:
+    '''Reduced metric result for one explicitly selected GT population.'''
+
+    schema_version: int
+    view_name: str
+    selected_gt_count: int
+    matched_selected_count: int
+    metric_values: tuple[float | None, ...]
+    accel_exact_consecutive_triple_count: int
+
+    def __post_init__(self) -> None:
+        if type(self.schema_version) is not int:
+            raise TypeError('schema_version must be an exact int')
+        if self.schema_version != CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION:
+            raise ValueError('unsupported selected corrected crowd schema version')
+        validate_corrected_crowd_selected_view_name(self.view_name)
+        for name in ('selected_gt_count', 'matched_selected_count'):
+            value = getattr(self, name)
+            if type(value) is not int or value < 0:
+                raise ValueError('%s must be a non-negative exact int' % name)
+        if self.matched_selected_count > self.selected_gt_count:
+            raise ValueError('matched_selected_count cannot exceed selected_gt_count')
+        if len(self.metric_values) != len(CORRECTED_CROWD_METRICS):
+            raise ValueError('metric_values has wrong metric count')
+        for value in self.metric_values:
+            if value is not None and not np.isfinite(value):
+                raise ValueError('metric values must be finite or None')
+        for value in self.metric_values[10:14]:
+            if value is not None and not 0.0 <= value <= 1.0:
+                raise ValueError('dimensionless metric values must be in [0,1]')
+        if (
+            type(self.accel_exact_consecutive_triple_count) is not int
+            or self.accel_exact_consecutive_triple_count < 0
+        ):
+            raise ValueError('triple count must be a non-negative exact int')
+        validate_exact_consecutive_window_support(
+            self.matched_selected_count,
+            self.accel_exact_consecutive_triple_count,
+        )
+        matched_empty = self.matched_selected_count == 0
+        required_indices = tuple(range(10)) + (13,)
+        if any(
+            (self.metric_values[index] is None) != matched_empty
+            for index in required_indices
+        ):
+            raise ValueError('joint/OKS availability differs from matched support')
+        if self.matched_selected_count < 2 and any(
+            self.metric_values[index] is not None
+            for index in range(10, 13)
+        ):
+            raise ValueError('pair metric availability exceeds matched support')
+        pair_available = tuple(
+            self.metric_values[index] is not None
+            for index in range(10, 13)
+        )
+        if len(set(pair_available)) != 1:
+            raise ValueError('pair metric availability must share one population')
+        if (
+            (self.metric_values[14] is None)
+            != (self.accel_exact_consecutive_triple_count == 0)
+        ):
+            raise ValueError('ACCEL availability differs from triple support')
+
+
 def validate_corrected_crowd_sequence(
     sequence: Corrected_Crowd_Sequence,
 ) -> Corrected_Crowd_Sequence:
@@ -486,3 +642,107 @@ def corrected_crowd_result_to_json(result: Corrected_Crowd_Result) -> JSON_Objec
             result.accel_exact_consecutive_triple_count,
         ),
     }
+
+
+def corrected_crowd_selected_view_summary_to_json(
+    summary: Corrected_Crowd_Selected_View_Sequence_Summary,
+) -> JSON_Object:
+    '''Serialize one selected-view scene summary with an independent schema.'''
+    return {
+        'schema_version': summary.schema_version,
+        'scene_id': summary.scene_id,
+        'view_name': summary.view_name,
+        'metrics': list(CORRECTED_CROWD_METRICS),
+        'metric_units': list(CORRECTED_CROWD_METRIC_UNITS),
+        'selected_gt_count': summary.selected_gt_count,
+        'matched_selected_count': summary.matched_selected_count,
+        'metric_sample_sums': summary.metric_sample_sums.tolist(),
+        'metric_sample_counts': summary.metric_sample_counts.tolist(),
+        'accel_exact_consecutive_triple_count': (
+            summary.accel_exact_consecutive_triple_count
+        ),
+    }
+
+
+def corrected_crowd_selected_view_summary_from_json(
+    value: Mapping[str, Any],
+) -> Corrected_Crowd_Selected_View_Sequence_Summary:
+    '''Parse one exact selected-view scene-summary JSON object.'''
+    expected = {
+        'schema_version', 'scene_id', 'view_name', 'metrics', 'metric_units',
+        'selected_gt_count', 'matched_selected_count', 'metric_sample_sums',
+        'metric_sample_counts', 'accel_exact_consecutive_triple_count',
+    }
+    if set(value) != expected:
+        raise ValueError('selected corrected crowd summary fields do not match schema')
+    if tuple(value['metrics']) != CORRECTED_CROWD_METRICS:
+        raise ValueError('corrected crowd metric order does not match schema')
+    if tuple(value['metric_units']) != CORRECTED_CROWD_METRIC_UNITS:
+        raise ValueError('corrected crowd metric units do not match schema')
+    return Corrected_Crowd_Selected_View_Sequence_Summary(
+        schema_version=value['schema_version'],
+        scene_id=value['scene_id'],
+        view_name=value['view_name'],
+        selected_gt_count=value['selected_gt_count'],
+        matched_selected_count=value['matched_selected_count'],
+        metric_sample_sums=np.asarray(value['metric_sample_sums'], dtype=np.float64),
+        metric_sample_counts=json_int_array(
+            value['metric_sample_counts'],
+            'metric_sample_counts',
+        ),
+        accel_exact_consecutive_triple_count=value[
+            'accel_exact_consecutive_triple_count'
+        ],
+    )
+
+
+def corrected_crowd_selected_view_result_to_json(
+    result: Corrected_Crowd_Selected_View_Result,
+) -> JSON_Object:
+    '''Serialize one selected-view reduced result.'''
+    return {
+        'schema_version': result.schema_version,
+        'view_name': result.view_name,
+        'metrics': list(CORRECTED_CROWD_METRICS),
+        'metric_units': list(CORRECTED_CROWD_METRIC_UNITS),
+        'selected_gt_count': result.selected_gt_count,
+        'matched_selected_count': result.matched_selected_count,
+        'metric_values': list(result.metric_values),
+        'accel_exact_consecutive_triple_count': (
+            result.accel_exact_consecutive_triple_count
+        ),
+    }
+
+
+def corrected_crowd_selected_view_result_from_json(
+    value: Mapping[str, Any],
+) -> Corrected_Crowd_Selected_View_Result:
+    '''Parse one exact selected-view reduced-result JSON object.'''
+    expected = {
+        'schema_version', 'view_name', 'metrics', 'metric_units',
+        'selected_gt_count', 'matched_selected_count', 'metric_values',
+        'accel_exact_consecutive_triple_count',
+    }
+    if set(value) != expected:
+        raise ValueError('selected corrected crowd result fields do not match schema')
+    if tuple(value['metrics']) != CORRECTED_CROWD_METRICS:
+        raise ValueError('corrected crowd metric order does not match schema')
+    if tuple(value['metric_units']) != CORRECTED_CROWD_METRIC_UNITS:
+        raise ValueError('corrected crowd metric units do not match schema')
+    raw_values = value['metric_values']
+    if not isinstance(raw_values, list):
+        raise TypeError('metric_values must be a JSON array')
+    typed_values = cast(list[Any], raw_values)
+    return Corrected_Crowd_Selected_View_Result(
+        schema_version=value['schema_version'],
+        view_name=value['view_name'],
+        selected_gt_count=value['selected_gt_count'],
+        matched_selected_count=value['matched_selected_count'],
+        metric_values=tuple(
+            None if item is None else float(item)
+            for item in typed_values
+        ),
+        accel_exact_consecutive_triple_count=value[
+            'accel_exact_consecutive_triple_count'
+        ],
+    )

@@ -25,10 +25,10 @@ testpaths = ['test_smoke', 'test']
 # hjlib-skeleton (JTA-22 -> SMPL-54 name map) + hjlib-geometry (corrected
 # point-registration fits). hjlib-network / hjlib-smpl remain deferred.
 [tool.hjlibm]
-description_updated = '2026-07-01'
+description_updated = '2026-08-20'
 
 [tool.hjlibm.deps]
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "11b55caa1f5fd3722abd558391aff7a0f5387b00" }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "32e85ac789b5063bc9f2e2d03e9853f1b5edda8c" }
-hjlib-geometry = { path = '../hjlib-geometry', commit = "b4594ad1f71f14b8b969178ec61232a1595817c1" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "ba1a787a90230b18969bc6e9729913535d837558" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "d090e2e7b8fede7afdf02dea9dff6c563dab30ec" }
+hjlib-geometry = { path = '../hjlib-geometry', commit = "ed1e8c34252d5979413780ed8c2f91abf4ecd62d" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "a69c1487821378ad363d94b145403f63a3c5f54f" }
