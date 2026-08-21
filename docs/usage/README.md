@@ -11,6 +11,17 @@
 默认归约字段是 `pred['joints_54_world']`,即 monolith 等价的 dump-side tamed
 协议;如需诊断 no-invalid-tame raw 输出,显式传 `pred_joints_key='joints_54_world_raw'`。
 
+另见 [用 `Tracked_Scene` 评估地面估计](ground_estimation.md)：从 2D
+top/bottom observations 选择/采样、调用等权或 density-balanced ground solver，并在
+共同 GT ray support 上计算 metre-valued same-ray ground error。
+
+需要在 legacy corrected population 上做显式子集比较时，见
+[selected corrected-crowd population](corrected_crowd_selected_population.md)。
+
+VirtualCrowd 的默认与 Crowd4D-native profile 选择见
+[VirtualCrowd evaluation profiles](virtualcrowd_evaluation_profiles.md)。未显式
+指定其他 profile 时，“在 VC 上测试”指 `VC_HJ_DEFAULT_V1`。
+
 真实数据测试与 dump 归约脚本使用 tracked contract 配置本机 roots：
 
 ```bash
@@ -37,6 +48,10 @@ cp test/local_setting_test.py.example test/local_setting_test.py
 我已经有每帧 scalar residual + 最终 bool mask?
 └─ summarize_trajectory_residuals(...)，再用 reduce_trajectory_residual_summaries(...)
    做 trajectory-weighted macro 与 valid-frame-weighted micro 归约。
+
+我有带 keypoint 的 Tracked_Scene，需要估计并定量评估地面？
+└─ collect_ground_observations(...) → keep all / sample / select →
+   estimate_ground_from_observations(...) → diagnostics / same-ray errors
 ```
 
 ## 端到端示例(评已有 dump —— 迁移 / parity 主路径)
@@ -97,6 +112,17 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `reduce_corrected_crowd_summaries(...)` | 按 lexical scene order 合并 full/common 两个 view；输出独立 completeness、15 个 corrected metrics 与具名 ACCEL triple count |
 | `compute_ppds_scores(...)` / `compute_pcod_3class_matches(...)` | 未归约的 unordered-pair crowd-layout leaves |
 | `compute_joint_acceleration_errors(...)` | 未归约的 3D vector acceleration residual，单位继承输入/frame² |
+| `make_coco17_visible_ge9_common_mask(...)` | 在 caller 提供的 old-common mask 上选择 mapped COCO-17 source channel `>0` count `>=9`；`0.5` 计入 |
+| `evaluate_corrected_crowd_selected_view(...)` | 复用同一 15-metric 数学，输出独立 selected-view summary |
+| `reduce_corrected_crowd_selected_view_summaries(...)` | lexical scene order 的 selected-view exact reduction |
+| `evaluate_corrected_crowd_selected_view_and_world_dynamics(...)` | 一次 validation 同时产生 legacy 15-metric 与四项 world-dynamics scene summaries |
+| `reduce_corrected_crowd_world_dynamics_summaries(...)` | 归约 `ACC-JOINT` / `ACC-ROOT` / `JERK-JOINT` / `JERK-ROOT` exact-window sufficient statistics |
+| `Ground_Observation_Set` / `collect_ground_observations(...)` | 从 `Tracked_Scene` 构造 caller-defined high-confidence top/bottom population；可选 bottom-pair/bbox-width ratio gate |
+| `sample_ground_observations(...)` / `select_ground_observations_at_frame(...)` | 固定 seed person-frame sampling / 单 global-frame diagnostic selection |
+| `estimate_ground_from_observations(...)` | 调用 injected/default RCR estimator，返回 camera-frame plane 与 objective |
+| `Ground_Effect_Support` / `compute_same_ray_ground_errors(...)` | 在固定 GT pixel-ray support 上计算 method-plane 3D error；详见 [ground_estimation.md](ground_estimation.md) |
+| `compute_ground_plane_diagnostics(...)` | sign-invariant normal angle 与 normalized plane-distance ratio |
+| `compute_ground_effect_decomposition(...)` | 同一 support 上的 actual、normal-oracle 与 GT-normal distance-only errors |
 | `corrected_crowd_summary_to_json(...)` / `corrected_crowd_summary_from_json(...)` | Stable versioned worker-summary JSON round trip |
 
 Corrected crowd input/output 的精确 shape、单位、view/metric order、invalid

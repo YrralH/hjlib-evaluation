@@ -23,12 +23,16 @@ testpaths = ['test_smoke', 'test']
 # Pinned internal deps (Phase 1-5): the testset/GT layers import hjlib-dataset-assembly
 # (Dataset factory + filter store) + hjlib-dataset-std (JTA raw 22-joint GT) +
 # hjlib-skeleton (JTA-22 -> SMPL-54 name map) + hjlib-geometry (corrected
-# point-registration fits). hjlib-network / hjlib-smpl remain deferred.
+# point-registration fits and ray-plane intersection) + hjlib-detection
+# (Tracked_Scene protocol) + hjlib-ground-solver (RCR baseline).
+# hjlib-network / hjlib-smpl remain deferred.
 [tool.hjlibm]
-description_updated = '2026-07-01'
+description_updated = '2026-08-19'
 
 [tool.hjlibm.deps]
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "11b55caa1f5fd3722abd558391aff7a0f5387b00" }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "32e85ac789b5063bc9f2e2d03e9853f1b5edda8c" }
-hjlib-geometry = { path = '../hjlib-geometry', commit = "b4594ad1f71f14b8b969178ec61232a1595817c1" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "5a7c0b8c60e3ee8f4c8aa03bcebda66a0a3e0855" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "b7915921319f9ebe8e4b2552368e9becc5cacdf9" }
+hjlib-detection = { path = '../hjlib-detection', commit = "9587530be0571556645265f36cc02262fd02e5a2" }
+hjlib-geometry = { path = '../hjlib-geometry', commit = "46981fb15090deb0c50735825dedba34fc598d26" }
+hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "80c416d177ad8b878a7a0780e62c9654b3c0564d" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "a69c1487821378ad363d94b145403f63a3c5f54f" }

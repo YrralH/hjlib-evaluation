@@ -16,6 +16,8 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 | `test_eval_pred_field.py` | `eval_dumps_against_gt` / `Tester.stage_eval` 的 `pred_joints_key` 字段选择:默认 `joints_54_world` vs raw 诊断 `joints_54_world_raw` |
 | `test_testset_fixed_window.py` | fixed-window 子集的窗口范围、segment offset、统计量与错误分支 |
 | `test_trajectory_residual.py` | scalar residual summary、authoritative mask、overflow/feasibility、macro/micro reduction |
+| `test_ground_estimation_protocol.py` | observation selection/sampling、bbox-ratio strict gate、RCR seam、same-ray error、plane/oracle decomposition |
+| `test_density_balanced_rcr_operation.py` | compact eight-scene unweighted/k16/k32/k64 operation、17,992 dry count、identity/tamper/reload、CLI help |
 | `test_all_func.py` | master runner;导入并依次跑每个 `smoke_test_*` |
 | `clean_test_data.py` | `LIST_PATH_CLEAN`(当前空:无持久产物) |
 

@@ -9,12 +9,17 @@ from numpy.typing import NDArray
 
 from hjlib_evaluation.corrected_crowd_data import (
     CORRECTED_CROWD_METRICS,
+    CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION,
     CORRECTED_CROWD_SCHEMA_VERSION,
     CORRECTED_CROWD_VIEWS,
     Corrected_Crowd_Result,
+    Corrected_Crowd_Selected_View_Result,
+    Corrected_Crowd_Selected_View_Sequence_Summary,
     Corrected_Crowd_Sequence,
     Corrected_Crowd_Sequence_Summary,
+    bool_array,
     validate_corrected_crowd_sequence,
+    validate_corrected_crowd_selected_view_name,
 )
 from hjlib_evaluation.crowd_layout import (
     compute_pcod_3class_matches,
@@ -229,36 +234,122 @@ def add_acceleration_metrics(
     view_index: int,
     sums: NDArray[np.float64],
     counts: NDArray[np.int64],
+    precomputed: tuple[NDArray[np.float64], int] | None = None,
 ) -> int:
     '''Add exact-consecutive VISRUN acceleration and return triple count.'''
-    populations: list[NDArray[np.float64]] = []
-    triple_count = 0
+    if precomputed is None:
+        errors, triple_count = collect_exact_acceleration_errors(
+            sequence,
+            match_gt,
+            match_pred,
+            visrun_labels,
+        )
+    else:
+        errors, triple_count = precomputed
+        errors = np.asarray(errors, dtype=np.float64)
+        if errors.shape != (triple_count, 24):
+            raise ValueError('precomputed acceleration population has wrong shape')
+    if errors.size:
+        add_metric_values(
+            sums,
+            counts,
+            view_index,
+            'ACCEL-WORLD',
+            errors,
+        )
+    return triple_count
+
+
+def iter_exact_matched_segments(
+    sequence: Corrected_Crowd_Sequence,
+    match_gt: NDArray[np.int64],
+    match_pred: NDArray[np.int64],
+    visrun_labels: NDArray[np.int64],
+) -> list[tuple[NDArray[np.int64], NDArray[np.int64]]]:
+    '''Return stable maximal exact-consecutive matched segments.'''
+    segments: list[tuple[NDArray[np.int64], NDArray[np.int64]]] = []
     labels = visrun_labels[match_gt]
     for label in np.unique(labels):
         selected = np.flatnonzero(labels == label)
         order = np.argsort(sequence.gt_frame_ids[match_gt[selected]], kind='stable')
         selected = selected[order]
         frames = sequence.gt_frame_ids[match_gt[selected]]
-        for center in range(1, len(selected) - 1):
-            if frames[center] - frames[center - 1] != 1:
-                continue
-            if frames[center + 1] - frames[center] != 1:
-                continue
-            triple = selected[center - 1:center + 2]
-            populations.append(compute_joint_acceleration_errors(
-                sequence.prediction_joints_world_m[match_pred[triple]],
-                sequence.gt_joints_world_m[match_gt[triple]],
-            ))
-            triple_count += 1
-    if populations:
-        add_metric_values(
-            sums,
-            counts,
-            view_index,
-            'ACCEL-WORLD',
-            np.concatenate(populations),
+        starts = np.concatenate((
+            np.array([0], dtype=np.int64),
+            np.flatnonzero(np.diff(frames) != 1).astype(np.int64) + 1,
+        ))
+        ends = np.concatenate((starts[1:], np.array([len(selected)], dtype=np.int64)))
+        for start, end in zip(starts, ends, strict=True):
+            rows = selected[int(start):int(end)]
+            segments.append((match_gt[rows], match_pred[rows]))
+    return segments
+
+
+def collect_exact_acceleration_errors(
+    sequence: Corrected_Crowd_Sequence,
+    match_gt: NDArray[np.int64],
+    match_pred: NDArray[np.int64],
+    visrun_labels: NDArray[np.int64],
+) -> tuple[NDArray[np.float64], int]:
+    '''Collect temporal-major SMPL-24 acceleration residuals.'''
+    populations: list[NDArray[np.float64]] = []
+    triple_count = 0
+    for gt_rows, pred_rows in iter_exact_matched_segments(
+        sequence,
+        match_gt,
+        match_pred,
+        visrun_labels,
+    ):
+        if len(gt_rows) < 3:
+            continue
+        errors = compute_joint_acceleration_errors(
+            sequence.prediction_joints_world_m[pred_rows],
+            sequence.gt_joints_world_m[gt_rows],
         )
-    return triple_count
+        populations.append(errors)
+        triple_count += len(errors)
+    if not populations:
+        return np.empty((0, 24), dtype=np.float64), 0
+    return np.concatenate(populations, axis=0), triple_count
+
+
+def evaluate_corrected_crowd_matched_rows(
+    validated_sequence: Corrected_Crowd_Sequence,
+    matched_gt_rows: NDArray[np.int64],
+    matched_prediction_rows: NDArray[np.int64],
+    base_visible_visrun_labels: NDArray[np.int64],
+    precomputed_acceleration: tuple[NDArray[np.float64], int] | None = None,
+) -> tuple[NDArray[np.float64], NDArray[np.int64], int]:
+    '''Evaluate one exact matched-row population using base-visible run labels.'''
+    match_gt = np.asarray(matched_gt_rows, dtype=np.int64)
+    match_pred = np.asarray(matched_prediction_rows, dtype=np.int64)
+    if match_gt.ndim != 1 or match_pred.shape != match_gt.shape:
+        raise ValueError('matched row arrays must have the same one-dimensional shape')
+    labels = np.asarray(base_visible_visrun_labels, dtype=np.int64)
+    if labels.shape != (len(validated_sequence.gt_frame_ids),):
+        raise ValueError('base-visible VISRUN labels have the wrong shape')
+    sums = np.zeros((1, len(CORRECTED_CROWD_METRICS)), dtype=np.float64)
+    counts = np.zeros(sums.shape, dtype=np.int64)
+    add_frame_joint_metrics(
+        validated_sequence, match_gt, match_pred, 0, sums, counts,
+    )
+    add_sequence_joint_metrics(
+        validated_sequence, match_gt, match_pred, labels, 0, sums, counts,
+    )
+    add_frame_layout_and_oks_metrics(
+        validated_sequence, match_gt, match_pred, 0, sums, counts,
+    )
+    triples = add_acceleration_metrics(
+        validated_sequence,
+        match_gt,
+        match_pred,
+        labels,
+        0,
+        sums,
+        counts,
+        precomputed_acceleration,
+    )
+    return sums[0], counts[0], triples
 
 
 def evaluate_corrected_crowd_sequence(
@@ -276,11 +367,8 @@ def evaluate_corrected_crowd_sequence(
     if fn < 0 or fp < 0:
         raise ValueError('association completeness counts are inconsistent')
 
-    sums = np.zeros(
-        (len(CORRECTED_CROWD_VIEWS), len(CORRECTED_CROWD_METRICS)),
-        dtype=np.float64,
-    )
-    counts = np.zeros(sums.shape, dtype=np.int64)
+    sums_rows: list[NDArray[np.float64]] = []
+    counts_rows: list[NDArray[np.int64]] = []
     triples = np.zeros((len(CORRECTED_CROWD_VIEWS),), dtype=np.int64)
     visrun_labels = build_visrun_labels(data)
     for view_index in range(len(CORRECTED_CROWD_VIEWS)):
@@ -289,22 +377,56 @@ def evaluate_corrected_crowd_sequence(
             selected = data.common_gt_mask[data.matched_gt_rows]
         match_gt = data.matched_gt_rows[selected]
         match_pred = data.matched_prediction_rows[selected]
-        add_frame_joint_metrics(data, match_gt, match_pred, view_index, sums, counts)
-        add_sequence_joint_metrics(
-            data, match_gt, match_pred, visrun_labels, view_index, sums, counts,
+        row_sums, row_counts, triple_count = evaluate_corrected_crowd_matched_rows(
+            data,
+            match_gt,
+            match_pred,
+            visrun_labels,
         )
-        add_frame_layout_and_oks_metrics(
-            data, match_gt, match_pred, view_index, sums, counts,
-        )
-        triples[view_index] = add_acceleration_metrics(
-            data, match_gt, match_pred, visrun_labels, view_index, sums, counts,
-        )
+        sums_rows.append(row_sums)
+        counts_rows.append(row_counts)
+        triples[view_index] = triple_count
     return Corrected_Crowd_Sequence_Summary(
         schema_version=CORRECTED_CROWD_SCHEMA_VERSION,
         scene_id=data.scene_id,
         tp=tp,
         fn=fn,
         fp=fp,
+        metric_sample_sums=np.stack(sums_rows),
+        metric_sample_counts=np.stack(counts_rows),
+        accel_exact_consecutive_triple_count=triples,
+    )
+
+
+def evaluate_corrected_crowd_selected_view(
+    sequence: Corrected_Crowd_Sequence,
+    view_name: str,
+    selected_gt_mask: NDArray[np.generic],
+) -> Corrected_Crowd_Selected_View_Sequence_Summary:
+    '''Evaluate one explicit subset without redefining base-visible run labels.'''
+    data = validate_corrected_crowd_sequence(sequence)
+    validated_name = validate_corrected_crowd_selected_view_name(view_name)
+    selected_mask = bool_array(selected_gt_mask, 'selected_gt_mask')
+    if selected_mask.shape != (len(data.gt_frame_ids),):
+        raise ValueError('selected_gt_mask must have shape [G]')
+    base_visible = np.any(data.gt_visibility_native > 0.0, axis=1)
+    if np.any(selected_mask & ~base_visible):
+        raise ValueError('selected_gt_mask must be a subset of GT-visible rows')
+    matched_selected = selected_mask[data.matched_gt_rows]
+    match_gt = data.matched_gt_rows[matched_selected]
+    match_pred = data.matched_prediction_rows[matched_selected]
+    sums, counts, triples = evaluate_corrected_crowd_matched_rows(
+        data,
+        match_gt,
+        match_pred,
+        build_visrun_labels(data),
+    )
+    return Corrected_Crowd_Selected_View_Sequence_Summary(
+        schema_version=CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION,
+        scene_id=data.scene_id,
+        view_name=validated_name,
+        selected_gt_count=int(np.count_nonzero(selected_mask)),
+        matched_selected_count=len(match_gt),
         metric_sample_sums=sums,
         metric_sample_counts=counts,
         accel_exact_consecutive_triple_count=triples,
@@ -373,4 +495,48 @@ def reduce_corrected_crowd_summaries(
         f1=f1,
         metric_values=tuple(values),
         accel_exact_consecutive_triple_count=triple_counts,
+    )
+
+
+def reduce_corrected_crowd_selected_view_summaries(
+    summaries: Sequence[Corrected_Crowd_Selected_View_Sequence_Summary],
+) -> Corrected_Crowd_Selected_View_Result:
+    '''Reduce selected-view sufficient statistics in lexical scene order.'''
+    ordered = tuple(sorted(summaries, key=lambda item: item.scene_id))
+    if not ordered:
+        raise ValueError('selected corrected crowd summary collection is empty')
+    if len({item.scene_id for item in ordered}) != len(ordered):
+        raise ValueError('selected corrected crowd scene IDs must be unique')
+    view_name = ordered[0].view_name
+    if any(item.view_name != view_name for item in ordered):
+        raise ValueError('selected corrected crowd view names must match')
+    counts = np.sum(
+        np.stack([item.metric_sample_counts for item in ordered]),
+        axis=0,
+        dtype=np.int64,
+    )
+    sums = np.array([
+        math.fsum(float(item.metric_sample_sums[index]) for item in ordered)
+        for index in range(len(CORRECTED_CROWD_METRICS))
+    ], dtype=np.float64)
+    scaled_indices = set(range(10)) | {METRIC_INDEX['ACCEL-WORLD']}
+    values: list[float | None] = []
+    for metric_index in range(len(CORRECTED_CROWD_METRICS)):
+        count = int(counts[metric_index])
+        if count == 0:
+            values.append(None)
+            continue
+        value = sums[metric_index] / count
+        if metric_index in scaled_indices:
+            value *= 1000.0
+        values.append(value)
+    return Corrected_Crowd_Selected_View_Result(
+        schema_version=CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION,
+        view_name=view_name,
+        selected_gt_count=sum(item.selected_gt_count for item in ordered),
+        matched_selected_count=sum(item.matched_selected_count for item in ordered),
+        metric_values=tuple(values),
+        accel_exact_consecutive_triple_count=sum(
+            item.accel_exact_consecutive_triple_count for item in ordered
+        ),
     )

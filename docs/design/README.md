@@ -25,7 +25,8 @@
 ```
 hjlib-experiments → { hjlib-evaluation, hjlib-network, vis 仓 }      # app/编排层
 hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
-                      hjlib-skeleton, hjlib-geometry }  # 执行层(本仓);已 pin
+                      hjlib-skeleton, hjlib-geometry, hjlib-detection,
+                      hjlib-ground-solver }             # 执行层(本仓);已 pin
                   ( + hjlib-network / hjlib-smpl )      # live driver 落地时再 pin
 ```
 
@@ -100,8 +101,13 @@ src/hjlib_evaluation/
     eval_meta.py           Eval_Meta / Metric_Spec_3D / Metric_Spec_2D_OKS(评测契约)
     eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
     joint_error.py         method-neutral unreduced per-joint Euclidean errors
+    joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
+    joint_jerk.py          method-neutral GT-relative joint jerk residuals
     keypoint_oks.py        method-neutral pairwise OKS matrix leaf
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
+    corrected_crowd_population.py named additive selected-population mask
+    corrected_crowd_world_dynamics.py additive exact-window world dynamics summary/result
+    ground_estimation_protocol.py generic Tracked_Scene observation selection/sampling + RCR solve + plane/same-ray diagnostics
     dump_reader.py         load_inference_dump(qualname-routing unpickler,读 monolith 真 dump 零 monolith import;legacy bare name→canonical 归一,FIX-1)
     gt_provider_base.py    GT_Provider_Base(ABC;joints/param/eval_meta 抽象,camera/ground/video deferred→raise)
     network_driver_base.py Network_Driver_Base(ABC,infer(dict_item)->dict;live driver deferred)
@@ -114,6 +120,9 @@ src/hjlib_evaluation/
         gt_provider_wp.py      WP_GT_Provider(从 assembly dump full label)
         gt_provider_jta.py     JTA_GT_Provider / JTA_Ext_GT_Provider(从 dataset-std raw 22-joint)
 docs/{usage,design}/       用法 / 设计两棵树(design/README 本文件 = 唯一 onboarding 入口)
+script/evaluate_virtualcrowd_rcr_ground.py  VirtualCrowd dataset-specific RCR experiment entry
+script/evaluate_virtualcrowd_density_balanced_rcr_ground.py strict single-arm unweighted/KDE operation
+script/evaluate_virtualcrowd_density_balanced_rcr_cartesian.py prepared 3x2x2 matrix; default prepare-only, explicit future execution
 test_smoke/                合成数据 smoke(test_testset + test_gt + master runner)
 test/                      真实数据 FAIL-not-skip(testset / GT / eval-on-dumps + local_setting_test)
 ```
@@ -150,6 +159,23 @@ smoke)deferred(narrow scenes below split,vis-only)。
 9. [VirtualCrowd corrected metric protocol](tasks/virtualcrowd-corrected-metric-protocol/README.md)
    —— Campaign 03 T3 的 reviewed population、completeness、metric 与
    reduction 数学，以及后续 Code Architecture residence。
+10. [VirtualCrowd RCR ground evaluation](tasks/virtualcrowd-rcr-ground-evaluation/README.md)
+    —— `Tracked_Scene` observation protocol、RCR baseline 与 same-ray ground-effect
+    evaluation 的数学和代码边界。
+11. [VirtualCrowd density-balanced RCR ground](tasks/virtualcrowd-density-balanced-rcr-ground/README.md)
+    —— strict full-observation population、density intermediate、weighted RCR、
+    normal/D decomposition 与四版本真实结果。
+12. [VirtualCrowd corrected selected population](tasks/virtualcrowd-corrected-population-profile/README.md)
+    —— 在不改变 legacy corrected schema/result 的前提下，定义
+    `C4D_DYCROWD_COMMON_COCO17_VISIBLE_GE9` 的 mask、selected-view schema 与
+    exact reduction boundary。
+13. [Corrected-crowd world dynamics](tasks/corrected-crowd-world-dynamics/README.md)
+    —— additive `ACC-JOINT` / `ACC-ROOT` / `JERK-JOINT` / `JERK-ROOT`
+    GT-relative world-space temporal metrics、reference status 与 exact-window
+    reduction boundary。
+14. [VirtualCrowd evaluation profiles](tasks/virtualcrowd-evaluation-profiles/README.md)
+    —— 区分 population / association / metric / complete evaluation profile，
+    冻结 `VC_HJ_DEFAULT_V1` 与 `VC_CROWD4D_NATIVE_V1` 的名字、组成和比较边界。
 
 ## Dump prediction field contract
 
@@ -169,6 +195,40 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## State of the world
 
+- Data-free smoke: 59 passed on 2026-08-19. The changed corrected/dynamics
+  modules and test use strict targeted pyright with 0 errors.
+
+- **2026-08-19 corrected world dynamics**：新增独立 schema-v1 dynamics
+  summary/result，不改变原 15-metric corrected schema-v1。GroupRec 在同一
+  159,405-occurrence population 上完成 8 scenes：156,263 acceleration triples、
+  154,883 jerk quadruples；重新发布的 legacy result 与接受版本 SHA-256
+  `f7c36b7...c2c36` byte-identical。
+
+- **2026-08-19 GroupRec three-method corrected evaluation**：新增 additive
+  selected-population contract；旧 167,243-key common manifest/result 未改写。
+  `C4D_DYCROWD_COMMON_COCO17_VISIBLE_GE9` 精确包含 159,405 occurrences，三种
+  method 均完成 8 scenes、159,405 matched occurrences 与 156,263 acceleration
+  triples 的同口径 reduction。完整 provenance/result 见 Campaign 04。
+
+- **2026-08-18 VirtualCrowd density-balanced RCR**：在严格 confidence>4、
+  ankle/bbox ratio<0.20 的完整 17,992 observations 上完成 exact-LOO Gaussian
+  KDE + Scott bandwidth single arm，并在同一 167,243 GT-ray support 评估。Global
+  mean same-ray error 从 unweighted 18.8961 m 降到 KDE 16.4576 m（12.90%），但
+  normal-oracle / distance-only 没有同步改善，记录为包含组合误差 cancellation。
+  历史 k=16/32/64 结果保留为 fixed-scale 探索。后续 3 confidence × 2
+  ankle-ratio × 2 density-mode matrix 已完成 12-arm 求解、plain result 写入和
+  independent source reconstruction/readback。六组 KDE 均降低 combined mean；
+  raw best 为 `confidence>5.0, ankle<0.20, KDE = 15.7277 m`，但该 arm 最小
+  scene 仅 256 observations，且全部六组 normal-oracle/distance-only means 同时
+  变差，故保留低 support 与 error-cancellation 限制。
+
+- **2026-08-18 VirtualCrowd RCR baseline**：新增 generic ground-observation
+  sampling / RCR solve / same-ray evaluation public API 与 dataset-specific script。
+  Portable smoke 43 passed；本次新增 module/script/test targeted Pyright strict 0。
+  真实 headline 使用 8×5,000 sampled observations，完整 167,243 support 的
+  mean/median ground-effect error 为 14.0449/10.4662 m；first-frame diagnostic
+  有 5/8 scene 因非 forward full-support intersection 被整体标 invalid。
+
 - **2026-06-30 field-select eval**:`eval_dumps_against_gt(..., pred_joints_key=...)` 与
   `Tester.stage_eval(..., pred_joints_key=...)` 支持同一套 TestSet/GT 同时读
   monolith-equivalent `joints_54_world` 和 raw diagnostic `joints_54_world_raw`;
@@ -179,8 +239,10 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 - **FIX-1(2026-06-25,parity 时发现)**:`dump_reader` 把 legacy monolith dump 的 bare `name_dataset`
   (`worldpose` 等)硬映射到 canonical 变体(`worldpose_smpl` 等)。否则 reducer 的 `seg==seg_on_disk`
   全等会因 assembly 把 bare 名 deprecate 而炸(只 `name_dataset` 一字段不符)。见 migration.md §7 / DIV-9。
-- `pip install -e .` PASS;pyright **strict, 0 errors**(全仓 src + test_smoke + test;CLI 须带
-  `--pythonpath <hjlib_py312>/bin/python`)。
+- `pip install -e .` PASS；本次 `src` + `test_smoke` targeted pyright **strict, 0 errors**
+  （CLI 须带 `--pythonpath <hjlib_py312>/bin/python`）。`test/` 的两个真实数据模块
+  在 import 时要求 gitignored `local_setting_test`，因此未配置机器上不构成 data-free
+  full-repo Pyright 0；这是既有 repo-level open item。
 - **Phase 2(testset)**:`test_segment` / `testset`(+ Filter_Stats)/ `testset_builder`(单一泛型,
   合并 wp/jta/jta_ext)/ `testset_builder_base` / `get_by_dataset` / `assembly_factory`
   (`build_test_assembly` 经工厂 `divider=` 注入)。
@@ -205,7 +267,8 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
   `py.typed`(migration.md DIV-6),且把 bare 数据集名 deprecate 为 canonical 后缀名(`get_dataset_facts`
   对 bare 名 raise)—— FIX-1 即应对此。`[tool.hjlibm.deps]` 钉 assembly / dataset-std / skeleton
   (assembly SHA 待 commit 后 `hjlibm update` bump)。
-- GitHub remote:`YrralH/hjlib-evaluation` 待建 + push(`gh` 未装,创库需先解决;本地 commit / pin 不依赖它)。
+- GitHub remote：`YrralH/hjlib-evaluation` 已建立；`main` 由 family gitsync
+  workflow 维护与 `origin/main` 的同步。
 
 ## What's open
 
