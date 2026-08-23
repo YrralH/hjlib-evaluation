@@ -22,6 +22,12 @@ VirtualCrowd 的默认与 Crowd4D-native profile 选择见
 [VirtualCrowd evaluation profiles](virtualcrowd_evaluation_profiles.md)。未显式
 指定其他 profile 时，“在 VC 上测试”指 `VC_HJ_DEFAULT_V1`。
 
+无 GT identity 的 JTA per-frame 多人预测使用
+`make_jta_person_detection_gt_frame(...)` 构造 evaluation-owned GT，方法侧构造
+`JTA_Person_Detection_Prediction_Frame`，再按完整 manifest 顺序送入
+`JTA_Person_Detection_Reducer`。精确 endpoint、OKS matching、unmatched 与空集语义见
+[JTA person-detection protocol](../design/tasks/jta-person-detection-evaluation/README.md)。
+
 真实数据测试与 dump 归约脚本使用 tracked contract 配置本机 roots：
 
 ```bash
@@ -106,6 +112,9 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `compute_jitter(joints (T,J,3), fps)` | 绝对 jerk 平滑度(m/s^3) |
 | `compute_joint_position_errors(target, reference)` | 相同 `(...,J,3)` 数组的未归约 per-joint Euclidean error；不持有 root/alignment/unit/reduction policy |
 | `compute_keypoint_oks_matrix(reference_xy, target_xy, areas, sigmas, valid)` | method-neutral `(G,P)` OKS matrix；不持有 bbox/epsilon/matching/aggregation policy |
+| `make_jta_person_detection_gt_frame(...)` | 从显式 raw JTA arrays 构造排序、过滤并绑定 digest 的 12-endpoint GT frame |
+| `JTA_Person_Detection_Prediction_Frame` / `JTA_Person_Detection_Reducer` | 归约无 GT identity 的 per-frame 3D people；强制 exact frame population、producer identity、OKS matching 与 unmatched 记账 |
+| `jta_person_detection_result_to_json(...)` / `..._from_json(...)` | stable canonical result JSON，undefined mean 使用 `null` |
 | `summarize_trajectory_residuals(residual, valid_frame_mask)` | 对 caller 已定义的 scalar residual population 计算 count/sum/mean/median/p95/MSE/RMSE；详见 [trajectory_residual.md](trajectory_residual.md) |
 | `reduce_trajectory_residual_summaries(summaries)` | 从 sufficient statistics 精确计算 trajectory-weighted macro 与 frame-weighted micro mean/MSE |
 | `Corrected_Crowd_Sequence` / `evaluate_corrected_crowd_sequence(...)` | 校验一个 normalized crowd scene，并产生可跨 scene 精确归约的 immutable summary |

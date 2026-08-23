@@ -176,6 +176,9 @@ smoke)deferred(narrow scenes below split,vis-only)。
 14. [VirtualCrowd evaluation profiles](tasks/virtualcrowd-evaluation-profiles/README.md)
     —— 区分 population / association / metric / complete evaluation profile，
     冻结 `VC_HJ_DEFAULT_V1` 与 `VC_CROWD4D_NATIVE_V1` 的名字、组成和比较边界。
+15. [JTA person-detection evaluation](tasks/jta-person-detection-evaluation/README.md)
+    —— unordered per-frame people 的 raw-JTA GT、OKS association、完整性与
+    MPJPE/PA-MPJPE exact reduction contract。
 
 ## Dump prediction field contract
 

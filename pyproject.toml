@@ -9,6 +9,7 @@ description = 'Evaluation protocol harness for dynamic-scene human pose predicti
 requires-python = '>=3.12'
 dependencies = [
     'numpy',
+    'scipy',
     'torch',
     'tqdm',
     'typer>=0.12,<1.0',
