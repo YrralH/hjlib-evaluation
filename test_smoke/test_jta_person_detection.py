@@ -136,6 +136,29 @@ def test_empty_populations_and_degenerate_pa_have_explicit_denominators() -> Non
         assert metrics.pa_degenerate_person_count == 1
 
 
+def test_failed_finite_pa_fit_keeps_absolute_and_pelvis_metrics(
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+    gt = make_gt()
+    prediction = make_prediction(gt)
+
+    def fail_fit(*args: object, **kwargs: object) -> None:
+        del args, kwargs
+        raise ValueError('finite cross-covariance is degenerate')
+
+    monkeypatch.setattr(
+        'hjlib_evaluation.jta_person_detection_protocol.'
+        'fit_similarity_registration',
+        fail_fit,
+    )
+    metrics = evaluate_jta_person_detection_frame(gt, prediction)
+    assert len(metrics.association.match_gt_indices) == 1
+    assert metrics.absolute_mpjpe_person_sum_mm == pytest.approx(0.0)
+    assert metrics.pelvis_mpjpe_person_sum_mm == pytest.approx(0.0)
+    assert metrics.pa_valid_person_count == 0
+    assert metrics.pa_degenerate_person_count == 1
+
+
 def test_reducer_validation_failure_does_not_advance_population() -> None:
     gt = make_gt()
     prediction = make_prediction(gt)

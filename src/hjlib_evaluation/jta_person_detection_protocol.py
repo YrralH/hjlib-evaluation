@@ -235,7 +235,11 @@ def evaluate_jta_person_detection_frame(
                 or float(np.sum(reference_centered * reference_centered)) == 0.0:
             pa_degenerate_count += 1
             continue
-        fit = fit_similarity_registration(target, reference, mask)
+        try:
+            fit = fit_similarity_registration(target, reference, mask)
+        except ValueError:
+            pa_degenerate_count += 1
+            continue
         aligned = apply_similarity_registration(target, fit)
         pa_sum += float(np.mean(
             compute_joint_position_errors(aligned, reference),
