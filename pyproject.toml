@@ -31,9 +31,9 @@ testpaths = ['test_smoke', 'test']
 description_updated = '2026-08-19'
 
 [tool.hjlibm.deps]
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "6ed0321f53f0e3817fae4e6ced13552eb08888b4" }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "0364c69e7f162a306d2d08fe6b9616d3bad16525" }
-hjlib-detection = { path = '../hjlib-detection', commit = "9587530be0571556645265f36cc02262fd02e5a2" }
-hjlib-geometry = { path = '../hjlib-geometry', commit = "46981fb15090deb0c50735825dedba34fc598d26" }
-hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "80c416d177ad8b878a7a0780e62c9654b3c0564d" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "7579cecf04ca2ae230b4e4b0f822de9df85a2fc3" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "c4d5e58c67bf4a7ac041b4db70af7c9ae1da7a72" }
+hjlib-detection = { path = '../hjlib-detection', commit = "32d73461ea0f23865ef57fd2db9cd6f7958c1eed" }
+hjlib-geometry = { path = '../hjlib-geometry', commit = "fa42c836553e7f3a12ce9e264d64bfc9cf6b567f" }
+hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "c37d352e1c201798a244b6bf6a51a7083990a227" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "a69c1487821378ad363d94b145403f63a3c5f54f" }
