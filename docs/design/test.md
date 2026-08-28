@@ -17,6 +17,7 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 | `test_testset_fixed_window.py` | fixed-window 子集的窗口范围、segment offset、统计量与错误分支 |
 | `test_trajectory_residual.py` | scalar residual summary、authoritative mask、overflow/feasibility、macro/micro reduction |
 | `test_ground_estimation_protocol.py` | observation selection/sampling、bbox-ratio strict gate、RCR seam、same-ray error、plane/oracle decomposition |
+| `test_jta_person_detection.py` | unordered JTA GT/prediction contracts、cardinality-first OKS association、MPJPE/PA reduction、exact-degeneracy、result invariants 与 canonical codec |
 | `test_density_balanced_rcr_operation.py` | compact eight-scene unweighted/k16/k32/k64 operation、17,992 dry count、identity/tamper/reload、CLI help |
 | `test_all_func.py` | master runner;导入并依次跑每个 `smoke_test_*` |
 | `clean_test_data.py` | `LIST_PATH_CLEAN`(当前空:无持久产物) |

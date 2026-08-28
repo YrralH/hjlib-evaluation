@@ -229,17 +229,11 @@ def evaluate_jta_person_detection_frame(
             target - target_pelvis,
             reference - reference_pelvis,
         ))) * 1000.0
-        target_centered = target - np.mean(target, axis=0)
-        reference_centered = reference - np.mean(reference, axis=0)
-        if float(np.sum(target_centered * target_centered)) == 0.0 \
-                or float(np.sum(reference_centered * reference_centered)) == 0.0:
+        if np.all(target == target[:1]) \
+                or np.all(reference == reference[:1]):
             pa_degenerate_count += 1
             continue
-        try:
-            fit = fit_similarity_registration(target, reference, mask)
-        except ValueError:
-            pa_degenerate_count += 1
-            continue
+        fit = fit_similarity_registration(target, reference, mask)
         aligned = apply_similarity_registration(target, fit)
         pa_sum += float(np.mean(
             compute_joint_position_errors(aligned, reference),

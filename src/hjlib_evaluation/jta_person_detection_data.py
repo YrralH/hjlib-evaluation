@@ -5,6 +5,7 @@ from dataclasses import dataclass, fields
 from hashlib import sha256
 from typing import Any, Final, Mapping, cast
 import json
+import math
 
 import numpy as np
 from numpy.typing import NDArray
@@ -279,6 +280,59 @@ class JTA_Person_Detection_Result:
     pa_valid_person_count: int
     input_digest_sha256: str
 
+    def __post_init__(self) -> None:
+        if not self.expected_frame_keys \
+                or len(set(self.expected_frame_keys)) \
+                != len(self.expected_frame_keys) \
+                or any(not scene or type(frame) is not int or frame < 0
+                        for scene, frame in self.expected_frame_keys) \
+                or self.frame_count != len(self.expected_frame_keys):
+            raise ValueError('JTA result frame population is invalid')
+        count_names = (
+            'frame_count', 'gt_person_count', 'prediction_person_count',
+            'matched_person_count', 'unmatched_gt_count',
+            'unmatched_prediction_count',
+            'projection_invalid_prediction_count',
+            'pa_degenerate_person_count', 'pa_valid_person_count',
+        )
+        counts = {
+            name: cast(int, getattr(self, name)) for name in count_names
+        }
+        if any(type(value) is not int or value < 0 for value in counts.values()):
+            raise ValueError('JTA result count is invalid')
+        if self.gt_person_count != (
+                self.matched_person_count + self.unmatched_gt_count) \
+                or self.prediction_person_count != (
+                    self.matched_person_count
+                    + self.unmatched_prediction_count
+                ) \
+                or self.projection_invalid_prediction_count \
+                > self.unmatched_prediction_count:
+            raise ValueError('JTA result matching partition is invalid')
+        if self.pa_valid_person_count + self.pa_degenerate_person_count \
+                != self.matched_person_count:
+            raise ValueError('JTA result PA partition is invalid')
+        sums = (
+            self.matched_oks_sum, self.absolute_mpjpe_person_sum_mm,
+            self.pelvis_mpjpe_person_sum_mm, self.pa_mpjpe_person_sum_mm,
+        )
+        if any(type(value) not in (float, int)
+                or not math.isfinite(float(value)) or value < 0.0
+                for value in sums) \
+                or self.matched_oks_sum > self.matched_person_count \
+                or (self.matched_person_count == 0
+                    and any(value != 0.0 for value in sums[:3])) \
+                or (self.pa_valid_person_count == 0
+                    and self.pa_mpjpe_person_sum_mm != 0.0):
+            raise ValueError('JTA result metric sum is invalid')
+        validate_sha256(
+            self.prediction_source_sha256, 'prediction_source_sha256',
+        )
+        validate_sha256(
+            self.prediction_profile_sha256, 'prediction_profile_sha256',
+        )
+        validate_sha256(self.input_digest_sha256, 'input_digest_sha256')
+
     @property
     def matched_mean_oks(self) -> float | None:
         return (
@@ -387,8 +441,8 @@ def jta_person_detection_result_from_json(
             != 'hjlib_evaluation.jta_person_detection_result' \
             or payload.pop('version', None) != JTA_PERSON_DETECTION_SCHEMA_VERSION:
         raise ValueError('JTA person-detection result identity is invalid')
-    payload.pop('metrics', None)
-    payload.pop('denominators', None)
+    metrics = payload.pop('metrics', None)
+    denominators = payload.pop('denominators', None)
     keys_raw = payload.get('expected_frame_keys')
     if not isinstance(keys_raw, list):
         raise ValueError('expected frame keys are invalid')
@@ -405,7 +459,22 @@ def jta_person_detection_result_from_json(
     field_names = {field.name for field in fields(JTA_Person_Detection_Result)}
     if set(payload) != field_names:
         raise ValueError('JTA person-detection result fields are invalid')
-    return JTA_Person_Detection_Result(**cast(Mapping[str, Any], payload))
+    result = JTA_Person_Detection_Result(**cast(Mapping[str, Any], payload))
+    canonical = result_payload(result)
+    if json.dumps(
+            metrics, sort_keys=True, separators=(',', ':'), allow_nan=False,
+        ) != json.dumps(
+            canonical['metrics'], sort_keys=True, separators=(',', ':'),
+            allow_nan=False,
+        ) or json.dumps(
+            denominators, sort_keys=True, separators=(',', ':'),
+            allow_nan=False,
+        ) != json.dumps(
+            canonical['denominators'], sort_keys=True, separators=(',', ':'),
+            allow_nan=False,
+        ):
+        raise ValueError('JTA person-detection derived fields are invalid')
+    return result
 
 
 __all__ = [

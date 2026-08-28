@@ -104,6 +104,8 @@ src/hjlib_evaluation/
     joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
     joint_jerk.py          method-neutral GT-relative joint jerk residuals
     keypoint_oks.py        method-neutral pairwise OKS matrix leaf
+    jta_person_detection_data.py immutable unordered-JTA GT/prediction/result contracts + canonical result codec
+    jta_person_detection_protocol.py cardinality-first OKS association + 3D metric reducer
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
     corrected_crowd_population.py named additive selected-population mask
     corrected_crowd_world_dynamics.py additive exact-window world dynamics summary/result
@@ -198,8 +200,9 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## State of the world
 
-- Data-free smoke: 59 passed on 2026-08-19. The changed corrected/dynamics
-  modules and test use strict targeted pyright with 0 errors.
+- Data-free smoke: 68 passed on 2026-08-28. The JTA person-detection public
+  unit and its result codec are included in both pytest discovery and the
+  master smoke runner; changed files use strict targeted pyright with 0 errors.
 
 - **2026-08-19 corrected world dynamics**：新增独立 schema-v1 dynamics
   summary/result，不改变原 15-metric corrected schema-v1。GroupRec 在同一

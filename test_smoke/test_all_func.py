@@ -16,6 +16,7 @@ sys.path.insert(0, osp.dirname(osp.abspath(__file__)))
 from test_testset import smoke_test_testset
 from test_gt import smoke_test_gt
 from test_ground_estimation_protocol import smoke_test_ground_estimation_protocol
+from test_jta_person_detection import smoke_test_jta_person_detection
 from test_metric_leaves import smoke_test_metric_leaves
 from test_eval_pred_field import smoke_test_eval_pred_field
 from test_testset_fixed_window import smoke_test_testset_fixed_window
@@ -30,6 +31,7 @@ def main() -> None:
     smoke_test_density_balanced_rcr_operation()
     smoke_test_density_balanced_rcr_cartesian()
     smoke_test_ground_estimation_protocol()
+    smoke_test_jta_person_detection()
     smoke_test_testset()
     smoke_test_gt()
     smoke_test_metric_leaves()

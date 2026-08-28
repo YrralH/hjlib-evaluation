@@ -1,5 +1,8 @@
 '''Data-free gates for unordered JTA person-detection evaluation.'''
+from dataclasses import replace
+from hashlib import sha256
 from time import perf_counter
+import json
 
 import numpy as np
 import pytest
@@ -101,6 +104,40 @@ def test_perfect_frame_reducer_and_canonical_round_trip() -> None:
     encoded = jta_person_detection_result_to_json(result)
     assert b'NaN' not in encoded
     assert jta_person_detection_result_from_json(encoded) == result
+    with pytest.raises(ValueError, match='PA partition'):
+        replace(result, pa_degenerate_person_count=1)
+    with pytest.raises(ValueError, match='matching partition'):
+        replace(result, unmatched_gt_count=result.unmatched_gt_count + 1)
+    with pytest.raises(ValueError, match='metric sum'):
+        replace(
+            result,
+            matched_oks_sum=float(result.matched_person_count) + 1.0,
+        )
+    tampered = json.loads(encoded)
+    tampered['metrics']['recall'] = True
+    tampered.pop('semantic_sha256')
+    tampered['semantic_sha256'] = sha256(
+        b'hjlib_evaluation.jta_person_detection_result_json.v1\0'
+        + json.dumps(
+            tampered, sort_keys=True, separators=(',', ':'), allow_nan=False,
+        ).encode('utf-8'),
+    ).hexdigest()
+    with pytest.raises(ValueError, match='derived fields'):
+        jta_person_detection_result_from_json(json.dumps(tampered))
+    tampered_denominator = json.loads(encoded)
+    tampered_denominator['denominators']['matched_person'] += 1
+    tampered_denominator.pop('semantic_sha256')
+    tampered_denominator['semantic_sha256'] = sha256(
+        b'hjlib_evaluation.jta_person_detection_result_json.v1\0'
+        + json.dumps(
+            tampered_denominator, sort_keys=True, separators=(',', ':'),
+            allow_nan=False,
+        ).encode('utf-8'),
+    ).hexdigest()
+    with pytest.raises(ValueError, match='derived fields'):
+        jta_person_detection_result_from_json(
+            json.dumps(tampered_denominator),
+        )
     with pytest.raises(RuntimeError, match='sealed'):
         reducer.finalize()
 
@@ -115,7 +152,9 @@ def test_projection_invalid_prediction_remains_unmatched() -> None:
     assert metrics.projection_invalid_prediction_count == 1
 
 
-def test_empty_populations_and_degenerate_pa_have_explicit_denominators() -> None:
+def test_empty_populations_and_degenerate_pa_have_explicit_denominators(
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
     gt_empty = make_gt(0)
     prediction_empty = make_prediction(gt_empty)
     reducer_empty = JTA_Person_Detection_Reducer(
@@ -130,13 +169,41 @@ def test_empty_populations_and_degenerate_pa_have_explicit_denominators() -> Non
     gt = make_gt()
     repeated = np.repeat(gt.gt_xyz_camera[:, :1], 12, axis=1)
     prediction = make_prediction(gt, repeated)
+
+    def perfect_oks(*args: object, **kwargs: object) -> np.ndarray:
+        del args, kwargs
+        return np.ones((1, 1), dtype=np.float64)
+
+    monkeypatch.setattr(
+        'hjlib_evaluation.jta_person_detection_protocol.'
+        'compute_keypoint_oks_matrix',
+        perfect_oks,
+    )
     metrics = evaluate_jta_person_detection_frame(gt, prediction)
-    if len(metrics.association.match_gt_indices):
-        assert metrics.pa_valid_person_count == 0
-        assert metrics.pa_degenerate_person_count == 1
+    assert len(metrics.association.match_gt_indices) == 1
+    assert metrics.pa_valid_person_count == 0
+    assert metrics.pa_degenerate_person_count == 1
+
+    repeated_reference = np.repeat(gt.gt_xyz_camera[:, :1], 12, axis=1)
+    degenerate_gt = JTA_Person_Detection_GT_Frame(
+        scene_id=gt.scene_id,
+        frame_id=gt.frame_id,
+        gt_source_ids=gt.gt_source_ids,
+        gt_xy=gt.gt_xy,
+        gt_visible=gt.gt_visible,
+        gt_xyz_camera=repeated_reference,
+        gt_bbox_xyxy=gt.gt_bbox_xyxy,
+        camera_K=gt.camera_K,
+    )
+    metrics_reference = evaluate_jta_person_detection_frame(
+        degenerate_gt, make_prediction(gt),
+    )
+    assert len(metrics_reference.association.match_gt_indices) == 1
+    assert metrics_reference.pa_valid_person_count == 0
+    assert metrics_reference.pa_degenerate_person_count == 1
 
 
-def test_failed_finite_pa_fit_keeps_absolute_and_pelvis_metrics(
+def test_failed_nondegenerate_pa_fit_is_a_hard_failure(
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
     gt = make_gt()
@@ -151,12 +218,38 @@ def test_failed_finite_pa_fit_keeps_absolute_and_pelvis_metrics(
         'fit_similarity_registration',
         fail_fit,
     )
-    metrics = evaluate_jta_person_detection_frame(gt, prediction)
-    assert len(metrics.association.match_gt_indices) == 1
-    assert metrics.absolute_mpjpe_person_sum_mm == pytest.approx(0.0)
-    assert metrics.pelvis_mpjpe_person_sum_mm == pytest.approx(0.0)
-    assert metrics.pa_valid_person_count == 0
-    assert metrics.pa_degenerate_person_count == 1
+    with pytest.raises(ValueError, match='finite cross-covariance'):
+        evaluate_jta_person_detection_frame(gt, prediction)
+
+
+def test_tiny_nonzero_spread_is_not_denominator_excluded(
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+    gt = make_gt()
+    repeated = np.repeat(gt.gt_xyz_camera[:, :1], 12, axis=1)
+    repeated[0, 1, 0] = np.nextafter(repeated[0, 1, 0], np.inf)
+    prediction = make_prediction(gt, repeated)
+
+    def perfect_oks(*args: object, **kwargs: object) -> np.ndarray:
+        del args, kwargs
+        return np.ones((1, 1), dtype=np.float64)
+
+    def fail_fit(*args: object, **kwargs: object) -> None:
+        del args, kwargs
+        raise ValueError('tiny nonzero spread reached registration')
+
+    monkeypatch.setattr(
+        'hjlib_evaluation.jta_person_detection_protocol.'
+        'compute_keypoint_oks_matrix',
+        perfect_oks,
+    )
+    monkeypatch.setattr(
+        'hjlib_evaluation.jta_person_detection_protocol.'
+        'fit_similarity_registration',
+        fail_fit,
+    )
+    with pytest.raises(ValueError, match='tiny nonzero spread'):
+        evaluate_jta_person_detection_frame(gt, prediction)
 
 
 def test_reducer_validation_failure_does_not_advance_population() -> None:
@@ -191,3 +284,20 @@ def test_large_all_tie_assignment_is_lexical_and_bounded() -> None:
     )
     assert association.solver_call_count <= 129
     assert elapsed < 2.0
+
+
+def smoke_test_jta_person_detection() -> None:
+    test_raw_jta_constructor_sorts_filters_and_owns_visibility()
+    test_threshold_graph_maximizes_cardinality_before_oks()
+    test_perfect_frame_reducer_and_canonical_round_trip()
+    test_projection_invalid_prediction_remains_unmatched()
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        test_empty_populations_and_degenerate_pa_have_explicit_denominators(
+            monkeypatch,
+        )
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        test_failed_nondegenerate_pa_fit_is_a_hard_failure(monkeypatch)
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        test_tiny_nonzero_spread_is_not_denominator_excluded(monkeypatch)
+    test_reducer_validation_failure_does_not_advance_population()
+    test_large_all_tie_assignment_is_lexical_and_bounded()

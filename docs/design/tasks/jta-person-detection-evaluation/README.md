@@ -125,8 +125,9 @@ millimetres after multiplying source metres by 1000.
 Pelvis alignment subtracts prediction and GT's own midpoint of endpoint slots
 6/7 independently. PA fits prediction to GT per occurrence with positive
 isotropic scale and reflection disabled. A PA occurrence is degenerate only
-when the centred prediction or centred GT has exactly zero squared spread;
-that predicate is checked before calling the geometry leaf. Degenerate fits
+when every prediction joint equals its first prediction joint, or every GT
+joint equals its first GT joint, under direct `float64` equality. This exact
+zero-spread predicate is checked before calling the geometry leaf. Degenerate fits
 are counted and excluded only from the PA denominator; they do not erase
 absolute or pelvis-aligned errors. Every exception from
 `fit_similarity_registration`, including non-positive correlation, SVD
@@ -139,7 +140,9 @@ accepted match, matched-only means are JSON `null` with
 denominator zero. When `G == 0`, all-GT OKS and recall are also `null`; when
 `G > 0`, both retain denominator `G` even if no prediction matches. The result
 contains explicit person and joint denominators and exact input population
-identity.
+identity, and validates that the matching and PA partitions are complete. The decoder
+also verifies the serialized derived metrics and denominators against the
+sufficient statistics rather than treating them as unchecked presentation.
 
 ## Code Architecture
 
@@ -211,3 +214,7 @@ mandatory.
   kinematic hip indices, quantized threshold-aware matching, typed producer
   provenance, exact reducer state, PA-degeneracy and empty semantics, module
   residence, SciPy reuse, and executable performance/state smoke gates.
+- 2026-08-28: Corrected the implementation to match the frozen PA contract:
+  only direct equality of every joint to the person's first joint is treated
+  as exact zero spread and denominator-excluded as degenerate; every
+  geometry-fit exception now propagates as a hard evaluation failure.
