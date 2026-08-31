@@ -31,7 +31,7 @@ testpaths = ['test_smoke', 'test']
 description_updated = '2026-08-19'
 
 [tool.hjlibm.deps]
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "1daac6d5bf1d8f941a1df135348dfdcb8574765a" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "301094c82f32937156da2c123108479bdd641c03" }
 hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "ff16e3844d83b0713e6890226ad1196b9910bc7b" }
 hjlib-detection = { path = '../hjlib-detection', commit = "c772551cc2b95e39ea2cea42d9b453ca9cf8bc15" }
 hjlib-geometry = { path = '../hjlib-geometry', commit = "779fa3a6116da9e0675e6c9122bd5ce140d6340f" }
