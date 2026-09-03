@@ -4,6 +4,52 @@ import numpy as np
 from numpy.typing import NDArray
 
 
+def compute_paired_keypoint_oks(
+        reference_points_xy: NDArray[np.generic],
+        target_points_xy: NDArray[np.generic],
+        reference_areas: NDArray[np.generic],
+        sigmas: NDArray[np.generic],
+    ) -> NDArray[np.float64]:
+    '''Return identity-paired OKS in linear time.'''
+    reference = validate_real_numeric_array(
+        reference_points_xy,
+        'reference_points_xy',
+        ndim=3,
+    )
+    target = validate_real_numeric_array(
+        target_points_xy,
+        'target_points_xy',
+        ndim=3,
+    )
+    areas = validate_real_numeric_array(reference_areas, 'reference_areas', ndim=1)
+    sigma_values = validate_real_numeric_array(sigmas, 'sigmas', ndim=1)
+    if reference.shape != target.shape or reference.shape[-1] != 2:
+        raise ValueError('paired keypoints must share shape (N, J, 2)')
+    count, joint_count = reference.shape[:2]
+    if count <= 0 or joint_count <= 0:
+        raise ValueError('paired keypoint population must be nonempty')
+    if areas.shape != (count,):
+        raise ValueError('reference_areas must have shape (%d,)' % count)
+    if sigma_values.shape != (joint_count,):
+        raise ValueError('sigmas must have shape (%d,)' % joint_count)
+    if not np.isfinite(reference).all() or not np.isfinite(target).all():
+        raise ValueError('paired keypoints must be finite')
+    if not np.isfinite(areas).all() or np.any(areas <= 0.0):
+        raise ValueError('reference_areas must be finite and strictly positive')
+    if not np.isfinite(sigma_values).all() or np.any(sigma_values <= 0.0):
+        raise ValueError('sigmas must be finite and strictly positive')
+    squared_distance = np.sum((reference - target) ** 2, axis=2)
+    denominator = (
+        (2.0 * sigma_values[None, :]) ** 2
+        * areas[:, None]
+        * 2.0
+    )
+    return np.asarray(
+        np.exp(-squared_distance / denominator).mean(axis=1),
+        dtype=np.float64,
+    )
+
+
 def compute_keypoint_oks_matrix(
         reference_points_xy: NDArray[np.generic],
         target_points_xy: NDArray[np.generic],

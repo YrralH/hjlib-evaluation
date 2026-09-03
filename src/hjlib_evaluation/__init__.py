@@ -109,8 +109,27 @@ from hjlib_evaluation.jta_person_detection_protocol import (
     associate_jta_people,
     evaluate_jta_person_detection_frame,
 )
-from hjlib_evaluation.keypoint_oks import compute_keypoint_oks_matrix
+from hjlib_evaluation.jta_sota_metric_reducer import (
+    JTA_SOTA_METRIC_PROFILE,
+    JTA_SOTA_Metric_Result,
+    JTA_SOTA_Metric_Sums,
+    compute_jta_sota_metric_sums,
+    finalize_jta_sota_metric_sums,
+    validate_jta_sota_occurrence_partition,
+)
+from hjlib_evaluation.keypoint_oks import (
+    compute_keypoint_oks_matrix,
+    compute_paired_keypoint_oks,
+)
 from hjlib_evaluation.network_driver_base import Network_Driver_Base
+from hjlib_evaluation.smpl_joint_occurrence_reducer import (
+    Joint_Coordinate_Frame,
+    Joint_Unit,
+    SMPL_Joint_Layout,
+    SMPL_Joint_Occurrence_Result,
+    compute_smpl_joint_occurrence_metric,
+    reduce_smpl_joint_occurrences,
+)
 from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import Filter_Stats, TestSet
 from hjlib_evaluation.testset_builder import TestSet_Builder
@@ -161,12 +180,19 @@ __all__ = [
     'JTA_Person_Detection_Prediction_Frame',
     'JTA_Person_Detection_Reducer',
     'JTA_Person_Detection_Result',
+    'JTA_SOTA_METRIC_PROFILE',
+    'JTA_SOTA_Metric_Result',
+    'JTA_SOTA_Metric_Sums',
+    'Joint_Coordinate_Frame',
+    'Joint_Unit',
     'Metric_Spec_2D_OKS',
     'Metric_Spec_3D',
     'Network_Driver_Base',
     'OKS_QUANTIZATION',
     'OKS_THRESHOLD',
     'SMPL54_ENDPOINT_INDICES',
+    'SMPL_Joint_Layout',
+    'SMPL_Joint_Occurrence_Result',
     'TestSet',
     'TestSet_Builder',
     'TestSet_Builder_Base',
@@ -181,11 +207,14 @@ __all__ = [
     'compute_joint_acceleration_errors',
     'compute_joint_jerk_errors',
     'compute_joint_position_errors',
+    'compute_jta_sota_metric_sums',
     'collect_ground_observations',
     'compute_ground_effect_decomposition',
     'compute_ground_plane_diagnostics',
     'compute_same_ray_ground_errors',
+    'compute_smpl_joint_occurrence_metric',
     'compute_keypoint_oks_matrix',
+    'compute_paired_keypoint_oks',
     'compute_pcod_3class_matches',
     'compute_ppds_scores',
     'corrected_crowd_result_to_json',
@@ -200,6 +229,7 @@ __all__ = [
     'corrected_crowd_world_dynamics_summary_from_json',
     'corrected_crowd_world_dynamics_summary_to_json',
     'eval_dumps_against_gt',
+    'finalize_jta_sota_metric_sums',
     'evaluate_corrected_crowd_sequence',
     'evaluate_corrected_crowd_selected_view',
     'evaluate_corrected_crowd_selected_view_and_world_dynamics',
@@ -215,6 +245,7 @@ __all__ = [
     'jta_person_detection_result_to_json',
     'make_jta_person_detection_gt_frame',
     'path_pkl_for_segment',
+    'reduce_smpl_joint_occurrences',
     'reduce_trajectory_residual_summaries',
     'reduce_corrected_crowd_summaries',
     'reduce_corrected_crowd_selected_view_summaries',
@@ -228,4 +259,5 @@ __all__ = [
     'validate_corrected_crowd_sequence',
     'validate_corrected_crowd_selected_view_name',
     'validate_ground_effect_support_against_K',
+    'validate_jta_sota_occurrence_partition',
 ]
