@@ -5,6 +5,9 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 
 ## test_smoke/ —— 合成数据,处处可跑
 
+`test_lsvhr_evaluation.py` 覆盖 exact selected population、official entry 顺序、
+重复 entry 拒绝与 loader scene drift；pytest 与 master runner 都执行这组测试。
+
 评测的纯逻辑件(`Eval_Meta` 契约、`TestSet` 容器不变量 + `restrict_to_scenes` 对齐、
 工厂的路径解析 + 错误分支)用合成 numpy / 直接构造的 `Filtered_Sub_Seq_Divider` 覆盖,
 不依赖真实数据集 / dump。

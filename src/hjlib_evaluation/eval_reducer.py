@@ -31,7 +31,9 @@ from hjlib_dataset_assembly.dataset_builder.dataset_registry import get_dataset_
 from hjlib_evaluation.dump_reader import load_inference_dump
 from hjlib_evaluation.eval_meta import Eval_Meta, Metric_Spec_3D
 from hjlib_evaluation.gt_provider_base import GT_Provider_Base
-from hjlib_evaluation.joint_error import compute_joint_position_errors
+from hjlib_evaluation.smpl_joint_occurrence_reducer import (
+    compute_smpl_joint_occurrence_metric,
+)
 from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import TestSet
 
@@ -177,15 +179,21 @@ def _compute_one_metric(
     _assert_no_nan(gt_root,   'GT',   metric.name, 'root_indices',  seg)
     _assert_no_nan(pred_root, 'pred', metric.name, 'root_indices',  seg)
 
-    mpjpe_mm = float(
-        compute_joint_position_errors(pred_sub, gt_sub).mean()
-    ) * scale_mm
-    tmpjpe_mm = float(
-        compute_joint_position_errors(
-            pred_sub - pred_root,
-            gt_sub - gt_root,
-        ).mean()
-    ) * scale_mm
+    occurrence_ids = np.arange(pred_joints.shape[0], dtype=np.int64)
+    unit_world = 'm' if scale_mm == 1000.0 else 'mm'
+    occurrence_result = compute_smpl_joint_occurrence_metric(
+        pred_joints,
+        gt_joints,
+        occurrence_ids,
+        occurrence_ids,
+        metric,
+        joint_layout='smpl_all_54',
+        unit_world=unit_world,
+        pred_coordinate_frame='world',
+        gt_coordinate_frame='world',
+    )
+    mpjpe_mm = occurrence_result.mpjpe_mm
+    tmpjpe_mm = occurrence_result.t_mpjpe_mm
 
     pred_sub_m = pred_sub if scale_mm == 1000.0 else pred_sub / 1000.0
     gt_sub_m = gt_sub if scale_mm == 1000.0 else gt_sub / 1000.0

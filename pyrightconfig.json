@@ -1,5 +1,6 @@
 {
-    "include": ["src", "test_smoke", "test"],
+    "include": ["src", "script", "test_smoke", "test"],
+    "exclude": ["campaigns/worldpose_crowd3d_spotcheck/scripts"],
     "typeCheckingMode": "strict",
     "reportImplicitOverride": "error",
     "pythonVersion": "3.12",

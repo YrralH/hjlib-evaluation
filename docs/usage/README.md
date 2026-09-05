@@ -28,6 +28,22 @@ VirtualCrowd 的默认与 Crowd4D-native profile 选择见
 `JTA_Person_Detection_Reducer`。精确 endpoint、OKS matching、unmatched 与空集语义见
 [JTA person-detection protocol](../design/tasks/jta-person-detection-evaluation/README.md)。
 
+已有 paired fitted-SMPL occurrence IDs 时，使用
+[JTA fitted-SMPL six metrics](jta_sota_six_metrics.md) 计算 root error、
+MPJPE、T-MPJPE、RT-MPJPE、PA-MPJPE 与 OKS；该路径不做 detection matching。
+
+Ours、Crowd4D、DyCrowd 需要在同一 caller-selected VirtualCrowd population 上做
+临时四指标比较时，见
+[VirtualCrowd provisional four-metric evaluator](virtualcrowd_naive_comparison.md)。
+如果 caller 已有 official entry ID → method loader mapping 和 dataset-std ALL8
+population selection，则用同页的 `LSVHR_Evaluation_Population` +
+`evaluate_lsvhr_virtualcrowd_matrix(...)` 做 exact split matrix；registry closure 与 report
+仍由 `hjlib-experiments-results` 负责。
+
+已有 method 自己声明的 camera 与 world-metre meshes、需要让 OKS projection 和
+visualization 共用它们时，见
+[LSV-HR method camera and world meshes](lsvhr_frame_visualization.md)。
+
 真实数据测试与 dump 归约脚本使用 tracked contract 配置本机 roots：
 
 ```bash
@@ -58,6 +74,10 @@ cp test/local_setting_test.py.example test/local_setting_test.py
 我有带 keypoint 的 Tracked_Scene，需要估计并定量评估地面？
 └─ collect_ground_observations(...) → keep all / sample / select →
    estimate_ground_from_observations(...) → diagnostics / same-ray errors
+
+我有 method camera + world meshes，需要同一相机做 projection 与 visualization？
+└─ LSVHR_Method_Camera(...) + project_lsvhr_world_points(...)
+   → LSVHR_Renderable_Frame(...)
 ```
 
 ## 端到端示例(评已有 dump —— 迁移 / parity 主路径)
@@ -112,6 +132,8 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `compute_jitter(joints (T,J,3), fps)` | 绝对 jerk 平滑度(m/s^3) |
 | `compute_joint_position_errors(target, reference)` | 相同 `(...,J,3)` 数组的未归约 per-joint Euclidean error；不持有 root/alignment/unit/reduction policy |
 | `compute_keypoint_oks_matrix(reference_xy, target_xy, areas, sigmas, valid)` | method-neutral `(G,P)` OKS matrix；不持有 bbox/epsilon/matching/aggregation policy |
+| `compute_jta_sota_metric_sums(...)` / `finalize_jta_sota_metric_sums(...)` | paired JTA fitted-SMPL occurrence 的六项 additive statistics 与 occurrence-weighted result |
+| `validate_jta_sota_occurrence_partition(...)` | 要求 ordered batch occurrence IDs 精确覆盖 expected population |
 | `make_jta_person_detection_gt_frame(...)` | 从显式 raw JTA arrays 构造排序、过滤并绑定 digest 的 12-endpoint GT frame |
 | `JTA_Person_Detection_Prediction_Frame` / `JTA_Person_Detection_Reducer` | 归约无 GT identity 的 per-frame 3D people；强制 exact frame population、producer identity、OKS matching 与 unmatched 记账 |
 | `jta_person_detection_result_to_json(...)` / `..._from_json(...)` | stable canonical result JSON，undefined mean 使用 `null` |
@@ -126,6 +148,11 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `reduce_corrected_crowd_selected_view_summaries(...)` | lexical scene order 的 selected-view exact reduction |
 | `evaluate_corrected_crowd_selected_view_and_world_dynamics(...)` | 一次 validation 同时产生 legacy 15-metric 与四项 world-dynamics scene summaries |
 | `reduce_corrected_crowd_world_dynamics_summaries(...)` | 归约 `ACC-JOINT` / `ACC-ROOT` / `JERK-JOINT` / `JERK-ROOT` exact-window sufficient statistics |
+| `evaluate_virtualcrowd_naive_comparison(...)` / `reduce_virtualcrowd_naive_comparison_summaries(...)` | 对 caller-selected VirtualCrowd population 计算并精确跨 scene 归约 provisional `MPJPE-WORLD` / `T-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` |
+| `LSVHR_Evaluation_Profile` / `LSVHR_Evaluation_Population` / `LSVHR_Evaluation_Entry` | 选择 fixed NAIVE profile，并把 dataset-std selection、exact split scenes 与 official entry loader 绑定为 method-neutral matrix input |
+| `evaluate_lsvhr_virtualcrowd_entry(...)` / `evaluate_lsvhr_virtualcrowd_matrix(...)` | 按 exact selected GT keys 逐 scene 求值并保持 caller-supplied official entry order；不读 registry 或 method artifacts |
+| `LSVHR_Method_Camera` / `project_lsvhr_world_points(...)` | 绑定 method 自己声明的 K/RT/image size/source，并让 OKS/visualization 复用同一 `hjlib-camera` projection |
+| `LSVHR_Renderable_Person` / `LSVHR_Renderable_Frame` / `LSVHR_Frame_Visualization_Provider` | 把有序 world-metre triangle meshes 交给 method-neutral renderer |
 | `Ground_Observation_Set` / `collect_ground_observations(...)` | 从 `Tracked_Scene` 构造 caller-defined high-confidence top/bottom population；可选 bottom-pair/bbox-width ratio gate |
 | `sample_ground_observations(...)` / `select_ground_observations_at_frame(...)` | 固定 seed person-frame sampling / 单 global-frame diagnostic selection |
 | `estimate_ground_from_observations(...)` | 调用 injected/default RCR estimator，返回 camera-frame plane 与 objective |

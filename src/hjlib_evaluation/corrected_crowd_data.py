@@ -283,7 +283,6 @@ class Corrected_Crowd_Sequence:
         ]
         if np.any(pred_depth[included_joint] <= 0.0):
             raise ValueError('included prediction projection depth must be positive')
-        self.validate_pair_populations()
 
     def validate_pair_populations(self) -> None:
         '''Preflight consumed pair distances and PA-PPDS fit predicates.'''

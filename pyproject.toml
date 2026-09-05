@@ -8,6 +8,8 @@ version = '0.1.0'
 description = 'Evaluation protocol harness for dynamic-scene human pose predictions, owning testset construction, dataset GT adapters, dump/inference orchestration, and metric reduction without model or dataset definitions.'
 requires-python = '>=3.12'
 dependencies = [
+    'hjlib-camera',
+    'hjlib-meshes',
     'numpy',
     'scipy',
     'torch',
@@ -31,9 +33,11 @@ testpaths = ['test_smoke', 'test']
 description_updated = '2026-08-19'
 
 [tool.hjlibm.deps]
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "edec942f74da6f60e3f27c68538fc2f90dd03d75" }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "52a44a2f9bd5de1d411f0482e21dbe044d229f8b" }
-hjlib-detection = { path = '../hjlib-detection', commit = "1b78a954119cb8b41612f05abe8b3f4ec5184501" }
-hjlib-geometry = { path = '../hjlib-geometry', commit = "8c0310ca2f32e740eaa7f928a4fd188a11911cf6" }
-hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "942147b3edbc0fcde7c8a54f5582e3c9302a2177" }
-hjlib-skeleton = { path = '../hjlib-skeleton', commit = "a69c1487821378ad363d94b145403f63a3c5f54f" }
+hjlib-camera = { path = '../hjlib-camera', commit = "a0071f8cc045d759f9c649f472ed198c2d61d04e" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "b62a5ae92fb2686850d7b6f4041c335668e2cba6" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "598ebde1d0e204d418c2cc752f1a65f1fde27ee4" }
+hjlib-detection = { path = '../hjlib-detection', commit = "104e18a5ed894f84854ef8e19e9c8d47af1a3b48" }
+hjlib-geometry = { path = '../hjlib-geometry', commit = "6ebc8ed2d59c5a0f4d622ca0e916dfb9241d47ee" }
+hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "4a8aa09307e2fed0310d696f9d32397f2681b774" }
+hjlib-meshes = { path = '../hjlib-meshes', commit = "359b163db69a57c9536fbccc74a260e3240a580e" }
+hjlib-skeleton = { path = '../hjlib-skeleton', commit = "713678e3e373f89cec182d65bbbf4920dda5216e" }

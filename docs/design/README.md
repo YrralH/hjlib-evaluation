@@ -104,9 +104,13 @@ src/hjlib_evaluation/
     joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
     joint_jerk.py          method-neutral GT-relative joint jerk residuals
     keypoint_oks.py        method-neutral pairwise OKS matrix leaf
+    jta_sota_metric_reducer.py paired fitted-SMPL six-metric sufficient statistics
     jta_person_detection_data.py immutable unordered-JTA GT/prediction/result contracts + canonical result codec
     jta_person_detection_protocol.py cardinality-first OKS association + 3D metric reducer
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
+    virtualcrowd_naive_comparison.py provisional selected-population four-metric summary/reducer
+    lsvhr_evaluation.py    registered-entry identity、exact split projection 与 ordered matrix composition
+    lsvhr_frame_visualization.py method-owned camera、world mesh/frame 与 provider contract
     corrected_crowd_population.py named additive selected-population mask
     corrected_crowd_world_dynamics.py additive exact-window world dynamics summary/result
     ground_estimation_protocol.py generic Tracked_Scene observation selection/sampling + RCR solve + plane/same-ray diagnostics
@@ -181,6 +185,14 @@ smoke)deferred(narrow scenes below split,vis-only)。
 15. [JTA person-detection evaluation](tasks/jta-person-detection-evaluation/README.md)
     —— unordered per-frame people 的 raw-JTA GT、OKS association、完整性与
     MPJPE/PA-MPJPE exact reduction contract。
+16. [JTA fitted-SMPL six metrics](jta_sota_six_metrics.md) —— paired occurrence
+    identity、12-endpoint/root/alignment math、additive reduction 与完整性边界。
+17. [VirtualCrowd provisional four-metric comparison](virtualcrowd_naive_comparison.md)
+    —— `MPJPE-WORLD` / `T-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` 的
+    exact-target completeness、support、additive reduction boundary，以及 LSV-HR
+    exact population / official-entry matrix composition。
+18. [LSV-HR method-camera 与 renderable-frame](lsvhr_frame_visualization.md)
+    —— OKS/visualization 共用的 method camera、world mesh value 与 provider boundary。
 
 ## Dump prediction field contract
 
@@ -200,9 +212,14 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## State of the world
 
-- Data-free smoke: 68 passed on 2026-08-28. The JTA person-detection public
-  unit and its result codec are included in both pytest discovery and the
-  master smoke runner; changed files use strict targeted pyright with 0 errors.
+- Data-free smoke: 103 passed on 2026-09-02. LSV-HR composition, JTA
+  person-detection and their result contracts are included in pytest discovery;
+  changed LSV-HR files use strict targeted pyright with 0 errors.
+
+- **2026-09-02 LSV-HR registered-entry composition**：新增 evaluation-owned
+  `LSVHR_Evaluation_Profile.NAIVE`、exact split population projection、official
+  entry binding 与 ordered matrix reduction。方法 artifact decoding 和 registry/report
+  selection 留在上层 owner；本层不读 registry 或 method-native output。
 
 - **2026-08-19 corrected world dynamics**：新增独立 schema-v1 dynamics
   summary/result，不改变原 15-metric corrected schema-v1。GroupRec 在同一
