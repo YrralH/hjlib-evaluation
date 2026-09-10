@@ -8,6 +8,7 @@ import pytest
 
 import hjlib_evaluation
 from hjlib_evaluation import (
+    compute_joint_height_errors,
     compute_joint_position_errors,
     compute_keypoint_oks_matrix,
 )
@@ -50,6 +51,45 @@ def test_joint_error_invalid_inputs_fail() -> None:
     for call in invalid_calls:
         with pytest.raises((TypeError, ValueError)):
             call()
+
+
+def test_joint_height_error_normalization_sign_and_leading_normals() -> None:
+    target = np.array([[[0.0, 0.0, 2.0], [3.0, 4.0, 0.0]]])
+    reference = np.zeros_like(target)
+    unit = compute_joint_height_errors(
+        target, reference, np.array([0.0, 0.0, 1.0]))
+    scaled = compute_joint_height_errors(
+        target, reference, np.array([0.0, 0.0, 0.1607]))
+    flipped = compute_joint_height_errors(
+        target, reference, np.array([0.0, 0.0, -1.0]))
+    assert unit.dtype == np.float64
+    assert np.array_equal(unit, np.array([[2.0, 0.0]]))
+    assert np.allclose(scaled, unit)
+    assert np.array_equal(flipped, unit)
+
+    two_frames = np.concatenate((target, target), axis=0)
+    leading = compute_joint_height_errors(
+        two_frames,
+        np.zeros_like(two_frames),
+        np.array([[0.0, 0.0, 2.0], [0.0, 1.0, 0.0]]),
+    )
+    assert np.array_equal(leading, np.array([[2.0, 0.0], [0.0, 4.0]]))
+
+
+def test_joint_height_error_invalid_normal_fails() -> None:
+    points = np.zeros((2, 12, 3))
+    invalid_normals = (
+        np.zeros(3),
+        np.array([0.0, 0.0, 1e-12]),
+        np.array([0.0, 0.0, 1e-13]),
+        np.array([0.0, np.nan, 1.0]),
+        np.zeros((3, 3)),
+        np.array(['x', 'y', 'z']),
+        np.array([1.0 + 1.0j, 0.0, 0.0]),
+    )
+    for normal in invalid_normals:
+        with pytest.raises((TypeError, ValueError)):
+            compute_joint_height_errors(points, points, normal)
 
 
 def test_oks_known_value_mask_and_empty_axes() -> None:
@@ -152,6 +192,7 @@ def test_oks_invalid_shapes_and_mask_dtype_fail() -> None:
 
 
 def test_top_level_exports() -> None:
+    assert hjlib_evaluation.compute_joint_height_errors is compute_joint_height_errors
     assert hjlib_evaluation.compute_joint_position_errors is compute_joint_position_errors
     assert hjlib_evaluation.compute_keypoint_oks_matrix is compute_keypoint_oks_matrix
 
@@ -159,6 +200,8 @@ def test_top_level_exports() -> None:
 def smoke_test_metric_leaves() -> None:
     test_joint_error_known_values_dtype_and_non_finite_policy()
     test_joint_error_invalid_inputs_fail()
+    test_joint_height_error_normalization_sign_and_leading_normals()
+    test_joint_height_error_invalid_normal_fails()
     test_oks_known_value_mask_and_empty_axes()
     for bad_positive in (0.0, -1.0, np.nan, np.inf):
         test_oks_positive_finite_contract(bad_positive)

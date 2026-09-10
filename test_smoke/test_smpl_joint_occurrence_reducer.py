@@ -112,9 +112,7 @@ def test_all_54_and_multiple_specs() -> None:
     assert all(item.mpjpe_mm == 0.0 for item in results)
 
 
-@pytest.mark.parametrize(
-    'call',
-    [
+INVALID_POPULATION_CALLS: tuple[Callable[[], object], ...] = (
         lambda: reduce_known(joints(0), joints(0)),
         lambda: reduce_known(joints().astype(np.float16), joints()),
         lambda: reduce_known(joints(), joints(3)),
@@ -139,16 +137,16 @@ def test_all_54_and_multiple_specs() -> None:
             joint_layout='smpl_24', unit_world='m',
             pred_coordinate_frame='camera', gt_coordinate_frame='camera',
         ),
-    ],
 )
+
+
+@pytest.mark.parametrize('call', INVALID_POPULATION_CALLS)
 def test_invalid_population_inputs_fail(call: Callable[[], object]) -> None:
     with pytest.raises((TypeError, ValueError)):
         call()
 
 
-@pytest.mark.parametrize(
-    'metric',
-    [
+INVALID_METRICS = (
         Metric_Spec_3D('empty_subject', (), (1,)),
         Metric_Spec_3D('empty_root', (1,), ()),
         Metric_Spec_3D('negative', (-1,), (1,)),
@@ -156,8 +154,10 @@ def test_invalid_population_inputs_fail(call: Callable[[], object]) -> None:
         Metric_Spec_3D('duplicate_subject', (1, 1), (2,)),
         Metric_Spec_3D('duplicate_root', (1,), (2, 2)),
         Metric_Spec_3D('bool_index', (True,), (2,)),
-    ],
 )
+
+
+@pytest.mark.parametrize('metric', INVALID_METRICS)
 def test_invalid_metric_indices_fail(metric: Metric_Spec_3D) -> None:
     with pytest.raises((TypeError, ValueError)):
         compute_smpl_joint_occurrence_metric(
@@ -190,3 +190,18 @@ def test_nonfinite_selected_and_invalid_declarations_fail() -> None:
             joint_layout='bad', unit_world='m',  # type: ignore[arg-type]
             pred_coordinate_frame='camera', gt_coordinate_frame='camera',
         )
+
+
+def smoke_test_smpl_joint_occurrence_reducer() -> None:
+    test_known_translation_and_root_alignment()
+    test_occurrence_weighting_and_common_permutation()
+    test_all_54_and_multiple_specs()
+    for call in INVALID_POPULATION_CALLS:
+        test_invalid_population_inputs_fail(call)
+    for metric in INVALID_METRICS:
+        test_invalid_metric_indices_fail(metric)
+    test_nonfinite_selected_and_invalid_declarations_fail()
+
+
+if __name__ == '__main__':
+    smoke_test_smpl_joint_occurrence_reducer()

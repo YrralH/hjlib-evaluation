@@ -20,6 +20,7 @@ from __future__ import annotations
 import os
 import os.path as osp
 import pickle
+from pathlib import Path
 from typing import Dict, List, Optional, Set
 
 from tqdm import tqdm
@@ -29,6 +30,7 @@ from hjlib_dataset_assembly.dataset_builder.dataset import Dataset_Single_Seq_As
 from hjlib_evaluation.eval_reducer import eval_dumps_against_gt
 from hjlib_evaluation.gt_provider_base import GT_Provider_Base
 from hjlib_evaluation.network_driver_base import Network_Driver_Base
+from hjlib_evaluation.output_publication import staged_output_directory
 from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import TestSet
 
@@ -47,6 +49,18 @@ def _tag_of_segment(seg: Test_Segment) -> str:
 
 def path_pkl_for_segment(path_dump_dir: str, seg: Test_Segment) -> str:
     return osp.join(path_dump_dir, '%s.pkl' % _tag_of_segment(seg))
+
+
+def require_testset_assembly_binding(
+    testset: TestSet,
+    assembly: Dataset_Single_Seq_Assembly,
+) -> None:
+    '''Require the exact divider instance used to construct model inputs.'''
+    testset.require_internal_alignment()
+    if assembly.divider is not testset.divider \
+            or assembly.name_dataset != testset.name_dataset \
+            or len(assembly) != len(testset):
+        raise ValueError('testset and assembly are not identity-aligned')
 
 
 class Tester:
@@ -79,6 +93,7 @@ class Tester:
         '''Traverse the TestSet + Assembly (+ optional GT-joints pull) for wiring
         sanity. Optional per-segment CSV dump. (GT pull is joints-only: camera K/RT is
         on the deferred GT surface.)'''
+        require_testset_assembly_binding(self.testset, self.assembly)
         print(self.testset.summary())
         print()
 
@@ -126,11 +141,16 @@ class Tester:
         filename = build_segment_tag(...) + ".pkl"; content =
         {'segment': Test_Segment, 'pred': <driver output dict>}. Requires a live
         Network_Driver_Base (deferred).'''
-        assert self.network_driver is not None, (
-            'stage_inference requires a Network_Driver_Base; none injected (the live '
-            'driver is deferred -- see network_driver_base.py).')
-        os.makedirs(path_dump_dir, exist_ok=True)
+        if self.network_driver is None:
+            raise RuntimeError(
+                'stage_inference requires a Network_Driver_Base; none injected')
+        require_testset_assembly_binding(self.testset, self.assembly)
+        if osp.exists(path_dump_dir):
+            raise FileExistsError(
+                'inference dump directory already exists: %s' % path_dump_dir)
         num_items = len(self.testset)
+        if num_items == 0:
+            raise ValueError('stage_inference requires a nonempty TestSet')
 
         if case_filter is None:
             indices_to_run = list(range(num_items))
@@ -139,22 +159,27 @@ class Tester:
                 _tag_of_segment(self.testset.get_test_segment(i)): i for i in range(num_items)
             }
             missing = sorted(t for t in case_filter if t not in tag_to_index)
-            assert not missing, (
-                'stage_inference: case_filter contains %d tag(s) not in TestSet:\n  %s'
-                % (len(missing), '\n  '.join(missing)))
+            if missing:
+                raise ValueError(
+                    'stage_inference: case_filter contains %d tag(s) not in TestSet:\n  %s'
+                    % (len(missing), '\n  '.join(missing)))
             indices_to_run = sorted(tag_to_index[t] for t in case_filter)
             print('stage_inference: case_filter active -- running %d / %d segments'
                   % (len(indices_to_run), num_items))
 
-        for i in tqdm(indices_to_run, desc='infer'):
-            seg = self.testset.get_test_segment(i)
-            item = self.assembly[i]
-            pred = self.network_driver.infer({'sample': item})
+        with staged_output_directory(Path(path_dump_dir)) as path_stage:
+            for i in tqdm(indices_to_run, desc='infer'):
+                seg = self.testset.get_test_segment(i)
+                item = self.assembly[i]
+                pred = self.network_driver.infer({'sample': item})
 
-            path_pkl = path_pkl_for_segment(path_dump_dir, seg)
-            with open(path_pkl, 'wb') as f:
-                pickle.dump({'segment': seg, 'pred': pred}, f, protocol=pickle.HIGHEST_PROTOCOL)
-
+                path_pkl = path_pkl_for_segment(str(path_stage), seg)
+                with open(path_pkl, 'xb') as file:
+                    pickle.dump(
+                        {'segment': seg, 'pred': pred},
+                        file,
+                        protocol=pickle.HIGHEST_PROTOCOL,
+                    )
         print('Wrote %d per-segment pkls to %s' % (len(indices_to_run), path_dump_dir))
 
     def stage_eval(self, path_dump_dir: str, pred_joints_key: str = 'joints_54_world') -> None:
@@ -167,8 +192,8 @@ class Tester:
         pred_joints_key defaults to ``joints_54_world``, the monolith-equivalent
         dump-side tamed protocol. Use ``joints_54_world_raw`` only for a diagnostic
         no-invalid-tame pass when the dump carries that field.'''
-        assert self.gt_provider is not None, (
-            'stage_eval requires a gt_provider; none was injected.')
+        if self.gt_provider is None:
+            raise RuntimeError('stage_eval requires a gt_provider; none was injected')
         eval_dumps_against_gt(
             testset              =self.testset,
             gt_provider          =self.gt_provider,

@@ -5,11 +5,9 @@ build-backend = 'hatchling.build'
 [project]
 name = 'hjlib-evaluation'
 version = '0.1.0'
-description = 'Evaluation protocol harness for dynamic-scene human pose predictions, owning testset construction, dataset GT adapters, dump/inference orchestration, and metric reduction without model or dataset definitions.'
+description = 'Evaluation protocol harness for dynamic-scene human pose predictions, owning GT adapters, dump/inference orchestration, GT-track sufficient statistics and metric reduction without model or dataset definitions.'
 requires-python = '>=3.12'
 dependencies = [
-    'hjlib-camera',
-    'hjlib-meshes',
     'numpy',
     'scipy',
     'torch',
@@ -27,17 +25,19 @@ testpaths = ['test_smoke', 'test']
 # (Dataset factory + filter store) + hjlib-dataset-std (JTA raw 22-joint GT) +
 # hjlib-skeleton (JTA-22 -> SMPL-54 name map) + hjlib-geometry (corrected
 # point-registration fits and ray-plane intersection) + hjlib-detection
-# (Tracked_Scene protocol) + hjlib-ground-solver (RCR baseline).
+# (Tracked_Scene protocol) + hjlib-ground-solver (RCR baseline) + hjlib-systools
+# (atomic no-replace directory publication).
 # hjlib-network / hjlib-smpl remain deferred.
 [tool.hjlibm]
-description_updated = '2026-08-19'
+description_updated = '2026-09-07'
 
 [tool.hjlibm.deps]
 hjlib-camera = { path = '../hjlib-camera', commit = "a0071f8cc045d759f9c649f472ed198c2d61d04e" }
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "c0bce965fc2d6327f47966be2ba371f0ccfc9758" }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "3186439271bd4861ffe337a1f67c71e98b59b41a" }
-hjlib-detection = { path = '../hjlib-detection', commit = "104e18a5ed894f84854ef8e19e9c8d47af1a3b48" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "0f1c5340ca2ed1503dabffb67a13d4e6ea6a8593" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "0ad7006ab8cbc48827c64449c40cb5668a49d8d4" }
+hjlib-detection = { path = '../hjlib-detection', commit = "03fbfa3f169188682508cbbd10bce3812aaebe64" }
 hjlib-geometry = { path = '../hjlib-geometry', commit = "6ebc8ed2d59c5a0f4d622ca0e916dfb9241d47ee" }
-hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "4a8aa09307e2fed0310d696f9d32397f2681b774" }
+hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "b97ce721c3dd74e81202eceaf1e2b05fb076efb2" }
 hjlib-meshes = { path = '../hjlib-meshes', commit = "359b163db69a57c9536fbccc74a260e3240a580e" }
-hjlib-skeleton = { path = '../hjlib-skeleton', commit = "713678e3e373f89cec182d65bbbf4920dda5216e" }
+hjlib-skeleton = { path = '../hjlib-skeleton', commit = "72bec37abeefda708cf9eedfdd2217075758045b" }
+hjlib-systools = { path = '../hjlib-systools', commit = "57034d09285abeac6e93fdbc865fbf91003c9b6c" }

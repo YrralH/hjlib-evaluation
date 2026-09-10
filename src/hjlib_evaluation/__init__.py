@@ -82,7 +82,10 @@ from hjlib_evaluation.ground_estimation_protocol import (
     take_ground_observations,
     validate_ground_effect_support_against_K,
 )
-from hjlib_evaluation.joint_error import compute_joint_position_errors
+from hjlib_evaluation.joint_error import (
+    compute_joint_height_errors,
+    compute_joint_position_errors,
+)
 from hjlib_evaluation.joint_acceleration import compute_joint_acceleration_errors
 from hjlib_evaluation.joint_jerk import compute_joint_jerk_errors
 from hjlib_evaluation.jta_person_detection_data import (
@@ -139,6 +142,12 @@ from hjlib_evaluation.lsvhr_frame_visualization import (
     project_lsvhr_world_points,
 )
 from hjlib_evaluation.network_driver_base import Network_Driver_Base
+from hjlib_evaluation.naive_track_statistics import (
+    Naive_Track_Statistics,
+    evaluate_naive_tracks,
+    finalize_naive_statistics,
+    merge_naive_statistics,
+)
 from hjlib_evaluation.smpl_joint_occurrence_reducer import (
     Joint_Coordinate_Frame,
     Joint_Unit,
@@ -174,6 +183,10 @@ from hjlib_evaluation.virtualcrowd_naive_comparison import (
 )
 
 __all__ = [
+    'Naive_Track_Statistics',
+    'evaluate_naive_tracks',
+    'finalize_naive_statistics',
+    'merge_naive_statistics',
     'CORRECTED_CROWD_METRICS',
     'CORRECTED_CROWD_METRIC_UNITS',
     'CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION',
@@ -250,6 +263,7 @@ __all__ = [
     'associate_jta_people',
     'compute_jitter',
     'compute_joint_acceleration_errors',
+    'compute_joint_height_errors',
     'compute_joint_jerk_errors',
     'compute_joint_position_errors',
     'compute_virtualcrowd_acc_root_ratio_statistics',

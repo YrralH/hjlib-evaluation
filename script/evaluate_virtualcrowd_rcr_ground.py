@@ -21,6 +21,7 @@ from hjlib_evaluation import (
     select_ground_observations_at_frame,
     summarize_ground_errors,
 )
+from hjlib_evaluation.output_publication import staged_output_directory
 
 
 TOP_JOINT_PAIR = (5, 6)
@@ -168,8 +169,10 @@ def run_virtualcrowd_rcr_ground(
     invalid_by_strategy: dict[str, list[str]] = {
         strategy: [] for strategy in STRATEGIES
     }
-    if not dry_run:
-        path_output_root.mkdir(parents=True)
+    scene_results: list[tuple[
+        str, str, Ground_Estimation_Result, Ground_Effect_Support,
+        NDArray[np.float64] | None, str | None,
+    ]] = []
 
     strategies_summary = cast(dict[str, Any], summary['strategies'])
     for strategy in STRATEGIES:
@@ -230,13 +233,8 @@ def run_virtualcrowd_rcr_ground(
                     **summarize_ground_errors(errors),
                 }
             cast(dict[str, Any], strategies_summary[strategy]['scenes'])[scene] = scene_summary
-            write_scene_result(
-                path_output_root / strategy / ('%s.npz' % scene),
-                result,
-                support,
-                errors,
-                invalid_reason,
-            )
+            scene_results.append((
+                strategy, scene, result, support, errors, invalid_reason))
 
     for strategy in STRATEGIES:
         strategy_summary = cast(dict[str, Any], strategies_summary[strategy])
@@ -256,10 +254,19 @@ def run_virtualcrowd_rcr_ground(
                 **summarize_ground_errors(global_errors),
             }
     if not dry_run:
-        (path_output_root / 'summary.json').write_text(
-            json.dumps(summary, indent=2, sort_keys=True) + '\n',
-            encoding='utf-8',
-        )
+        with staged_output_directory(path_output_root) as output_root:
+            for strategy, scene, result, support, errors, reason in scene_results:
+                write_scene_result(
+                    output_root / strategy / ('%s.npz' % scene),
+                    result,
+                    support,
+                    errors,
+                    reason,
+                )
+            (output_root / 'summary.json').write_text(
+                json.dumps(summary, indent=2, sort_keys=True) + '\n',
+                encoding='utf-8',
+            )
     return summary
 
 

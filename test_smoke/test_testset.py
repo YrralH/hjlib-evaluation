@@ -100,6 +100,25 @@ def _check_get_testset_builder_paths() -> None:
 
 
 def _check_error_paths() -> None:
+    ranges = [
+        ('scene_A', '0000_0000', 0, 10),
+        ('scene_A', '0000_0000', 10, 20),
+    ]
+    swapped = [
+        Test_Segment('worldpose_smpl', 'scene_A', '0000_0000', 0, 1010, 1020),
+        Test_Segment('worldpose_smpl', 'scene_A', '0000_0000', 0, 1000, 1010),
+    ]
+    try:
+        TestSet(
+            'worldpose_smpl', 'full', 'all',
+            Filtered_Sub_Seq_Divider(ranges), swapped,
+            '/dump/worldpose', 50.0,
+        )
+    except ValueError as error:
+        assert 'divider and test segment differ' in str(error)
+    else:
+        raise AssertionError('equal-length segment substitution must fail')
+
     try:
         get_testset_builder('vrv1', path_dump_root='/dump', path_filter_stats_base='/fs')
     except NotImplementedError:

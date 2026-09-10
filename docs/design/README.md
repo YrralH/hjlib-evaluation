@@ -1,5 +1,8 @@
 # 设计 —— hjlib-evaluation
 
+GT-MOT sequence 的 additive partition 与 nullable reduction 见
+[NAIVE track statistics](naive_track_statistics.md)。
+
 修改本仓的唯一 onboarding 入口(family 规定:每仓仅一个 onboarding doc,无
 `docs/CLAUDE.md`)。
 
@@ -26,7 +29,7 @@
 hjlib-experiments → { hjlib-evaluation, hjlib-network, vis 仓 }      # app/编排层
 hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
                       hjlib-skeleton, hjlib-geometry, hjlib-detection,
-                      hjlib-ground-solver }             # 执行层(本仓);已 pin
+                      hjlib-ground-solver, hjlib-systools } # 执行层(本仓);已 pin
                   ( + hjlib-network / hjlib-smpl )      # live driver 落地时再 pin
 ```
 
@@ -100,15 +103,21 @@ src/hjlib_evaluation/
     testset_builder.py     TestSet_Builder(单一泛型,合并 monolith wp/jta/jta_ext;读 washed filter store)
     eval_meta.py           Eval_Meta / Metric_Spec_3D / Metric_Spec_2D_OKS(评测契约)
     eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
-    joint_error.py         method-neutral unreduced per-joint Euclidean errors
+    output_publication.py  推理/CLI 共用的 failure-clean staged directory wrapper；原子 no-replace commit 复用 hjlib-systools
+    joint_error.py         method-neutral unreduced per-joint Euclidean and normalized-ground-height errors
     joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
     joint_jerk.py          method-neutral GT-relative joint jerk residuals
     keypoint_oks.py        method-neutral pairwise OKS matrix leaf
+    corrected_crowd_data.py immutable corrected-crowd input/result records and validation
+    corrected_crowd_protocol.py corrected-crowd evaluation and exact reduction
+    crowd_layout.py        unordered-pair crowd-layout metric leaves
     jta_sota_metric_reducer.py paired fitted-SMPL six-metric sufficient statistics
     jta_person_detection_data.py immutable unordered-JTA GT/prediction/result contracts + canonical result codec
     jta_person_detection_protocol.py cardinality-first OKS association + 3D metric reducer
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
-    virtualcrowd_naive_comparison.py provisional selected-population four-metric summary/reducer
+    virtualcrowd_naive_comparison.py provisional four-metric summary/reducer; normalized WP schema 2 reuse
+    naive_track_statistics.py GT identity track partition + additive NAIVE sufficient statistics
+    smpl_joint_occurrence_reducer.py sparse paired SMPL occurrence MPJPE/T-MPJPE reduction
     lsvhr_evaluation.py    registered-entry identity、exact split projection 与 ordered matrix composition
     lsvhr_frame_visualization.py method-owned camera、world mesh/frame 与 provider contract
     corrected_crowd_population.py named additive selected-population mask
@@ -185,13 +194,17 @@ smoke)deferred(narrow scenes below split,vis-only)。
 15. [JTA person-detection evaluation](tasks/jta-person-detection-evaluation/README.md)
     —— unordered per-frame people 的 raw-JTA GT、OKS association、完整性与
     MPJPE/PA-MPJPE exact reduction contract。
-16. [JTA fitted-SMPL six metrics](jta_sota_six_metrics.md) —— paired occurrence
+16. [Joint-error leaves](joint_error.md) —— method-neutral Euclidean 与
+    normalized-ground-height unreduced primitives；不拥有 population/profile/reduction。
+17. [JTA fitted-SMPL six metrics](jta_sota_six_metrics.md) —— paired occurrence
     identity、12-endpoint/root/alignment math、additive reduction 与完整性边界。
-17. [VirtualCrowd provisional four-metric comparison](virtualcrowd_naive_comparison.md)
+18. [NAIVE track statistics](naive_track_statistics.md) —— GT identity track partition、
+    frame-range support、additive merge 与 nullable finalization。
+19. [VirtualCrowd provisional four-metric comparison](virtualcrowd_naive_comparison.md)
     —— `MPJPE-WORLD` / `T-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` 的
     exact-target completeness、support、additive reduction boundary，以及 LSV-HR
     exact population / official-entry matrix composition。
-18. [LSV-HR method-camera 与 renderable-frame](lsvhr_frame_visualization.md)
+20. [LSV-HR method-camera 与 renderable-frame](lsvhr_frame_visualization.md)
     —— OKS/visualization 共用的 method camera、world mesh value 与 provider boundary。
 
 ## Dump prediction field contract
@@ -212,9 +225,8 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## State of the world
 
-- Data-free smoke: 103 passed on 2026-09-02. LSV-HR composition, JTA
-  person-detection and their result contracts are included in pytest discovery;
-  changed LSV-HR files use strict targeted pyright with 0 errors.
+- Data-free smoke: 124 passed on 2026-09-11; master runner passed. Current
+  repository strict pyright completed with 0 errors.
 
 - **2026-09-02 LSV-HR registered-entry composition**：新增 evaluation-owned
   `LSVHR_Evaluation_Profile.NAIVE`、exact split population projection、official

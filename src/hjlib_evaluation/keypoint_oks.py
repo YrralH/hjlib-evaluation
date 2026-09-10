@@ -9,6 +9,7 @@ def compute_paired_keypoint_oks(
         target_points_xy: NDArray[np.generic],
         reference_areas: NDArray[np.generic],
         sigmas: NDArray[np.generic],
+        reference_joint_valid: NDArray[np.bool_] | None = None,
     ) -> NDArray[np.float64]:
     '''Return identity-paired OKS in linear time.'''
     reference = validate_real_numeric_array(
@@ -44,10 +45,19 @@ def compute_paired_keypoint_oks(
         * areas[:, None]
         * 2.0
     )
-    return np.asarray(
-        np.exp(-squared_distance / denominator).mean(axis=1),
-        dtype=np.float64,
-    )
+    similarity = np.exp(-squared_distance / denominator)
+    if reference_joint_valid is None:
+        return np.asarray(similarity.mean(axis=1), dtype=np.float64)
+    valid = np.asarray(reference_joint_valid)
+    if valid.dtype != np.bool_:
+        raise TypeError('reference_joint_valid must have bool dtype')
+    if valid.shape != (count, joint_count):
+        raise ValueError('reference_joint_valid must have shape (N, J)')
+    support = valid.sum(axis=1)
+    if np.any(support == 0):
+        raise ValueError('paired OKS requires at least one valid joint per row')
+    return np.asarray(np.where(valid, similarity, 0.0).sum(axis=1) / support,
+        dtype=np.float64)
 
 
 def compute_keypoint_oks_matrix(

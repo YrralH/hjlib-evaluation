@@ -29,6 +29,7 @@ from hjlib_evaluation import (
     estimate_ground_from_observations,
     summarize_ground_errors,
 )
+from hjlib_evaluation.output_publication import staged_output_directory
 from hjlib_ground_solver import (
     Ground_Observation_KDE_Density,
     compute_ground_observation_kde_density,
@@ -476,7 +477,7 @@ def write_plain_result(
         payloads: dict[tuple[str, str], dict[str, np.ndarray]],
     ) -> None:
     '''Write one plain summary plus one numeric NPZ per config and scene.'''
-    output_root.mkdir(parents=True)
+    output_root.mkdir(parents=True, exist_ok=True)
     for config_name in config_names:
         for scene in scenes:
             path = output_root / config_name / ('%s.npz' % scene)
@@ -632,19 +633,20 @@ def run_virtualcrowd_density_balanced_rcr_ground(
         return dry_run_summary(tracked_root, scenes)
 
     summary, payloads = compute_complete_result(dataset, tracked_root, support_root, scenes)
-    write_plain_result(
-        path_output_root,
-        scenes,
-        VARIANTS,
-        summary,
-        payloads,
-    )
-    validate_written_results(
-        path_output_root,
-        dataset_root,
-        tracked_root,
-        support_root,
-    )
+    with staged_output_directory(path_output_root) as output_root:
+        write_plain_result(
+            output_root,
+            scenes,
+            VARIANTS,
+            summary,
+            payloads,
+        )
+        validate_written_results(
+            output_root,
+            dataset_root,
+            tracked_root,
+            support_root,
+        )
     return summary
 
 

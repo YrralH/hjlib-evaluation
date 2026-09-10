@@ -1,5 +1,7 @@
 # 用法 —— hjlib-evaluation
 
+GT-MOT sequence 级可持久统计见 [NAIVE track statistics](naive_track_statistics.md)。
+
 调用方视角:我有一个数据集 + 一批预测(已存 dump,或一个待评的 ckpt),怎么算出
 世界空间 MPJPE / T-MPJPE。
 
@@ -35,6 +37,9 @@ MPJPE、T-MPJPE、RT-MPJPE、PA-MPJPE 与 OKS；该路径不做 detection matchi
 Ours、Crowd4D、DyCrowd 需要在同一 caller-selected VirtualCrowd population 上做
 临时四指标比较时，见
 [VirtualCrowd provisional four-metric evaluator](virtualcrowd_naive_comparison.md)。
+[Joint-error leaves](joint_error.md) 计算 unreduced per-joint Euclidean 或
+normalized-ground-height error，joint subset、单位和 reduction 由调用方决定。
+同页说明 WP `WORLD_METRES` normalization v2 的四公式复用；注册 matrix 仍是 VC-only。
 如果 caller 已有 official entry ID → method loader mapping 和 dataset-std ALL8
 population selection，则用同页的 `LSVHR_Evaluation_Population` +
 `evaluate_lsvhr_virtualcrowd_matrix(...)` 做 exact split matrix；registry closure 与 report
@@ -63,6 +68,8 @@ cp test/local_setting_test.py.example test/local_setting_test.py
 └─ 先推理再归约 -> Tester(..., network_driver=<driver>).stage_inference(dump_dir)
                   然后 .stage_eval(dump_dir)
    注:live network_driver 当前 deferred(见 design;评新 ckpt 才需要)。
+   dump_dir 必须尚不存在；推理先写 sibling staging directory，成功后原子
+   no-replace 发布。writer 失败会清理 staging，目标竞争则保留完整 staging 供恢复。
 
 我只想看测试集构成 / 接线 sanity?
 └─ testset.summary()  或  Tester(...).stage_list_segments()
@@ -126,11 +133,14 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `build_segment_tag` / `path_pkl_for_segment` / `list_dump_segment_tags` | dump 文件名规则 + 覆盖核对 |
 | `load_inference_dump(path_pkl)` | 读一个 dump → `(Test_Segment, pred_dict)`(qualname 路由;legacy bare `name_dataset`→canonical 变体,FIX-1) |
 | `Eval_Meta` / `Metric_Spec_3D` / `Metric_Spec_2D_OKS` | 评测契约(指标子集 / 对齐根 / 2D 投影空间) |
-| `TestSet` / `Test_Segment` / `Filter_Stats` | 测试集容器 / per-segment 元数据 / 过滤统计 |
+| `TestSet` / `Test_Segment` / `Filter_Stats` | 测试集容器 / per-segment 元数据 / 过滤统计；构造时校验 divider 与 segment 的 dataset/scene/seq/person/range 对齐 |
 | `GT_Provider_Base` / `Network_Driver_Base` | per-dataset GT / 推理 driver 的 ABC |
 | `TestSet_Builder` / `TestSet_Builder_Base` | 配好的测试集 builder(一般经 `get_testset_builder` 取实例)/ 其 ABC |
 | `compute_jitter(joints (T,J,3), fps)` | 绝对 jerk 平滑度(m/s^3) |
-| `compute_joint_position_errors(target, reference)` | 相同 `(...,J,3)` 数组的未归约 per-joint Euclidean error；不持有 root/alignment/unit/reduction policy |
+| `compute_joint_position_errors(...)` / `compute_joint_height_errors(...)` | equal `(...,J,3)` arrays 的 unreduced Euclidean / normalized-ground-height errors；不持有 joint-set/unit/reduction policy |
+| `evaluate_naive_tracks(sequence, filtering_id, split_id, selected_gt_mask)` | 按 native GT identity 把一个已校验 scene 划为 track records，并计算 additive NAIVE statistics |
+| `merge_naive_statistics(summaries, scene_id)` | 合并同 scene、同 profile/filtering/split 的 additive summaries；caller 保证 track identity 不重叠 |
+| `finalize_naive_statistics(summary)` | 把 additive summary 变成四个 nullable headline metric 值 |
 | `compute_keypoint_oks_matrix(reference_xy, target_xy, areas, sigmas, valid)` | method-neutral `(G,P)` OKS matrix；不持有 bbox/epsilon/matching/aggregation policy |
 | `compute_jta_sota_metric_sums(...)` / `finalize_jta_sota_metric_sums(...)` | paired JTA fitted-SMPL occurrence 的六项 additive statistics 与 occurrence-weighted result |
 | `validate_jta_sota_occurrence_partition(...)` | 要求 ordered batch occurrence IDs 精确覆盖 expected population |

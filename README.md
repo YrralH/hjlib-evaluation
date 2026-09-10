@@ -34,6 +34,22 @@ hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
 已核实 **无环**:assembly / dataset-std / skeleton 均纯下游(network 不反向依赖)。详见
 [docs/design/README.md](docs/design/README.md)。
 
+## 最小示例
+
+```python
+from hjlib_evaluation import Tester, build_test_assembly
+
+tester = Tester(
+    testset,
+    build_test_assembly(testset),
+    gt_provider=gt_provider,
+)
+tester.stage_eval('/path/to/per-segment-dumps')
+```
+
+`testset` 与 `gt_provider` 的 dataset-specific 构造见
+[usage 端到端示例](docs/usage/README.md#端到端示例评已有-dump迁移--parity-主路径)。
+
 ## 更多
 
 - [docs/usage/](docs/usage/) —— 怎么调用(评已有 dump / 评新 ckpt 的端到端流程)
@@ -49,5 +65,5 @@ hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
 - `Tracked_Scene` ground observation selection/sampling、RCR solve、density-balanced
   variants 与 same-ray ground error
   用法见 [ground_estimation.md](docs/usage/ground_estimation.md)。
-- GitHub remote:`YrralH/hjlib-evaluation`(建仓后)
+- GitHub remote: [YrralH/hjlib-evaluation](https://github.com/YrralH/hjlib-evaluation)
 - family 入口:[../CLAUDE.md](../CLAUDE.md)

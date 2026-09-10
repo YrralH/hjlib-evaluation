@@ -357,6 +357,8 @@ def evaluate_corrected_crowd_sequence(
 ) -> Corrected_Crowd_Sequence_Summary:
     '''Evaluate one normalized scene into exact sufficient statistics.'''
     data = validate_corrected_crowd_sequence(sequence)
+    if data.schema_version != CORRECTED_CROWD_SCHEMA_VERSION:
+        raise ValueError('legacy corrected crowd evaluation requires schema version 1')
     visible = np.any(data.gt_visibility_native > 0.0, axis=1)
     targets = data.prediction_identity_target_gt_rows
     mapped_invisible = (targets >= 0) & ~visible[np.maximum(targets, 0)]
@@ -405,6 +407,8 @@ def evaluate_corrected_crowd_selected_view(
 ) -> Corrected_Crowd_Selected_View_Sequence_Summary:
     '''Evaluate one explicit subset without redefining base-visible run labels.'''
     data = validate_corrected_crowd_sequence(sequence)
+    if data.schema_version != CORRECTED_CROWD_SCHEMA_VERSION:
+        raise ValueError('legacy corrected crowd evaluation requires schema version 1')
     validated_name = validate_corrected_crowd_selected_view_name(view_name)
     selected_mask = bool_array(selected_gt_mask, 'selected_gt_mask')
     if selected_mask.shape != (len(data.gt_frame_ids),):

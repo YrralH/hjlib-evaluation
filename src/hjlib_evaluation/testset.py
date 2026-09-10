@@ -21,6 +21,9 @@ from dataclasses import dataclass, replace
 from typing import Iterable, List, Optional, Set
 
 from hjlib_dataset_assembly.dataset_builder.divider import Filtered_Sub_Seq_Divider
+from hjlib_dataset_assembly.dataset_builder.label_manager import (
+    extract_name_seq_info,
+)
 
 from hjlib_evaluation.test_segment import Test_Segment
 
@@ -74,7 +77,8 @@ class TestSet:
             fps:             float,
             filter_stats:    Optional[Filter_Stats] = None,
         ):
-        assert len(divider) == len(test_segments), (len(divider), len(test_segments))
+        if len(divider) != len(test_segments):
+            raise ValueError('divider and test-segment counts differ')
         self.name_dataset    = name_dataset
         self.policy          = policy
         self.split           = split
@@ -83,6 +87,35 @@ class TestSet:
         self.path_root_label = path_root_label
         self.fps             = fps
         self.filter_stats    = filter_stats
+        self.require_internal_alignment()
+
+    def require_internal_alignment(self) -> None:
+        '''Reject divider/test-segment order or range substitution.'''
+        if len(self.divider) != len(self.test_segments):
+            raise ValueError('divider and test-segment counts differ')
+        scene_offset_by_seq: dict[tuple[str, str], int] = {}
+        for index, segment in enumerate(self.test_segments):
+            info = self.divider.get_seq_info(index)
+            scene_offset_start = (
+                segment.index_frame_original_start
+                - info.index_within_singleseq_start)
+            scene_offset_end = (
+                segment.index_frame_original_end
+                - info.index_within_singleseq_end)
+            id_person, _ = extract_name_seq_info(info.name_seq)
+            key = (info.name_scene, info.name_seq)
+            previous_offset = scene_offset_by_seq.setdefault(
+                key, scene_offset_start)
+            if segment.name_dataset != self.name_dataset \
+                    or info.name_scene != segment.name_scene \
+                    or info.name_seq != segment.name_seq \
+                    or id_person != segment.id_person \
+                    or info.index_within_singleseq_end \
+                    - info.index_within_singleseq_start != segment.length \
+                    or scene_offset_start != scene_offset_end \
+                    or scene_offset_start != previous_offset:
+                raise ValueError(
+                    'divider and test segment differ at index %d' % index)
 
     def __len__(self) -> int:
         return len(self.test_segments)
@@ -112,7 +145,7 @@ class TestSet:
                 % (length_overlap, length_window)
             )
         if tail_policy != 'drop':
-            raise ValueError("unsupported tail_policy %r; only 'drop' is implemented" % tail_policy)
+            raise ValueError('unsupported tail_policy %r; only drop is implemented' % tail_policy)
 
         stride = length_window - length_overlap
         subset_ranges: List[tuple[str, str, int, int]] = []
@@ -183,6 +216,7 @@ class TestSet:
                 longest_segment    = max(seg_lens) if seg_lens else 0,
                 total_frames       = sum(seg_lens),
             )
+        self.require_internal_alignment()
         n_scenes_after = len(set(s.name_scene for s in new_segments))
         print('TestSet.restrict_to_scenes: kept %d / %d segments across %d scenes'
               % (len(new_segments), n_old, n_scenes_after))

@@ -375,7 +375,7 @@ def _exact_consecutive_segments(
     return segments
 
 
-def _root_acceleration_magnitudes(
+def root_acceleration_magnitudes(
     root_world_m: NDArray[np.generic],
 ) -> NDArray[np.float64]:
     '''Return historical twice-central-differenced root magnitudes.'''
@@ -407,10 +407,10 @@ def compute_virtualcrowd_acc_root_ratio_statistics(
         join.gt_rows,
         join.prediction_rows,
     ):
-        predicted = _root_acceleration_magnitudes(
+        predicted = root_acceleration_magnitudes(
             sequence.prediction_joints_world_m[segment_prediction_rows, 0],
         )
-        reference = _root_acceleration_magnitudes(
+        reference = root_acceleration_magnitudes(
             sequence.gt_joints_world_m[segment_gt_rows, 0],
         )
         if predicted.shape != reference.shape:

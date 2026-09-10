@@ -38,7 +38,7 @@ from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import TestSet
 
 
-Path_Pkl_For_Segment = Callable[[str, Test_Segment], str]
+type Path_Pkl_For_Segment = Callable[[str, Test_Segment], str]
 
 
 def compute_jitter(joints_3d: np.ndarray, fps: float, divide_by_10: bool = False) -> float:
@@ -85,7 +85,12 @@ def eval_dumps_against_gt(
     already interpolated invalid-frame world translation before writing it. Use
     ``joints_54_world_raw`` only as a diagnostic no-invalid-tame view; it is expected to
     be worse on detector-failure frames.'''
+    testset.require_internal_alignment()
+    if len(testset) == 0:
+        raise ValueError('evaluation requires a nonempty TestSet')
     meta = gt_provider.get_eval_meta()
+    if meta.name_dataset != testset.name_dataset:
+        raise ValueError('GT provider dataset differs from TestSet')
     scale_mm = {'m': 1000.0, 'mm': 1.0}[meta.unit_world]
     fps = get_dataset_facts(meta.name_dataset).fps
 
@@ -131,14 +136,16 @@ def _load_one_segment(
     ) -> Tuple[np.ndarray, np.ndarray]:
     '''Load pred dump, assert segment match, fetch GT joints, assert shape.'''
     path_pkl = path_pkl_for_segment(path_dump_dir, seg)
-    assert osp.isfile(path_pkl), (
-        'eval reducer: missing inference pkl for flat_idx=%d (%s). Expected: %s'
-        % (flat_idx, seg.to_str(), path_pkl))
+    if not osp.isfile(path_pkl):
+        raise FileNotFoundError(
+            'eval reducer: missing inference pkl for flat_idx=%d (%s). Expected: %s'
+            % (flat_idx, seg.to_str(), path_pkl))
     seg_on_disk, pred = load_inference_dump(path_pkl)
-    assert seg_on_disk == seg, (
-        'eval reducer: pkl at %s describes a different segment than TestSet[flat_idx=%d]. '
-        'Likely a stale inference dump. Disk: %s  vs  TestSet: %s'
-        % (path_pkl, flat_idx, seg_on_disk.to_str(), seg.to_str()))
+    if seg_on_disk != seg:
+        raise ValueError(
+            'eval reducer: pkl at %s describes a different segment than TestSet[flat_idx=%d]. '
+            'Likely a stale inference dump. Disk: %s  vs  TestSet: %s'
+            % (path_pkl, flat_idx, seg_on_disk.to_str(), seg.to_str()))
 
     if pred_joints_key not in pred:
         raise KeyError(
@@ -149,7 +156,10 @@ def _load_one_segment(
         seg.name_scene, seg.name_seq,
         (seg.index_frame_original_start, seg.index_frame_original_end),
     )
-    assert pred_joints.shape == gt_joints.shape, (pred_joints.shape, gt_joints.shape, seg.to_str())
+    if pred_joints.shape != gt_joints.shape:
+        raise ValueError(
+            'prediction/GT shapes differ: %s vs %s for %s'
+            % (pred_joints.shape, gt_joints.shape, seg.to_str()))
     return pred_joints, gt_joints
 
 

@@ -14,12 +14,15 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 
 | 文件 | 覆盖 |
 |---|---|
-| `test_testset.py` | `Test_Segment`(length/to_str);`TestSet`(len / get_test_segment / restrict_to_scenes 对齐 / summary);`get_testset_builder` 路径解析(wp→`wp` token 等)+ vrv1/unknown/curated-policy 错误分支 |
+| `test_testset.py` | `Test_Segment`(length/to_str);`TestSet` 的 divider/segment identity、offset、person 与顺序对齐；restrict/summary；`get_testset_builder` 路径解析和错误分支 |
 | `test_gt.py` | `Eval_Meta`(WP 全 SMPL-24 / JTA 12·10 limb 两 variant);`get_gt_provider` 错误分支(vrv1 / unknown / jta 缺 raw root) |
-| `test_eval_pred_field.py` | `eval_dumps_against_gt` / `Tester.stage_eval` 的 `pred_joints_key` 字段选择:默认 `joints_54_world` vs raw 诊断 `joints_54_world_raw` |
+| `test_eval_pred_field.py` | `eval_dumps_against_gt` / `Tester.stage_eval` 的字段选择、空集/陈旧 dump 拒绝，以及 `Tester.stage_inference` 的 assembly identity binding 与 failure-clean publication |
+| `test_output_publication.py` | staged directory 成功提交、已存在目标拒绝、writer failure 清理，以及 destination race 的原子 no-replace/保留 staging 语义 |
 | `test_testset_fixed_window.py` | fixed-window 子集的窗口范围、segment offset、统计量与错误分支 |
 | `test_trajectory_residual.py` | scalar residual summary、authoritative mask、overflow/feasibility、macro/micro reduction |
 | `test_ground_estimation_protocol.py` | observation selection/sampling、bbox-ratio strict gate、RCR seam、same-ray error、plane/oracle decomposition |
+| `test_metric_leaves.py` | unreduced Euclidean errors；ground normal scale/sign invariance、leading-position normals、non-finite/degenerate normal rejection；package-root exports |
+| `test_smpl_joint_occurrence_reducer.py` | sparse paired SMPL occurrence 的 identity/layout/unit、MPJPE/T-MPJPE、multi-spec reduction 与错误分支；pytest/master 双入口 |
 | `test_jta_person_detection.py` | unordered JTA GT/prediction contracts、cardinality-first OKS association、MPJPE/PA reduction、exact-degeneracy、result invariants 与 canonical codec |
 | `test_density_balanced_rcr_operation.py` | compact eight-scene unweighted/k16/k32/k64 operation、17,992 dry count、identity/tamper/reload、CLI help |
 | `test_all_func.py` | master runner;导入并依次跑每个 `smoke_test_*` |

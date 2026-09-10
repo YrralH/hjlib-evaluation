@@ -6,14 +6,14 @@ from hjlib_evaluation.testset import Filter_Stats, TestSet
 
 def build_testset() -> TestSet:
     divider = Filtered_Sub_Seq_Divider([
-        ('scene_a', 'seq_a', 10, 390),
-        ('scene_b', 'seq_b', 5, 90),
+        ('scene_a', '0007_0000', 10, 390),
+        ('scene_b', '0009_0000', 5, 90),
     ])
     segments = [
         Test_Segment(
             name_dataset='dummy_smpl',
             name_scene='scene_a',
-            name_seq='seq_a',
+            name_seq='0007_0000',
             id_person=7,
             index_frame_original_start=1000,
             index_frame_original_end=1380,
@@ -21,7 +21,7 @@ def build_testset() -> TestSet:
         Test_Segment(
             name_dataset='dummy_smpl',
             name_scene='scene_b',
-            name_seq='seq_b',
+            name_seq='0009_0000',
             id_person=9,
             index_frame_original_start=205,
             index_frame_original_end=290,
@@ -100,6 +100,10 @@ def smoke_test_testset_fixed_window() -> None:
         raise AssertionError('tail_policy != drop should raise')
 
     print('[PASS] test_testset_fixed_window')
+
+
+def test_testset_fixed_window() -> None:
+    smoke_test_testset_fixed_window()
 
 
 if __name__ == '__main__':

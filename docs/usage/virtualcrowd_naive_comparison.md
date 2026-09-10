@@ -4,6 +4,13 @@ Use this API after a method adapter has normalized one scene into
 `Corrected_Crowd_Sequence` and the population owner has produced the exact GT
 row mask. The evaluator does not load dumps or run a model.
 
+For WP, the method adapter may supply schema 2 `Corrected_Crowd_Sequence` with
+`coordinate_frame='WORLD_METRES'`, native non-negative GT row IDs and WP
+filtering/split IDs. Use the same scene evaluator/reducer, not the VC-specific
+registered matrix. The adapter must preserve source cadence and compute GT
+and prediction projections/depth from their respective cameras. The four
+formulas are unchanged; retain the explicit WP protocol label in reports.
+
 ```python
 from hjlib_evaluation import (
     compute_virtualcrowd_mpjpe_world_statistics,

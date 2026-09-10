@@ -36,6 +36,7 @@ from hjlib_evaluation import (
     collect_ground_observations,
     summarize_ground_errors,
 )
+from hjlib_evaluation.output_publication import staged_output_directory
 
 
 SCENES = (
@@ -365,19 +366,20 @@ def run_virtualcrowd_density_balanced_rcr_cartesian(
         support_root,
         scenes,
     )
-    write_plain_result(
-        path_output_root,
-        scenes,
-        tuple(config.name for config in configs),
-        summary,
-        payloads,
-    )
-    validate_cartesian_result(
-        path_output_root,
-        dataset_root,
-        tracked_root,
-        support_root,
-    )
+    with staged_output_directory(path_output_root) as output_root:
+        write_plain_result(
+            output_root,
+            scenes,
+            tuple(config.name for config in configs),
+            summary,
+            payloads,
+        )
+        validate_cartesian_result(
+            output_root,
+            dataset_root,
+            tracked_root,
+            support_root,
+        )
     return summary
 
 

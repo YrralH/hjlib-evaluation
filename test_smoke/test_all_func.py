@@ -25,6 +25,12 @@ from test_eval_pred_field import smoke_test_eval_pred_field
 from test_testset_fixed_window import smoke_test_testset_fixed_window
 from test_trajectory_residual import smoke_test_trajectory_residual
 from test_virtualcrowd_naive_comparison import smoke_test_virtualcrowd_naive_comparison
+from test_world_crowd_schema import smoke_test_world_crowd_schema
+from test_naive_track_statistics import smoke_test_naive_track_statistics
+from test_output_publication import smoke_test_output_publication
+from test_smpl_joint_occurrence_reducer import (
+    smoke_test_smpl_joint_occurrence_reducer,
+)
 from test_corrected_crowd import smoke_test_corrected_crowd
 from test_density_balanced_rcr_operation import smoke_test_density_balanced_rcr_operation
 from test_density_balanced_rcr_cartesian import smoke_test_density_balanced_rcr_cartesian
@@ -46,6 +52,10 @@ def main() -> None:
     smoke_test_testset_fixed_window()
     smoke_test_trajectory_residual()
     smoke_test_virtualcrowd_naive_comparison()
+    smoke_test_world_crowd_schema()
+    smoke_test_naive_track_statistics()
+    smoke_test_output_publication()
+    smoke_test_smpl_joint_occurrence_reducer()
     print('test_all_func: all smoke tests passed')
 
 

@@ -11,6 +11,15 @@ reduction. Dataset assembly, model inference, camera choice, prediction
 adaptation, result registration and visualization remain in their respective
 experiment/adapter layers.
 
+The four formulas also accept explicitly normalized WP world data. The additive
+`Corrected_Crowd_Sequence` schema 2 uses `WORLD_METRES` and non-negative native
+GT person rows (including zero); schema 1 keeps its existing fixed-camera-world
+tag and positive GT IDs unchanged. Adapters own GT/method camera projection,
+visibility and native cadence validation. No world fit or FPS scaling is added.
+The historical metric profile name remains `VC_NAIVE_COMPARISON_METRICS_V1`;
+WP callers must label their actual population, not claim VC protocol identity.
+The registered matrix composition below remains VC-only.
+
 The evaluator consumes `Corrected_Crowd_Sequence`, the registry-owned
 `filtering_id` and `split_id` as separate identities, plus an exact GT-row
 boolean mask. It joins selected rows through the sequence's existing

@@ -13,6 +13,7 @@ from hjlib_geometry import fit_similarity_registration
 
 
 CORRECTED_CROWD_SCHEMA_VERSION = 1
+WORLD_CROWD_SCHEMA_VERSION = 2
 CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION = 1
 CORRECTED_CROWD_VIEWS = ('GT_VISIBLE', 'C4D_DYCROWD_COMMON')
 CORRECTED_CROWD_METRICS = (
@@ -39,10 +40,10 @@ CORRECTED_CROWD_METRIC_UNITS = (
 )
 UNMAPPED_GT_ROW = -1
 
-Float_Array = NDArray[np.float64]
-Int_Array = NDArray[np.int64]
-Bool_Array = NDArray[np.bool_]
-JSON_Object = dict[str, Any]
+type Float_Array = NDArray[np.float64]
+type Int_Array = NDArray[np.int64]
+type Bool_Array = NDArray[np.bool_]
+type JSON_Object = dict[str, Any]
 
 
 def immutable_array(value: NDArray[np.generic], dtype: np.dtype[Any]) -> NDArray[Any]:
@@ -126,12 +127,15 @@ class Corrected_Crowd_Sequence:
     def __post_init__(self) -> None:
         if type(self.schema_version) is not int:
             raise TypeError('schema_version must be an exact int')
-        if self.schema_version != CORRECTED_CROWD_SCHEMA_VERSION:
+        if self.schema_version not in (CORRECTED_CROWD_SCHEMA_VERSION, WORLD_CROWD_SCHEMA_VERSION):
             raise ValueError('unsupported corrected crowd schema version')
         if not self.scene_id:
             raise ValueError('scene_id must be a non-empty string')
         literals = {
-            'coordinate_frame': 'FIXED_CAMERA_WORLD_EQUIVALENT',
+            'coordinate_frame': (
+                'FIXED_CAMERA_WORLD_EQUIVALENT'
+                if self.schema_version == CORRECTED_CROWD_SCHEMA_VERSION else 'WORLD_METRES'
+            ),
             'length_unit': 'metre',
             'camera_depth_axis': 'POSITIVE_Z_AWAY_FROM_CAMERA',
             'smpl_joint_order': 'SMPL_24',
@@ -223,8 +227,9 @@ class Corrected_Crowd_Sequence:
 
     def validate_values_and_keys(self) -> None:
         '''Validate values and cross-array association invariants.'''
-        if np.any(self.gt_track_ids <= 0):
-            raise ValueError('gt_track_ids must be positive')
+        minimum_track_id = 1 if self.schema_version == CORRECTED_CROWD_SCHEMA_VERSION else 0
+        if np.any(self.gt_track_ids < minimum_track_id):
+            raise ValueError('gt_track_ids are below the declared schema minimum')
         if np.any(self.prediction_local_track_ids < 0):
             raise ValueError('prediction_local_track_ids must be non-negative')
         if not np.isin(self.gt_frame_ids, self.frame_domain).all():

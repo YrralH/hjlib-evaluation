@@ -10,6 +10,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from hjlib_evaluation.corrected_crowd_data import (
+    CORRECTED_CROWD_SCHEMA_VERSION,
     CORRECTED_CROWD_SELECTED_VIEW_SCHEMA_VERSION,
     Corrected_Crowd_Selected_View_Sequence_Summary,
     Corrected_Crowd_Sequence,
@@ -261,6 +262,8 @@ def evaluate_corrected_crowd_world_dynamics(
 ) -> Corrected_Crowd_World_Dynamics_Sequence_Summary:
     '''Evaluate one selected population into world-dynamics statistics.'''
     data = validate_corrected_crowd_sequence(sequence)
+    if data.schema_version != CORRECTED_CROWD_SCHEMA_VERSION:
+        raise ValueError('legacy corrected crowd evaluation requires schema version 1')
     name, match_gt, match_pred, labels, selected_count = prepare_selected_rows(
         data,
         view_name,
@@ -292,6 +295,8 @@ def evaluate_corrected_crowd_selected_view_and_world_dynamics(
 ]:
     '''Validate once and evaluate legacy selected-view plus world dynamics.'''
     data = validate_corrected_crowd_sequence(sequence)
+    if data.schema_version != CORRECTED_CROWD_SCHEMA_VERSION:
+        raise ValueError('legacy corrected crowd evaluation requires schema version 1')
     name, match_gt, match_pred, labels, selected_count = prepare_selected_rows(
         data,
         view_name,

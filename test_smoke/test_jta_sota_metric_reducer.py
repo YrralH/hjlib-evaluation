@@ -21,7 +21,7 @@ from hjlib_evaluation import (
 from hjlib_evaluation.jta_sota_metric_reducer import JTA_SOTA_JOINT_COUNT
 
 
-Float_Array = NDArray[np.float64]
+type Float_Array = NDArray[np.float64]
 
 
 def base_joints(count: int = 2) -> Float_Array:
