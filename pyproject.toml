@@ -40,4 +40,4 @@ hjlib-geometry = { path = '../hjlib-geometry', commit = "6ebc8ed2d59c5a0f4d622ca
 hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "b97ce721c3dd74e81202eceaf1e2b05fb076efb2" }
 hjlib-meshes = { path = '../hjlib-meshes', commit = "359b163db69a57c9536fbccc74a260e3240a580e" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "72bec37abeefda708cf9eedfdd2217075758045b" }
-hjlib-systools = { path = '../hjlib-systools', commit = "5014c986f2d75d8fa95914a2807f6e9cbe180433" }
+hjlib-systools = { path = '../hjlib-systools', commit = "859fcfd04b7ded826e2171a8082909c2de44a751" }
