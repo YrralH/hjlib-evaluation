@@ -1,4 +1,4 @@
-'''Smoke tests for the provisional VirtualCrowd four-metric evaluator.'''
+'''Smoke tests for the provisional VirtualCrowd NAIVE evaluator.'''
 from dataclasses import replace
 
 import numpy as np
@@ -15,6 +15,7 @@ from hjlib_evaluation import (
     compute_virtualcrowd_acc_root_ratio_statistics,
     compute_virtualcrowd_mpjpe_world_statistics,
     compute_virtualcrowd_oks_vis_statistics,
+    compute_virtualcrowd_pa_mpjpe_statistics,
     compute_virtualcrowd_t_mpjpe_statistics,
     direct_target_join,
     evaluate_virtualcrowd_naive_comparison,
@@ -107,19 +108,22 @@ def test_exact_geometry_profile_and_zero_visible_support() -> None:
     sequence = make_sequence()
     summary, result = evaluate_result(sequence)
 
-    assert VC_NAIVE_COMPARISON_PROFILE_ID == 'VC_NAIVE_COMPARISON_METRICS_V1'
+    assert VC_NAIVE_COMPARISON_PROFILE_ID == 'VC_NAIVE_COMPARISON_METRICS_V2'
     assert VC_NAIVE_COMPARISON_METRICS == (
-        'MPJPE-WORLD', 'T-MPJPE', 'OKS-VIS', 'ACC-ROOT-RATIO',
+        'MPJPE-WORLD', 'T-MPJPE', 'PA-MPJPE', 'OKS-VIS',
+        'ACC-ROOT-RATIO',
     )
     assert isinstance(summary, VirtualCrowd_Naive_Comparison_Sequence_Summary)
     assert isinstance(result, VirtualCrowd_Naive_Comparison_Result)
     assert summary.selected_gt_count == 8
     assert summary.matched_selected_count == 8
     assert summary.mpjpe_world_count == 8 * 24
+    assert summary.pa_mpjpe_count == 8 * 24
     assert summary.oks_vis_count == 7
     assert summary.acc_root_sample_count == 2
     assert result.mpjpe_world_mm == pytest.approx(0.0)
     assert result.t_mpjpe_mm == pytest.approx(0.0)
+    assert result.pa_mpjpe_mm == pytest.approx(0.0, abs=1e-9)
     assert result.oks_vis == pytest.approx(1.0)
     assert result.acc_root_ratio == pytest.approx(1.0)
 
@@ -139,6 +143,10 @@ def test_validated_join_and_independent_metric_leaves() -> None:
     )
     assert compute_virtualcrowd_t_mpjpe_statistics(join) == (
         pytest.approx(0.0),
+        8 * 24,
+    )
+    assert compute_virtualcrowd_pa_mpjpe_statistics(join) == (
+        pytest.approx(0.0, abs=1e-12),
         8 * 24,
     )
     assert compute_virtualcrowd_oks_vis_statistics(join) == (
@@ -165,9 +173,9 @@ def test_validated_join_and_independent_metric_leaves() -> None:
         )
 
 
-def test_naive_sequence_construction_skips_layout_preflight() -> None:
+def test_naive_pa_rejects_undefined_degenerate_fit() -> None:
     base = make_sequence()
-    coincident = np.repeat(base.gt_joints_world_m[:1], 2, axis=0)
+    coincident = np.tile(base.gt_joints_world_m[:1, :1], (2, 24, 1))
     sequence = Corrected_Crowd_Sequence(
         schema_version=CORRECTED_CROWD_SCHEMA_VERSION,
         scene_id='degenerate_layout',
@@ -194,14 +202,13 @@ def test_naive_sequence_construction_skips_layout_preflight() -> None:
         matched_prediction_rows=np.array([0, 1], dtype=np.int64),
         common_gt_mask=np.ones(2, dtype=np.bool_),
     )
-    summary = evaluate_virtualcrowd_naive_comparison(
-        sequence,
-        FILTERING_ID,
-        SPLIT_ID,
-        np.ones(2, dtype=np.bool_),
-    )
-    assert summary.selected_gt_count == 2
-    assert summary.mpjpe_world_sum_m == pytest.approx(0.0)
+    with pytest.raises(ValueError, match='spread'):
+        evaluate_virtualcrowd_naive_comparison(
+            sequence,
+            FILTERING_ID,
+            SPLIT_ID,
+            np.ones(2, dtype=np.bool_),
+        )
 
 
 def test_translation_and_acceleration_scaling_semantics() -> None:
@@ -212,6 +219,7 @@ def test_translation_and_acceleration_scaling_semantics() -> None:
     _, translated_result = evaluate_result(translated)
     assert translated_result.mpjpe_world_mm == pytest.approx(1000.0)
     assert translated_result.t_mpjpe_mm == pytest.approx(0.0)
+    assert translated_result.pa_mpjpe_mm == pytest.approx(0.0, abs=1e-9)
     assert translated_result.oks_vis == pytest.approx(1.0)
     assert translated_result.acc_root_ratio == pytest.approx(1.0)
 
@@ -219,6 +227,7 @@ def test_translation_and_acceleration_scaling_semantics() -> None:
         make_sequence(prediction_motion_scale=2.0),
     )
     assert scaled_result.t_mpjpe_mm == pytest.approx(0.0)
+    assert scaled_result.pa_mpjpe_mm == pytest.approx(0.0, abs=1e-9)
     assert scaled_result.acc_root_ratio == pytest.approx(2.0)
 
 
@@ -246,19 +255,34 @@ def test_oks_visibility_bbox_and_source_depth() -> None:
     )[1].oks_vis
     assert large_bbox_oks > normal_oks
 
-    invalid_depth = np.array(sequence.prediction_coco17_camera_depth_m, copy=True)
-    invalid_depth[2, 0] = 0.0
-    unchecked_by_stable_match = replace(
+    baseline_summary, baseline_result = evaluate_result(sequence)
+    filtered_depth = np.array(sequence.prediction_coco17_camera_depth_m, copy=True)
+    filtered_depth[2] = -1.0
+    filtered_depth[4, 0] = 0.0
+    filtered_xy = np.array(sequence.prediction_coco17_xy_px, copy=True)
+    filtered_xy[4, 0] += 10000.0
+    filtered = replace(
         sequence,
-        prediction_coco17_camera_depth_m=invalid_depth,
+        prediction_coco17_camera_depth_m=filtered_depth,
+        prediction_coco17_xy_px=filtered_xy,
     )
-    with pytest.raises(ValueError, match='positive prediction camera depth'):
-        evaluate_virtualcrowd_naive_comparison(
-            unchecked_by_stable_match,
-            FILTERING_ID,
-            SPLIT_ID,
-            selected_all(sequence),
+    filtered_summary, filtered_result = evaluate_result(filtered)
+    for name in (
+        'selected_gt_count', 'matched_selected_count',
+        'mpjpe_world_sum_m', 'mpjpe_world_count',
+        't_mpjpe_sum_m', 't_mpjpe_count',
+        'pa_mpjpe_sum_m', 'pa_mpjpe_count',
+        'acc_root_predicted_sum_m_per_frame2',
+        'acc_root_reference_sum_m_per_frame2', 'acc_root_sample_count',
+    ):
+        assert getattr(filtered_summary, name) == pytest.approx(
+            getattr(baseline_summary, name),
         )
+    assert filtered_summary.oks_vis_count == baseline_summary.oks_vis_count - 1
+    assert filtered_summary.oks_vis_sum == pytest.approx(
+        baseline_summary.oks_vis_sum - 1.0,
+    )
+    assert filtered_result.oks_vis == pytest.approx(baseline_result.oks_vis)
 
 
 def test_exact_direct_target_completeness() -> None:
@@ -432,6 +456,15 @@ def test_unequal_support_micro_reduction_and_partial_scene_support() -> None:
         * (base_summary.t_mpjpe_sum_m + unequal_summary.t_mpjpe_sum_m)
         / (base_summary.t_mpjpe_count + unequal_summary.t_mpjpe_count)
     )
+    assert base_summary.pa_mpjpe_sum_m is not None
+    assert unequal_summary.pa_mpjpe_sum_m is not None
+    assert base_summary.pa_mpjpe_count is not None
+    assert unequal_summary.pa_mpjpe_count is not None
+    assert unequal_result.pa_mpjpe_mm == pytest.approx(
+        1000.0
+        * (base_summary.pa_mpjpe_sum_m + unequal_summary.pa_mpjpe_sum_m)
+        / (base_summary.pa_mpjpe_count + unequal_summary.pa_mpjpe_count)
+    )
     assert unequal_result.oks_vis == pytest.approx(
         (base_summary.oks_vis_sum + unequal_summary.oks_vis_sum)
         / (base_summary.oks_vis_count + unequal_summary.oks_vis_count)
@@ -486,7 +519,7 @@ def smoke_test_virtualcrowd_naive_comparison() -> None:
     '''Run the public provisional-evaluator smoke entry point.'''
     test_exact_geometry_profile_and_zero_visible_support()
     test_validated_join_and_independent_metric_leaves()
-    test_naive_sequence_construction_skips_layout_preflight()
+    test_naive_pa_rejects_undefined_degenerate_fit()
     test_translation_and_acceleration_scaling_semantics()
     test_oks_visibility_bbox_and_source_depth()
     test_exact_direct_target_completeness()

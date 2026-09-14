@@ -4,6 +4,26 @@ import numpy as np
 from numpy.typing import NDArray
 
 
+def make_positive_depth_joint_mask(
+        reference_joint_valid: NDArray[np.bool_],
+        target_camera_depth: NDArray[np.generic],
+    ) -> NDArray[np.bool_]:
+    '''Keep reference-valid joints with finite positive paired target depth.'''
+    valid = np.asarray(reference_joint_valid)
+    if valid.dtype != np.bool_ or valid.ndim != 2:
+        raise TypeError('reference_joint_valid must be a two-dimensional bool array')
+    depth = validate_real_numeric_array(
+        target_camera_depth,
+        'target_camera_depth',
+        ndim=2,
+    )
+    if depth.shape != valid.shape:
+        raise ValueError('target_camera_depth must match reference_joint_valid shape')
+    if not np.isfinite(depth).all():
+        raise ValueError('target_camera_depth must be finite')
+    return np.asarray(valid & (depth > 0.0), dtype=np.bool_)
+
+
 def compute_paired_keypoint_oks(
         reference_points_xy: NDArray[np.generic],
         target_points_xy: NDArray[np.generic],

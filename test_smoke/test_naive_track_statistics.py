@@ -8,6 +8,7 @@ from numpy.typing import NDArray
 
 from hjlib_evaluation import (
     Naive_Track_Statistics,
+    VC_NAIVE_COMPARISON_PROFILE_V1_ID,
     evaluate_naive_tracks,
     finalize_naive_statistics,
     merge_naive_statistics,
@@ -50,6 +51,10 @@ def make_two_tracks() -> Corrected_Crowd_Sequence:
 
 def test_track_partition_parity_and_chunk_independence() -> None:
     sequence = make_two_tracks()
+    prediction = sequence.prediction_joints_world_m.copy()
+    prediction[:8, 1, 2] += 0.05
+    prediction[8:, 2, 0] += 0.25
+    sequence = replace(sequence, prediction_joints_world_m=prediction)
     selected: NDArray[np.bool_] = np.ones(16, dtype=np.bool_)
     selected[-1] = False
     with patch('hjlib_evaluation.naive_track_statistics.direct_target_join', wraps=direct_target_join) as join:
@@ -70,6 +75,17 @@ def test_track_partition_parity_and_chunk_independence() -> None:
         merged.acc_root_predicted_sum_m_per_frame2 / merged.acc_root_reference_sum_m_per_frame2,
     )
     assert root_ratio != pytest.approx((2.0 + 1.0 / 3.0) / 2.0)
+    pa_mpjpe = finalize_naive_statistics(merged)['pa_mpjpe_mm']
+    track_pa_0 = finalize_naive_statistics(tracks[0].statistics)['pa_mpjpe_mm']
+    track_pa_1 = finalize_naive_statistics(tracks[1].statistics)['pa_mpjpe_mm']
+    assert isinstance(pa_mpjpe, float)
+    assert isinstance(track_pa_0, float)
+    assert isinstance(track_pa_1, float)
+    assert merged.pa_mpjpe_sum_m is not None
+    assert merged.pa_mpjpe_count is not None
+    assert pa_mpjpe == pytest.approx(
+        1000.0 * merged.pa_mpjpe_sum_m / merged.pa_mpjpe_count)
+    assert pa_mpjpe != pytest.approx((track_pa_0 + track_pa_1) / 2.0)
 
 
 def test_gaps_row_zero_and_empty_selection() -> None:
@@ -96,10 +112,30 @@ def test_unsupported_metrics_and_stationary_reference() -> None:
     )
     track = evaluate_naive_tracks(sequence, FILTERING_ID, SPLIT_ID, np.ones(8, dtype=np.bool_))[0]
     values = finalize_naive_statistics(track.statistics)
-    assert values == {'mpjpe_world_mm': 0.0, 't_mpjpe_mm': 0.0, 'oks_vis': None, 'acc_root_ratio': None}
+    assert values == {
+        'mpjpe_world_mm': 0.0,
+        't_mpjpe_mm': 0.0,
+        'pa_mpjpe_mm': pytest.approx(0.0, abs=1e-9),
+        'oks_vis': None,
+        'acc_root_ratio': None,
+    }
     assert track.statistics.acc_root_sample_count == 2
     empty = evaluate_virtualcrowd_naive_comparison(sequence, FILTERING_ID, SPLIT_ID, np.zeros(8, dtype=np.bool_))
     assert all(value is None for value in finalize_naive_statistics(empty).values())
+
+    legacy = replace(
+        track.statistics,
+        profile_id=VC_NAIVE_COMPARISON_PROFILE_V1_ID,
+        pa_mpjpe_sum_m=None,
+        pa_mpjpe_count=None,
+    )
+    assert finalize_naive_statistics(legacy) == {
+        'mpjpe_world_mm': 0.0,
+        't_mpjpe_mm': 0.0,
+        'oks_vis': None,
+        'acc_root_ratio': None,
+    }
+    assert merge_naive_statistics([legacy], legacy.scene_id) == legacy
 
 
 def test_duplicate_direct_target_and_invalid_ranges() -> None:
@@ -150,10 +186,36 @@ def test_paired_visibility_parity_and_validation() -> None:
     points = np.zeros((1, 17, 2), dtype=np.float64)
     with pytest.raises(ValueError, match='at least one valid'):
         compute_paired_keypoint_oks(points, points, np.ones(1), np.ones(17), np.zeros((1, 17), dtype=np.bool_))
-    bad_depth = np.array(sequence.prediction_coco17_camera_depth_m, copy=True)
-    bad_depth[2, 1] = 0.0
-    with pytest.raises(ValueError, match='positive prediction camera depth'):
-        evaluate_naive_tracks(replace(sequence, prediction_coco17_camera_depth_m=bad_depth), FILTERING_ID, SPLIT_ID, selected)
+    depth_base = make_sequence()
+    depth_selected = np.ones(8, dtype=np.bool_)
+    depth_track = evaluate_naive_tracks(
+        depth_base, FILTERING_ID, SPLIT_ID, depth_selected,
+    )[0]
+    filtered_depth = np.array(
+        depth_base.prediction_coco17_camera_depth_m, copy=True,
+    )
+    filtered_depth[2] = -1.0
+    filtered_depth[4, 0] = 0.0
+    filtered_xy = np.array(depth_base.prediction_coco17_xy_px, copy=True)
+    filtered_xy[4, 0] += 10000.0
+    filtered = replace(
+        depth_base,
+        prediction_coco17_camera_depth_m=filtered_depth,
+        prediction_coco17_xy_px=filtered_xy,
+    )
+    filtered_track = evaluate_naive_tracks(
+        filtered, FILTERING_ID, SPLIT_ID, depth_selected,
+    )[0]
+    assert filtered_track.statistics.oks_vis_count \
+        == depth_track.statistics.oks_vis_count - 1
+    assert filtered_track.statistics.oks_vis_sum == pytest.approx(
+        depth_track.statistics.oks_vis_sum - 1.0,
+    )
+    for name, expected in asdict(depth_track.statistics).items():
+        if name.startswith('oks_vis'):
+            continue
+        actual = getattr(filtered_track.statistics, name)
+        assert actual == pytest.approx(expected) if isinstance(expected, float) else actual == expected
 
 
 def smoke_test_naive_track_statistics() -> None:

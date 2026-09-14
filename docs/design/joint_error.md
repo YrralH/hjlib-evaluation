@@ -11,6 +11,12 @@ match the points' leading positions as `(..., 3)`; it is normalized internally,
 so equivalent plane scale and sign do not affect the result. Non-finite normals
 and norms at or below `1e-12` fail.
 
+`compute_pa_joint_position_errors` accepts equal finite `(N, J, 3)` arrays and
+returns `(N, J)` errors after fitting each occurrence independently with the
+positive-scale, reflection-disabled similarity registration owned by
+`hjlib-geometry`. It uses every joint, accepts empty `N`, and fails an undefined
+fit instead of changing the denominator.
+
 Consumers own finite-point policy and all reduction denominators. This lets an
 experiment compose the leaves without moving experiment names or population
 semantics into `hjlib-evaluation`.

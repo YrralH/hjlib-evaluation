@@ -2,6 +2,10 @@
 
 GT-MOT sequence 级可持久统计见 [NAIVE track statistics](naive_track_statistics.md)。
 
+无 identity 的 per-frame 多人预测需要 OKS matching 时，见
+[person OKS association](person_oks_association.md)：包含默认 thresholded
+cardinality-first 协议与 Crowd4D-author greedy compatibility 协议。
+
 调用方视角:我有一个数据集 + 一批预测(已存 dump,或一个待评的 ckpt),怎么算出
 世界空间 MPJPE / T-MPJPE。
 
@@ -35,15 +39,21 @@ VirtualCrowd 的默认与 Crowd4D-native profile 选择见
 MPJPE、T-MPJPE、RT-MPJPE、PA-MPJPE 与 OKS；该路径不做 detection matching。
 
 Ours、Crowd4D、DyCrowd 需要在同一 caller-selected VirtualCrowd population 上做
-临时四指标比较时，见
-[VirtualCrowd provisional four-metric evaluator](virtualcrowd_naive_comparison.md)。
-[Joint-error leaves](joint_error.md) 计算 unreduced per-joint Euclidean 或
-normalized-ground-height error，joint subset、单位和 reduction 由调用方决定。
-同页说明 WP `WORLD_METRES` normalization v2 的四公式复用；注册 matrix 仍是 VC-only。
+versioned NAIVE 五指标比较时，见
+[VirtualCrowd provisional NAIVE evaluator](virtualcrowd_naive_comparison.md)。
+[Joint-error leaves](joint_error.md) 计算 unreduced per-joint Euclidean、per-occurrence
+proper-similarity-aligned 或 normalized-ground-height error，joint subset、单位和 reduction
+由调用方决定。同页说明 WP `WORLD_METRES` normalization v2 的 versioned profile 复用；
+注册 matrix 仍是 VC-only。
 如果 caller 已有 official entry ID → method loader mapping 和 dataset-std ALL8
 population selection，则用同页的 `LSVHR_Evaluation_Population` +
 `evaluate_lsvhr_virtualcrowd_matrix(...)` 做 exact split matrix；registry closure 与 report
 仍由 `hjlib-experiments-results` 负责。
+
+无 GT identity 的预测经 matching 形成闭合的 `Corrected_Crowd_Sequence` 后，使用
+`evaluate_lsvhr_virtualcrowd_naive_matched_entry(...)`。它只在 TP 上复用上述五项
+NAIVE 数学，并另外输出 precision、recall、F1；TP/FN/FP 与各 metric support 保留为
+原始统计。零 support 的几何项为 `None`，不会填 dummy error。
 
 已有 method 自己声明的 camera 与 world-metre meshes、需要让 OKS projection 和
 visualization 共用它们时，见
@@ -82,9 +92,8 @@ cp test/local_setting_test.py.example test/local_setting_test.py
 └─ collect_ground_observations(...) → keep all / sample / select →
    estimate_ground_from_observations(...) → diagnostics / same-ray errors
 
-我有 method camera + world meshes，需要同一相机做 projection 与 visualization？
-└─ LSVHR_Method_Camera(...) + project_lsvhr_world_points(...)
-   → LSVHR_Renderable_Frame(...)
+我有 generic per-frame camera + world meshes，需要 legacy visualization transport？
+└─ Camera_with_Pose.project_world_points(...) + LSVHR_Renderable_Frame(...)
 ```
 
 ## 端到端示例(评已有 dump —— 迁移 / parity 主路径)
@@ -137,10 +146,10 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `GT_Provider_Base` / `Network_Driver_Base` | per-dataset GT / 推理 driver 的 ABC |
 | `TestSet_Builder` / `TestSet_Builder_Base` | 配好的测试集 builder(一般经 `get_testset_builder` 取实例)/ 其 ABC |
 | `compute_jitter(joints (T,J,3), fps)` | 绝对 jerk 平滑度(m/s^3) |
-| `compute_joint_position_errors(...)` / `compute_joint_height_errors(...)` | equal `(...,J,3)` arrays 的 unreduced Euclidean / normalized-ground-height errors；不持有 joint-set/unit/reduction policy |
+| `compute_joint_position_errors(...)` / `compute_pa_joint_position_errors(...)` / `compute_joint_height_errors(...)` | equal `(...,J,3)` arrays 的 unreduced Euclidean / per-occurrence proper-similarity-aligned / normalized-ground-height errors；不持有 joint-set/unit/reduction policy |
 | `evaluate_naive_tracks(sequence, filtering_id, split_id, selected_gt_mask)` | 按 native GT identity 把一个已校验 scene 划为 track records，并计算 additive NAIVE statistics |
 | `merge_naive_statistics(summaries, scene_id)` | 合并同 scene、同 profile/filtering/split 的 additive summaries；caller 保证 track identity 不重叠 |
-| `finalize_naive_statistics(summary)` | 把 additive summary 变成四个 nullable headline metric 值 |
+| `finalize_naive_statistics(summary)` | 把 additive summary 变成对应 profile 的 nullable headline metric 值（V1 四项；V2 含 PA-MPJPE 共五项） |
 | `compute_keypoint_oks_matrix(reference_xy, target_xy, areas, sigmas, valid)` | method-neutral `(G,P)` OKS matrix；不持有 bbox/epsilon/matching/aggregation policy |
 | `compute_jta_sota_metric_sums(...)` / `finalize_jta_sota_metric_sums(...)` | paired JTA fitted-SMPL occurrence 的六项 additive statistics 与 occurrence-weighted result |
 | `validate_jta_sota_occurrence_partition(...)` | 要求 ordered batch occurrence IDs 精确覆盖 expected population |
@@ -158,11 +167,13 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `reduce_corrected_crowd_selected_view_summaries(...)` | lexical scene order 的 selected-view exact reduction |
 | `evaluate_corrected_crowd_selected_view_and_world_dynamics(...)` | 一次 validation 同时产生 legacy 15-metric 与四项 world-dynamics scene summaries |
 | `reduce_corrected_crowd_world_dynamics_summaries(...)` | 归约 `ACC-JOINT` / `ACC-ROOT` / `JERK-JOINT` / `JERK-ROOT` exact-window sufficient statistics |
-| `evaluate_virtualcrowd_naive_comparison(...)` / `reduce_virtualcrowd_naive_comparison_summaries(...)` | 对 caller-selected VirtualCrowd population 计算并精确跨 scene 归约 provisional `MPJPE-WORLD` / `T-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` |
+| `evaluate_virtualcrowd_naive_comparison(...)` / `reduce_virtualcrowd_naive_comparison_summaries(...)` | 对 caller-selected VirtualCrowd population 计算并精确跨 scene 归约 provisional `MPJPE-WORLD` / `T-MPJPE` / `PA-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` |
 | `LSVHR_Evaluation_Profile` / `LSVHR_Evaluation_Population` / `LSVHR_Evaluation_Entry` | 选择 fixed NAIVE profile，并把 dataset-std selection、exact split scenes 与 official entry loader 绑定为 method-neutral matrix input |
 | `evaluate_lsvhr_virtualcrowd_entry(...)` / `evaluate_lsvhr_virtualcrowd_matrix(...)` | 按 exact selected GT keys 逐 scene 求值并保持 caller-supplied official entry order；不读 registry 或 method artifacts |
-| `LSVHR_Method_Camera` / `project_lsvhr_world_points(...)` | 绑定 method 自己声明的 K/RT/image size/source，并让 OKS/visualization 复用同一 `hjlib-camera` projection |
-| `LSVHR_Renderable_Person` / `LSVHR_Renderable_Frame` / `LSVHR_Frame_Visualization_Provider` | 把有序 world-metre triangle meshes 交给 method-neutral renderer |
+| `evaluate_virtualcrowd_naive_matched(...)` / `reduce_virtualcrowd_naive_matched_summaries(...)` | 在闭合 sparse association 上累计 TP/FN/FP，只把 TP 送入既有 NAIVE leaves，再 micro-reduce precision/recall/F1 与 nullable 五项指标 |
+| `evaluate_lsvhr_virtualcrowd_naive_matched_entry(...)` | `NAIVE_MATCHED` 的 sibling entry evaluator；不放宽旧 NAIVE result 类型或函数 |
+| `Camera_with_Pose.project_world_points(...)` | 使用 `hjlib-camera` 的 generic `(N,3)` projection；带额外 leading axes 的 caller 自行 flatten/restore |
+| `LSVHR_Renderable_Person` / `LSVHR_Renderable_Frame` / `LSVHR_Frame_Visualization_Provider` | legacy transport：把 generic per-frame camera、独立 provenance 和有序 world-metre meshes 交给 method-neutral renderer；scene-complete camera artifact 归 `hjlib-experiments-results` |
 | `Ground_Observation_Set` / `collect_ground_observations(...)` | 从 `Tracked_Scene` 构造 caller-defined high-confidence top/bottom population；可选 bottom-pair/bbox-width ratio gate |
 | `sample_ground_observations(...)` / `select_ground_observations_at_frame(...)` | 固定 seed person-frame sampling / 单 global-frame diagnostic selection |
 | `estimate_ground_from_observations(...)` | 调用 injected/default RCR estimator，返回 camera-frame plane 与 objective |

@@ -3,6 +3,12 @@
 GT-MOT sequence 的 additive partition 与 nullable reduction 见
 [NAIVE track statistics](naive_track_statistics.md)。
 
+Per-frame unordered person OKS association 的稳定接口见
+[usage](../usage/person_oks_association.md)；两个 profile 共用一个结果 contract，standard pair
+按 GT row canonical 排序，Crowd4D-author pair 保留 release process order。Crowd3D 的跨仓
+owner split 与完整形式化定义留在
+[task design](../../../hjlib-experiments-results/docs/design/tasks/crowd3d_matching/README.md)。
+
 修改本仓的唯一 onboarding 入口(family 规定:每仓仅一个 onboarding doc,无
 `docs/CLAUDE.md`)。
 
@@ -108,14 +114,15 @@ src/hjlib_evaluation/
     joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
     joint_jerk.py          method-neutral GT-relative joint jerk residuals
     keypoint_oks.py        method-neutral pairwise OKS matrix leaf
+    person_oks_association.py named COCO17 association dispatcher + cardinality-first and Crowd4D-author greedy implementations
     corrected_crowd_data.py immutable corrected-crowd input/result records and validation
     corrected_crowd_protocol.py corrected-crowd evaluation and exact reduction
     crowd_layout.py        unordered-pair crowd-layout metric leaves
     jta_sota_metric_reducer.py paired fitted-SMPL six-metric sufficient statistics
     jta_person_detection_data.py immutable unordered-JTA GT/prediction/result contracts + canonical result codec
-    jta_person_detection_protocol.py cardinality-first OKS association + 3D metric reducer
+    jta_person_detection_protocol.py cardinality/quality + explicit row-lex OKS association + 3D metric reducer
     trajectory_residual.py generic scalar trajectory residual summary + macro/micro reduction
-    virtualcrowd_naive_comparison.py provisional four-metric summary/reducer; normalized WP schema 2 reuse
+    virtualcrowd_naive_comparison.py versioned five-metric NAIVE summary/reducer; historical V1 read support
     naive_track_statistics.py GT identity track partition + additive NAIVE sufficient statistics
     smpl_joint_occurrence_reducer.py sparse paired SMPL occurrence MPJPE/T-MPJPE reduction
     lsvhr_evaluation.py    registered-entry identity、exact split projection 与 ordered matrix composition
@@ -194,17 +201,19 @@ smoke)deferred(narrow scenes below split,vis-only)。
 15. [JTA person-detection evaluation](tasks/jta-person-detection-evaluation/README.md)
     —— unordered per-frame people 的 raw-JTA GT、OKS association、完整性与
     MPJPE/PA-MPJPE exact reduction contract。
-16. [Joint-error leaves](joint_error.md) —— method-neutral Euclidean 与
-    normalized-ground-height unreduced primitives；不拥有 population/profile/reduction。
+16. [Joint-error leaves](joint_error.md) —— method-neutral Euclidean、per-occurrence
+    PA 与 normalized-ground-height unreduced primitives；不拥有 population/profile/reduction。
 17. [JTA fitted-SMPL six metrics](jta_sota_six_metrics.md) —— paired occurrence
     identity、12-endpoint/root/alignment math、additive reduction 与完整性边界。
 18. [NAIVE track statistics](naive_track_statistics.md) —— GT identity track partition、
     frame-range support、additive merge 与 nullable finalization。
-19. [VirtualCrowd provisional four-metric comparison](virtualcrowd_naive_comparison.md)
-    —— `MPJPE-WORLD` / `T-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` 的
+19. [VirtualCrowd provisional NAIVE comparison](virtualcrowd_naive_comparison.md)
+    —— `MPJPE-WORLD` / `T-MPJPE` / `PA-MPJPE` / `OKS-VIS` / `ACC-ROOT-RATIO` 的
     exact-target completeness、support、additive reduction boundary，以及 LSV-HR
     exact population / official-entry matrix composition。
-20. [LSV-HR method-camera 与 renderable-frame](lsvhr_frame_visualization.md)
+20. [LSV-HR NAIVE PA-MPJPE task](tasks/lsvhr-naive-pa-mpjpe/README.md)
+    —— V2 数学定义、V1/V2 contract 和跨 evaluation/results 仓实现边界。
+21. [LSV-HR method-camera 与 renderable-frame](lsvhr_frame_visualization.md)
     —— OKS/visualization 共用的 method camera、world mesh value 与 provider boundary。
 
 ## Dump prediction field contract
@@ -225,8 +234,8 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## State of the world
 
-- Data-free smoke: 124 passed on 2026-09-11; master runner passed. Current
-  repository strict pyright completed with 0 errors.
+- Data-free smoke: 143 passed on 2026-09-13; master runner passed. Current
+  repository strict pyright completed with 0 errors across 68 analyzed files.
 
 - **2026-09-02 LSV-HR registered-entry composition**：新增 evaluation-owned
   `LSVHR_Evaluation_Profile.NAIVE`、exact split population projection、official

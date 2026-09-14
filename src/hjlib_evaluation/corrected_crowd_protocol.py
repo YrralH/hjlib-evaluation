@@ -27,7 +27,10 @@ from hjlib_evaluation.crowd_layout import (
 )
 from hjlib_evaluation.joint_acceleration import compute_joint_acceleration_errors
 from hjlib_evaluation.joint_error import compute_joint_position_errors
-from hjlib_evaluation.keypoint_oks import compute_keypoint_oks_matrix
+from hjlib_evaluation.keypoint_oks import (
+    compute_paired_keypoint_oks,
+    make_positive_depth_joint_mask,
+)
 from hjlib_geometry import (
     apply_mean_translation,
     apply_rigid_registration,
@@ -207,22 +210,31 @@ def add_frame_layout_and_oks_metrics(
             0.3,
         )
         add_metric_values(sums, counts, view_index, 'PCOD-3C-0.3m', pcod)
-        valid = sequence.gt_visibility_native[gt_rows] > 0.0
-        bboxes = sequence.gt_bbox_xyxy_px[gt_rows]
+        valid = make_positive_depth_joint_mask(
+            sequence.gt_visibility_native[gt_rows] > 0.0,
+            sequence.prediction_coco17_camera_depth_m[pred_rows],
+        )
+        row_supported = np.any(valid, axis=1)
+        if not np.any(row_supported):
+            continue
+        supported_gt_rows = gt_rows[row_supported]
+        supported_pred_rows = pred_rows[row_supported]
+        supported_valid = valid[row_supported]
+        bboxes = sequence.gt_bbox_xyxy_px[supported_gt_rows]
         areas = (bboxes[:, 2] - bboxes[:, 0]) * (bboxes[:, 3] - bboxes[:, 1])
-        oks_matrix = compute_keypoint_oks_matrix(
-            sequence.gt_coco17_xy_px[gt_rows],
-            sequence.prediction_coco17_xy_px[pred_rows],
+        oks_values = compute_paired_keypoint_oks(
+            sequence.gt_coco17_xy_px[supported_gt_rows],
+            sequence.prediction_coco17_xy_px[supported_pred_rows],
             areas,
             COCO17_SIGMAS,
-            valid,
+            supported_valid,
         )
         add_metric_values(
             sums,
             counts,
             view_index,
             'OKS-VIS',
-            np.diag(oks_matrix),
+            oks_values,
         )
 
 

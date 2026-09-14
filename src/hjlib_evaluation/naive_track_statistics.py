@@ -4,16 +4,24 @@ from __future__ import annotations
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 from numpy.typing import NDArray
 
 from hjlib_evaluation.corrected_crowd_data import Corrected_Crowd_Sequence
 from hjlib_evaluation.corrected_crowd_protocol import COCO17_SIGMAS
-from hjlib_evaluation.joint_error import compute_joint_position_errors
-from hjlib_evaluation.keypoint_oks import compute_paired_keypoint_oks
+from hjlib_evaluation.joint_error import (
+    compute_joint_position_errors,
+    compute_pa_joint_position_errors,
+)
+from hjlib_evaluation.keypoint_oks import (
+    compute_paired_keypoint_oks,
+    make_positive_depth_joint_mask,
+)
 from hjlib_evaluation.virtualcrowd_naive_comparison import (
     VC_NAIVE_COMPARISON_PROFILE_ID,
+    VC_NAIVE_COMPARISON_PROFILE_V2_ID,
     VirtualCrowd_Naive_Comparison_Sequence_Summary,
     direct_target_join,
     require_exact_nonnegative_int,
@@ -58,15 +66,16 @@ def track_oks_statistics(
     prediction_rows: NDArray[np.int64],
 ) -> tuple[float, int]:
     '''Compute selected identity-paired visible OKS without a pairwise matrix.'''
-    valid = sequence.gt_visibility_native[gt_rows] > 0.0
+    valid = make_positive_depth_joint_mask(
+        sequence.gt_visibility_native[gt_rows] > 0.0,
+        sequence.prediction_coco17_camera_depth_m[prediction_rows],
+    )
     supported = np.any(valid, axis=1)
     if not np.any(supported):
         return 0.0, 0
     gt_rows = gt_rows[supported]
     prediction_rows = prediction_rows[supported]
     valid = valid[supported]
-    if np.any(sequence.prediction_coco17_camera_depth_m[prediction_rows][valid] <= 0):
-        raise ValueError('native-visible OKS joints require positive prediction camera depth')
     bbox = sequence.gt_bbox_xyxy_px[gt_rows]
     values = compute_paired_keypoint_oks(
         sequence.gt_coco17_xy_px[gt_rows],
@@ -95,6 +104,7 @@ def summarize_naive_track_rows(
     local = compute_joint_position_errors(
         predicted - predicted[:, :1], reference - reference[:, :1],
     ).reshape(-1)
+    pa = compute_pa_joint_position_errors(predicted, reference).reshape(-1)
     oks_sum, oks_count = track_oks_statistics(sequence, gt_rows, prediction_rows)
     predicted_acc: list[float] = []
     reference_acc: list[float] = []
@@ -124,6 +134,8 @@ def summarize_naive_track_rows(
         acc_root_predicted_sum_m_per_frame2=math.fsum(predicted_acc),
         acc_root_reference_sum_m_per_frame2=math.fsum(reference_acc),
         acc_root_sample_count=len(predicted_acc),
+        pa_mpjpe_sum_m=math.fsum(float(value) for value in pa),
+        pa_mpjpe_count=len(pa),
     )
     return Naive_Track_Statistics(int(sequence.gt_track_ids[gt_rows[0]]), tuple(ranges), summary)
 
@@ -176,6 +188,13 @@ def merge_naive_statistics(
         first.profile_id, first.filtering_id, first.split_id,
     ) for item in summaries):
         raise ValueError('statistics require the same profile, filtering and split')
+    pa_sum = None
+    pa_count = None
+    if first.profile_id == VC_NAIVE_COMPARISON_PROFILE_V2_ID:
+        pa_sum = math.fsum(
+            cast(float, item.pa_mpjpe_sum_m) for item in summaries)
+        pa_count = sum(
+            cast(int, item.pa_mpjpe_count) for item in summaries)
     return VirtualCrowd_Naive_Comparison_Sequence_Summary(
         profile_id=first.profile_id, filtering_id=first.filtering_id,
         split_id=first.split_id, scene_id=scene_id,
@@ -192,6 +211,8 @@ def merge_naive_statistics(
         acc_root_reference_sum_m_per_frame2=math.fsum(
             item.acc_root_reference_sum_m_per_frame2 for item in summaries),
         acc_root_sample_count=sum(item.acc_root_sample_count for item in summaries),
+        pa_mpjpe_sum_m=pa_sum,
+        pa_mpjpe_count=pa_count,
     )
 
 
@@ -206,6 +227,10 @@ def finalize_naive_statistics(
             if summary.mpjpe_world_count else None,
         't_mpjpe_mm': 1000.0 * summary.t_mpjpe_sum_m / summary.t_mpjpe_count
             if summary.t_mpjpe_count else None,
+        **({'pa_mpjpe_mm': 1000.0 * cast(float, summary.pa_mpjpe_sum_m)
+                / summary.pa_mpjpe_count
+            if summary.pa_mpjpe_count else None}
+            if summary.profile_id == VC_NAIVE_COMPARISON_PROFILE_V2_ID else {}),
         'oks_vis': summary.oks_vis_sum / summary.oks_vis_count
             if summary.oks_vis_count else None,
         'acc_root_ratio': summary.acc_root_predicted_sum_m_per_frame2

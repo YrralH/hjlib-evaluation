@@ -134,13 +134,44 @@ def test_full_protocol_partition_views_and_round_trip() -> None:
     assert not summary.metric_sample_sums.flags.writeable
 
 
-def test_visibility_exclusion_and_invalid_projection_contract() -> None:
+def test_visibility_exclusion_and_signed_projection_contract() -> None:
     sequence = make_sequence()
-    assert evaluate_corrected_crowd_sequence(sequence).fp == 1
-    invalid_depth = np.array(sequence.prediction_coco17_camera_depth_m, copy=True)
-    invalid_depth[0, 0] = 0.0
-    with pytest.raises(ValueError, match='projection depth'):
-        replace(sequence, prediction_coco17_camera_depth_m=invalid_depth)
+    baseline = evaluate_corrected_crowd_sequence(sequence)
+    assert baseline.fp == 1
+    signed_depth = np.array(sequence.prediction_coco17_camera_depth_m, copy=True)
+    signed_depth[0] = -0.5
+    signed_depth[4, 0] = 0.0
+    prediction_xy = np.array(sequence.prediction_coco17_xy_px, copy=True)
+    prediction_xy[4, 0] += 10000.0
+    normalized = replace(
+        sequence,
+        prediction_coco17_camera_depth_m=signed_depth,
+        prediction_coco17_xy_px=prediction_xy,
+    )
+    assert normalized.prediction_coco17_camera_depth_m[0, 0] == -0.5
+    assert normalized.prediction_coco17_camera_depth_m[4, 0] == 0.0
+    filtered = evaluate_corrected_crowd_sequence(normalized)
+    oks_index = CORRECTED_CROWD_METRICS.index('OKS-VIS')
+    non_oks = np.arange(len(CORRECTED_CROWD_METRICS)) != oks_index
+    np.testing.assert_array_equal(
+        filtered.metric_sample_counts[:, non_oks],
+        baseline.metric_sample_counts[:, non_oks],
+    )
+    np.testing.assert_allclose(
+        filtered.metric_sample_sums[:, non_oks],
+        baseline.metric_sample_sums[:, non_oks],
+    )
+    np.testing.assert_array_equal(
+        filtered.metric_sample_counts[:, oks_index],
+        baseline.metric_sample_counts[:, oks_index] - 1,
+    )
+    np.testing.assert_allclose(
+        filtered.metric_sample_sums[:, oks_index],
+        baseline.metric_sample_sums[:, oks_index] - 1.0,
+    )
+    assert (filtered.tp, filtered.fn, filtered.fp) == (
+        baseline.tp, baseline.fn, baseline.fp,
+    )
 
 
 def test_pair_and_pcod_boundaries() -> None:
@@ -361,7 +392,7 @@ def test_selected_view_constructors_reject_legacy_names(reserved_name: str) -> N
 def smoke_test_corrected_crowd() -> None:
     '''Run the full portable corrected-crowd smoke surface.'''
     test_full_protocol_partition_views_and_round_trip()
-    test_visibility_exclusion_and_invalid_projection_contract()
+    test_visibility_exclusion_and_signed_projection_contract()
     test_pair_and_pcod_boundaries()
     test_acceleration_uses_vector_residual()
     test_jerk_uses_vector_residual_and_cubic_difference()

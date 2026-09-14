@@ -5,7 +5,9 @@ native GT identity and frame order. It sorts once and does not reconstruct or
 revalidate the entire scene per person. Per-track temporary arrays scale with one
 track's occurrences and joints; no dense identity-pair OKS matrix is allocated.
 
-Joint error math reuses `compute_joint_position_errors`. The existing paired OKS
+Joint error math reuses `compute_joint_position_errors` and the per-occurrence
+`compute_pa_joint_position_errors` leaf. PA sums/counts remain additive across
+track and scene partitions. The existing paired OKS
 primitive now accepts an optional visibility mask, leaving its unmasked callers
 unchanged. Unsupported rows are excluded before calling that primitive. Temporal
 math reuses the existing central difference twice and trims three frames at either

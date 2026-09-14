@@ -282,12 +282,6 @@ class Corrected_Crowd_Sequence:
             targets[self.matched_prediction_rows] != self.matched_gt_rows,
         ):
             raise ValueError('matched pair must equal its identity target')
-        included_joint = self.gt_visibility_native[self.matched_gt_rows] > 0.0
-        pred_depth = self.prediction_coco17_camera_depth_m[
-            self.matched_prediction_rows
-        ]
-        if np.any(pred_depth[included_joint] <= 0.0):
-            raise ValueError('included prediction projection depth must be positive')
 
     def validate_pair_populations(self) -> None:
         '''Preflight consumed pair distances and PA-PPDS fit predicates.'''

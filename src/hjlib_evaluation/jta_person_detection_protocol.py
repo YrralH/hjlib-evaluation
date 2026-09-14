@@ -2,10 +2,8 @@
 # pyright: reportMissingTypeStubs=false
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from hashlib import sha256
-from typing import cast
 import json
 import math
 
@@ -15,7 +13,6 @@ from hjlib_geometry import (
 )
 import numpy as np
 from numpy.typing import NDArray
-from scipy.optimize import linear_sum_assignment  # pyright: ignore[reportUnknownVariableType]
 
 from hjlib_evaluation.joint_error import compute_joint_position_errors
 from hjlib_evaluation.jta_person_detection_data import (
@@ -26,10 +23,14 @@ from hjlib_evaluation.jta_person_detection_data import (
     validate_sha256,
 )
 from hjlib_evaluation.keypoint_oks import compute_keypoint_oks_matrix
+from hjlib_evaluation.person_oks_association import (
+    OKS_QUANTIZATION,
+    project_camera_points,
+    solve_cardinality_quality_assignment,
+)
 
 
 OKS_THRESHOLD = 0.50
-OKS_QUANTIZATION = 1_000_000_000_000
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,32 +62,8 @@ def solve_assignment_objective(
         admissible: NDArray[np.bool_],
         quantized_oks: NDArray[np.int64],
 ) -> tuple[int, int, NDArray[np.int64]]:
-    '''Return maximum cardinality, integer OKS sum, and one optimizer mapping.'''
-    row_count, prediction_count = admissible.shape
-    mapping = np.full(row_count, -1, dtype=np.int64)
-    if row_count == 0 or prediction_count == 0:
-        return 0, 0, mapping
-    edge_bound = min(row_count, prediction_count)
-    cardinality_weight = edge_bound * OKS_QUANTIZATION + 1
-    score = np.zeros(
-        (row_count, prediction_count + row_count), dtype=np.int64,
-    )
-    score[:, :prediction_count] = -cardinality_weight
-    real_scores = cardinality_weight + quantized_oks
-    score[:, :prediction_count][admissible] = real_scores[admissible]
-    assignment = cast(Callable[..., tuple[
-        NDArray[np.int64], NDArray[np.int64],
-    ]], linear_sum_assignment)
-    rows, columns = assignment(score, maximize=True)
-    for row, column in zip(rows.tolist(), columns.tolist()):
-        if column < prediction_count and admissible[row, column]:
-            mapping[row] = column
-    matched_rows = np.flatnonzero(mapping >= 0)
-    cardinality = int(len(matched_rows))
-    quality = int(sum(
-        int(quantized_oks[row, mapping[row]]) for row in matched_rows
-    ))
-    return cardinality, quality, mapping
+    '''Compatibility wrapper around the method-neutral objective solver.'''
+    return solve_cardinality_quality_assignment(admissible, quantized_oks)
 
 
 def associate_jta_people(
@@ -173,14 +150,7 @@ def project_predictions(
         xyz: NDArray[np.float64],
         camera_K: NDArray[np.float64],
 ) -> tuple[NDArray[np.float64], NDArray[np.bool_]]:
-    valid = np.all(xyz[:, :, 2] > 0.0, axis=1)
-    projected = np.zeros((xyz.shape[0], xyz.shape[1], 2), dtype=np.float64)
-    if np.any(valid):
-        camera = xyz[valid] @ camera_K.T
-        projected[valid] = camera[:, :, :2] / camera[:, :, 2:3]
-    if not np.isfinite(projected).all():
-        raise ValueError('JTA prediction projection is non-finite')
-    return projected, np.asarray(valid, dtype=np.bool_)
+    return project_camera_points(xyz, camera_K)
 
 
 def evaluate_jta_person_detection_frame(

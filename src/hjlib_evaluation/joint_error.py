@@ -3,6 +3,11 @@
 import numpy as np
 from numpy.typing import NDArray
 
+from hjlib_geometry import (
+    apply_similarity_registration,
+    fit_similarity_registration,
+)
+
 
 GROUND_NORMAL_MIN_NORM = 1e-12
 
@@ -18,6 +23,41 @@ def compute_joint_position_errors(
         raise ValueError(
             'target_points and reference_points must have equal shape')
     return np.linalg.norm(target - reference, axis=-1)
+
+
+def compute_pa_joint_position_errors(
+        target_points: NDArray[np.generic],
+        reference_points: NDArray[np.generic],
+    ) -> NDArray[np.float64]:
+    '''Return per-occurrence similarity-aligned joint errors for `(N,J,3)`.'''
+    target = validate_joint_points(target_points, 'target_points')
+    reference = validate_joint_points(reference_points, 'reference_points')
+    if target.shape != reference.shape:
+        raise ValueError(
+            'target_points and reference_points must have equal shape')
+    if target.ndim != 3:
+        raise ValueError('PA joint points must have shape (N, J, 3)')
+    if target.shape[1] <= 0:
+        raise ValueError('PA joint points must have a positive joint count')
+    if not np.isfinite(target).all() or not np.isfinite(reference).all():
+        raise ValueError('PA joint points must be finite')
+    if target.shape[0] == 0:
+        return np.empty(target.shape[:2], dtype=np.float64)
+    mask = np.ones(target.shape[1], dtype=np.bool_)
+    aligned: list[NDArray[np.float64]] = []
+    for target_occurrence, reference_occurrence in zip(
+            target, reference, strict=True,
+        ):
+        fit = fit_similarity_registration(
+            target_occurrence,
+            reference_occurrence,
+            mask,
+        )
+        aligned.append(apply_similarity_registration(target_occurrence, fit))
+    return compute_joint_position_errors(
+        np.stack(aligned, axis=0),
+        reference,
+    )
 
 
 def compute_joint_height_errors(

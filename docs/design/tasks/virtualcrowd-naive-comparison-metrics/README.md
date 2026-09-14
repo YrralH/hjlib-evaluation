@@ -76,10 +76,11 @@ multiplier and does not perform OKS matching. A selected row with no visible
 COCO joint remains part of the MPJPE and temporal populations but contributes
 no OKS sample. The summary therefore carries an independent `oks_vis_count`.
 An individual scene may have zero OKS support; the global reducer raises only
-when total OKS support is zero. For every native-visible joint in each retained
-OKS row, its paired prediction's source
-`prediction_coco17_camera_depth_m` must be finite and strictly positive;
-failure raises rather than silently dropping the joint or row.
+when total OKS support is zero. Joint support is the intersection of native GT
+visibility and strictly positive paired
+`prediction_coco17_camera_depth_m`. A non-positive-depth joint is excluded only
+from OKS, and a row with no remaining joint adds neither OKS sum nor count while
+remaining in all non-OKS populations.
 
 ### ACC-ROOT-RATIO
 
@@ -228,8 +229,8 @@ Data-free tests must prove:
   is reduced from sums rather than mean-of-ratios;
 - GT visibility excludes hidden COCO-17 joints, GT bbox area controls OKS, a
   zero-visible selected row remains in the full population while adding no OKS
-  support, and a native-visible joint with non-positive prediction camera depth
-  fails explicitly;
+  support, a partially supported row excludes only its non-positive-depth
+  joints, and a row with no positive-depth visible joint adds no OKS support;
 - non-consecutive frames are split before temporal evaluation and short runs
   contribute no acceleration samples;
 - missing selected predictions, duplicate predictions targeting one selected

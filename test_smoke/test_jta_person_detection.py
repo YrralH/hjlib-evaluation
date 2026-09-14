@@ -85,6 +85,22 @@ def test_threshold_graph_maximizes_cardinality_before_oks() -> None:
     np.testing.assert_allclose(association.matched_oks, [0.51, 0.50])
 
 
+def test_jta_retains_explicit_row_lex_third_objective() -> None:
+    oks = np.full((3, 3), 0.7, dtype=np.float64)
+    admissible = np.asarray([
+        [False, True, True],
+        [False, True, False],
+        [False, False, True],
+    ], dtype=np.bool_)
+    association = associate_jta_people(oks, admissible)
+    np.testing.assert_array_equal(
+        association.match_gt_indices, [0, 2],
+    )
+    np.testing.assert_array_equal(
+        association.match_prediction_indices, [1, 2],
+    )
+
+
 def test_perfect_frame_reducer_and_canonical_round_trip() -> None:
     gt = make_gt(2)
     prediction = make_prediction(gt)
@@ -276,7 +292,9 @@ def test_large_all_tie_assignment_is_lexical_and_bounded() -> None:
     size = 128
     oks = np.ones((size, size), dtype=np.float64)
     started = perf_counter()
-    association = associate_jta_people(oks, np.ones_like(oks, dtype=np.bool_))
+    association = associate_jta_people(
+        oks, np.ones(oks.shape, dtype=np.bool_),
+    )
     elapsed = perf_counter() - started
     np.testing.assert_array_equal(
         association.match_prediction_indices,
@@ -289,6 +307,7 @@ def test_large_all_tie_assignment_is_lexical_and_bounded() -> None:
 def smoke_test_jta_person_detection() -> None:
     test_raw_jta_constructor_sorts_filters_and_owns_visibility()
     test_threshold_graph_maximizes_cardinality_before_oks()
+    test_jta_retains_explicit_row_lex_third_objective()
     test_perfect_frame_reducer_and_canonical_round_trip()
     test_projection_invalid_prediction_remains_unmatched()
     with pytest.MonkeyPatch.context() as monkeypatch:

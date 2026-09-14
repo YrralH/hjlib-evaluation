@@ -16,10 +16,15 @@ from hjlib_dataset_std import (
 from hjlib_evaluation.corrected_crowd_data import Corrected_Crowd_Sequence
 from hjlib_evaluation.virtualcrowd_naive_comparison import (
     VC_NAIVE_COMPARISON_PROFILE_ID,
+    VC_NAIVE_MATCHED_PROFILE_ID,
     VirtualCrowd_Naive_Comparison_Result,
     VirtualCrowd_Naive_Comparison_Sequence_Summary,
+    VirtualCrowd_Naive_Matched_Result,
+    VirtualCrowd_Naive_Matched_Sequence_Summary,
     evaluate_virtualcrowd_naive_comparison,
+    evaluate_virtualcrowd_naive_matched,
     reduce_virtualcrowd_naive_comparison_summaries,
+    reduce_virtualcrowd_naive_matched_summaries,
 )
 
 
@@ -27,6 +32,7 @@ class LSVHR_Evaluation_Profile(StrEnum):
     '''Fixed LSV-HR metric profiles selectable by callers.'''
 
     NAIVE = 'naive'
+    NAIVE_MATCHED = 'naive-matched'
 
 
 def require_identity(value: str, name: str) -> str:
@@ -129,6 +135,23 @@ class LSVHR_Entry_Evaluation_Result:
             raise ValueError('result metric profile differs from LSV-HR profile')
 
 
+@dataclass(frozen=True, slots=True)
+class LSVHR_Naive_Matched_Entry_Evaluation_Result:
+    '''One NAIVE matched result bound to a method entry.'''
+
+    profile: LSVHR_Evaluation_Profile
+    entry_id: str
+    result: VirtualCrowd_Naive_Matched_Result
+
+    def __post_init__(self) -> None:
+        if self.profile is not LSVHR_Evaluation_Profile.NAIVE_MATCHED:
+            raise ValueError('profile must be NAIVE matched')
+        require_identity(self.entry_id, 'entry_id')
+        if type(self.result) is not VirtualCrowd_Naive_Matched_Result \
+                or self.result.profile_id != VC_NAIVE_MATCHED_PROFILE_ID:
+            raise ValueError('result differs from NAIVE matched profile')
+
+
 def selected_gt_mask_for_lsvhr_population_scene(
         sequence: Corrected_Crowd_Sequence,
         population: LSVHR_Evaluation_Population,
@@ -215,6 +238,38 @@ def evaluate_lsvhr_virtualcrowd_entry(
     )
 
 
+def evaluate_lsvhr_virtualcrowd_naive_matched_entry(
+        entry: LSVHR_Evaluation_Entry,
+        population: LSVHR_Evaluation_Population,
+    ) -> LSVHR_Naive_Matched_Entry_Evaluation_Result:
+    '''Evaluate one sparse-associated entry without changing NAIVE behavior.'''
+    if type(entry) is not LSVHR_Evaluation_Entry:
+        raise TypeError('entry must be an exact LSVHR_Evaluation_Entry')
+    if type(population) is not LSVHR_Evaluation_Population:
+        raise TypeError('population must be an LSVHR_Evaluation_Population')
+    summaries: list[VirtualCrowd_Naive_Matched_Sequence_Summary] = []
+    for scene_id in population.split_scene_ids:
+        sequence = entry.loader.load_scene(scene_id)
+        if sequence.scene_id != scene_id:
+            raise ValueError('method loader returned the wrong scene identity')
+        selected_mask = selected_gt_mask_for_lsvhr_population_scene(
+            sequence,
+            population,
+        )
+        summaries.append(evaluate_virtualcrowd_naive_matched(
+            sequence,
+            population.filtering_id,
+            population.split_id,
+            selected_mask,
+        ))
+        del selected_mask, sequence
+    return LSVHR_Naive_Matched_Entry_Evaluation_Result(
+        profile=LSVHR_Evaluation_Profile.NAIVE_MATCHED,
+        entry_id=entry.entry_id,
+        result=reduce_virtualcrowd_naive_matched_summaries(summaries),
+    )
+
+
 def evaluate_lsvhr_virtualcrowd_matrix(
         profile: LSVHR_Evaluation_Profile,
         entries: Sequence[LSVHR_Evaluation_Entry],
@@ -243,7 +298,9 @@ __all__ = [
     'LSVHR_Evaluation_Population',
     'LSVHR_Evaluation_Profile',
     'LSVHR_Method_Loader',
+    'LSVHR_Naive_Matched_Entry_Evaluation_Result',
     'evaluate_lsvhr_virtualcrowd_entry',
     'evaluate_lsvhr_virtualcrowd_matrix',
+    'evaluate_lsvhr_virtualcrowd_naive_matched_entry',
     'selected_gt_mask_for_lsvhr_population_scene',
 ]

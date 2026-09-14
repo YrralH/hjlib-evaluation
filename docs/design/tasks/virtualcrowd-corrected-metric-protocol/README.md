@@ -384,13 +384,12 @@ OKS_VIS(person_frame) = mean(similarity[k] over v[k] > 0)
 ```
 
 Native `0.5` and `1` are both included equally; `0.5` is never a fractional
-weight. The view definition guarantees at least one included joint. For every
-included joint, `J_pred_coco2d` and `J_pred_coco_cam_z` must be finite and the
-source depth must be strictly positive. Violation fails the generic validity
-gate with the exact predicate; no joint is silently removed or replaced by a
-zero similarity. A retained invalid class would require a later reviewed,
-specifically named policy. Final `OKS-VIS` is the person-frame micro mean.
-Recall and matching do not enter it.
+weight. OKS support is the intersection of this native visibility mask and
+strictly positive paired prediction depth. Finite non-positive depth remains in
+the normalized record and every non-OKS population, but the affected joint is
+excluded from OKS support. A person-frame with no remaining joint adds neither
+OKS sum nor OKS count. Final `OKS-VIS` is the supported person-frame micro mean;
+recall and matching do not enter it.
 
 ### 9. Gap-aware acceleration
 
@@ -606,15 +605,16 @@ array in its returned value is an owned bytes-backed read-only copy; frozen
 dataclasses alone are not treated as immutable. It checks
 all shapes, exact integer/bool fields, unique keys, row bounds, one-to-one
 association, same-scene/same-frame identity consistency, fixed literals,
-finiteness, positive included projection depth, positive bboxes, common-mask
-subset, positive consumed GT pair distance, and the Section 6 alignment
+finiteness, positive bboxes, common-mask subset, positive consumed GT pair
+distance, and the Section 6 alignment
 predicates. It does not filter rows or create invalid categories.
 
 `evaluate_corrected_crowd_sequence` validates once, derives the full and common
 matched relations, and emits one immutable scene summary. It reuses
-`compute_joint_position_errors` and `compute_keypoint_oks_matrix`; their frozen
+`compute_joint_position_errors` and the paired OKS primitive; their frozen
 existing behavior is not changed. It groups frame metrics by matched rows,
-pair metrics by frame, sequence metrics by the GT-owned VISRUN/TRACK labels,
+excludes non-positive-depth joints only from OKS support, pair metrics by frame,
+sequence metrics by the GT-owned VISRUN/TRACK labels,
 and acceleration by exact frame-ID triples. No metric leaf receives F1.
 
 Freeze the immutable scene-summary schema:
@@ -777,9 +777,10 @@ Add portable synthetic coverage for:
 6. PCOD classes at `-0.3`, `+0.3`, and just outside both boundaries;
 7. native `0/0.5/1` visibility mapping, frozen COCO sigma/order, half-open bbox
    area, and equality of `0.5/1` inclusion weights;
-8. non-finite points, non-positive included projection depth, non-positive bbox,
-   duplicate keys, cross-frame matches, and non-injective association all
-   fail-fast without filtering;
+8. non-finite points, non-positive bbox, duplicate keys, cross-frame matches,
+   and non-injective association all fail at normalization; non-positive
+   included prediction depth survives normalization and is excluded only from
+   OKS support;
 9. the full `G/P/M` partition: visibility-excluded mapped predictions are out
    of scope, while unmapped, absent-GT, and duplicate occurrences remain FP;
 10. common view emits geometry only and cannot change global completeness;

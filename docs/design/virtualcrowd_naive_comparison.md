@@ -1,6 +1,6 @@
-# VirtualCrowd provisional four-metric comparison
+# VirtualCrowd provisional NAIVE comparison
 
-`VC_NAIVE_COMPARISON_METRICS_V1` is a narrow, method-neutral comparison profile
+`VC_NAIVE_COMPARISON_METRICS_V2` is a narrow, method-neutral comparison profile
 for Ours, Crowd4D and DyCrowd on one caller-selected VirtualCrowd population. It
 does not replace the stable default or Crowd4D-native profiles.
 
@@ -11,12 +11,14 @@ reduction. Dataset assembly, model inference, camera choice, prediction
 adaptation, result registration and visualization remain in their respective
 experiment/adapter layers.
 
-The four formulas also accept explicitly normalized WP world data. The additive
+The five formulas also accept explicitly normalized WP world data. The additive
 `Corrected_Crowd_Sequence` schema 2 uses `WORLD_METRES` and non-negative native
 GT person rows (including zero); schema 1 keeps its existing fixed-camera-world
 tag and positive GT IDs unchanged. Adapters own GT/method camera projection,
 visibility and native cadence validation. No world fit or FPS scaling is added.
-The historical metric profile name remains `VC_NAIVE_COMPARISON_METRICS_V1`;
+Historical `VC_NAIVE_COMPARISON_METRICS_V1` summaries remain accepted only for
+four-metric finalization and persisted-result validation. Current evaluation
+emits V2 and never synthesizes PA-MPJPE for V1 evidence.
 WP callers must label their actual population, not claim VC protocol identity.
 The registered matrix composition below remains VC-only.
 
@@ -34,13 +36,22 @@ excludes zero-visible rows retained inside `vc.visible_common` runs.
 |---|---:|---:|---|
 | `MPJPE-WORLD` | mm | ↓ | micro mean over selected SMPL-24 joint occurrences |
 | `T-MPJPE` | mm | ↓ | pelvis-relative micro mean over the same joints |
+| `PA-MPJPE` | mm | ↓ | per-person-frame similarity-aligned micro mean over the same joints |
 | `OKS-VIS` | fraction | ↑ | direct-paired mean over rows with native-visible GT COCO joints |
 | `ACC-ROOT-RATIO` | unitless | →1 | global predicted/reference root-acceleration magnitude sums |
 
 `T-MPJPE` subtracts joint 0 independently from prediction and GT; it is not an
-optimized translation fit. `OKS-VIS` uses COCO-17 sigmas, GT bbox area and only
+optimized translation fit. `PA-MPJPE` independently fits each person-frame with
+positive scale, translation, and a proper rotation (`det(R)=+1`), using all 24
+joints; reflection and cross-frame alignment are not allowed. `OKS-VIS` uses
+COCO-17 sigmas, GT bbox area and only
 GT native visibility `> 0`, with no matching or recall multiplier. A zero-visible
 row stays in the 3D/temporal population but adds no OKS support.
+The normalized sequence preserves finite signed prediction camera depth as a
+method-output fact. OKS support is the intersection of native GT visibility and
+positive paired prediction depth. Non-positive-depth joints are excluded; a row
+with no remaining joint contributes no OKS sum/count but remains in every 3D
+population.
 
 `direct_target_join()` constructs one immutable
 `VirtualCrowd_Direct_Target_Join`: it takes a fresh validated sequence
@@ -50,16 +61,17 @@ join:
 
 - `compute_virtualcrowd_mpjpe_world_statistics`;
 - `compute_virtualcrowd_t_mpjpe_statistics`;
+- `compute_virtualcrowd_pa_mpjpe_statistics`;
 - `compute_virtualcrowd_oks_vis_statistics`;
 - `compute_virtualcrowd_acc_root_ratio_statistics`.
 
 Each returns additive statistics only. Population projection and cross-scene
 reduction remain outside the leaves;
 `evaluate_virtualcrowd_naive_comparison()` is the fixed wiring over one shared
-join. Normalized `Corrected_Crowd_Sequence` construction no longer executes
-PPDS or similarity-fit preflight for profiles that do not request those
-metrics. Full corrected-profile evaluators still execute their layout metrics
-when evaluated.
+join. Normalized `Corrected_Crowd_Sequence` construction does not execute PPDS
+or similarity-fit preflight. The NAIVE evaluator performs PA fitting only after
+the selected direct-target join is known. Full corrected-profile evaluators
+still execute their layout metrics when evaluated.
 
 `ACC-ROOT-RATIO` applies replicate-padded central difference twice to each
 maximal exact-consecutive selected GT track segment, trims three samples from
@@ -94,3 +106,5 @@ registry facts.
 
 The reviewed task design and edge-case rationale are in
 [the task residence](tasks/virtualcrowd-naive-comparison-metrics/README.md).
+The V2 PA-MPJPE extension is recorded in
+[its task residence](tasks/lsvhr-naive-pa-mpjpe/README.md).

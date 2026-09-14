@@ -6,7 +6,9 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 ## test_smoke/ —— 合成数据,处处可跑
 
 `test_lsvhr_evaluation.py` 覆盖 exact selected population、official entry 顺序、
-重复 entry 拒绝与 loader scene drift；pytest 与 master runner 都执行这组测试。
+重复 entry 拒绝与 loader scene drift；同时覆盖 `naive-matched` 的 TP/FN/FP
+闭合、precision/recall/F1 micro-reduction、nullable metric support 与 temporal gap。
+pytest 与 master runner 都执行这组测试。
 
 评测的纯逻辑件(`Eval_Meta` 契约、`TestSet` 容器不变量 + `restrict_to_scenes` 对齐、
 工厂的路径解析 + 错误分支)用合成 numpy / 直接构造的 `Filtered_Sub_Seq_Divider` 覆盖,
@@ -23,7 +25,8 @@ family 两棵树政策(`test_smoke/` 无外部数据 / `test/` 真实数据 FAIL
 | `test_ground_estimation_protocol.py` | observation selection/sampling、bbox-ratio strict gate、RCR seam、same-ray error、plane/oracle decomposition |
 | `test_metric_leaves.py` | unreduced Euclidean errors；ground normal scale/sign invariance、leading-position normals、non-finite/degenerate normal rejection；package-root exports |
 | `test_smpl_joint_occurrence_reducer.py` | sparse paired SMPL occurrence 的 identity/layout/unit、MPJPE/T-MPJPE、multi-spec reduction 与错误分支；pytest/master 双入口 |
-| `test_jta_person_detection.py` | unordered JTA GT/prediction contracts、cardinality-first OKS association、MPJPE/PA reduction、exact-degeneracy、result invariants 与 canonical codec |
+| `test_jta_person_detection.py` | unordered JTA GT/prediction contracts、cardinality/quality + explicit row-lex OKS association、MPJPE/PA reduction、exact-degeneracy、result invariants 与 canonical codec |
+| `test_person_oks_association.py` | 两个 named COCO17 profiles 的 dispatch、threshold、cardinality/quality、fixed-order tie、author collision、projection/visibility/empty partition 与 solver accounting |
 | `test_density_balanced_rcr_operation.py` | compact eight-scene unweighted/k16/k32/k64 operation、17,992 dry count、identity/tamper/reload、CLI help |
 | `test_all_func.py` | master runner;导入并依次跑每个 `smoke_test_*` |
 | `clean_test_data.py` | `LIST_PATH_CLEAN`(当前空:无持久产物) |
@@ -53,6 +56,10 @@ pytest test_smoke/ -q
 
 本仓 `test/` 的「reader」即 `get_testset_builder` / `get_gt_provider`(per-dataset 工厂),
 不另设 `reader_<dataset>.py` Protocol —— 数据访问由工厂注入根路径完成。
+
+2026-09-14 当前 portable suite 为 `147 passed`（4 个既有 collection
+warnings），strict pyright 为 0 errors；coverage self-check 覆盖全部 67 个
+tracked active Python files，另有 7 个显式排除的 campaign scripts。
 
 跑法:`python test/test_all_func_with_data.py`(或 `pytest test/ -q`,需先配 local_setting_test)。
 
