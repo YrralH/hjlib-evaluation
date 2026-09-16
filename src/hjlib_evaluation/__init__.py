@@ -87,7 +87,10 @@ from hjlib_evaluation.joint_error import (
     compute_pa_joint_position_errors,
     compute_joint_position_errors,
 )
-from hjlib_evaluation.joint_acceleration import compute_joint_acceleration_errors
+from hjlib_evaluation.joint_acceleration import (
+    compute_central_acceleration_magnitudes,
+    compute_joint_acceleration_errors,
+)
 from hjlib_evaluation.joint_jerk import compute_joint_jerk_errors
 from hjlib_evaluation.jta_person_detection_data import (
     JTA_CAMERA_K,
@@ -122,6 +125,7 @@ from hjlib_evaluation.jta_sota_metric_reducer import (
     validate_jta_sota_occurrence_partition,
 )
 from hjlib_evaluation.keypoint_oks import (
+    COCO17_OKS_SIGMAS,
     compute_keypoint_oks_matrix,
     compute_paired_keypoint_oks,
 )
@@ -164,6 +168,29 @@ from hjlib_evaluation.smpl_joint_occurrence_reducer import (
     SMPL_Joint_Occurrence_Result,
     compute_smpl_joint_occurrence_metric,
     reduce_smpl_joint_occurrences,
+)
+from hjlib_evaluation.standard_evaluation import (
+    STANDARD_EVALUATION_METRICS,
+    STANDARD_EVALUATION_METRIC_UNITS,
+    STANDARD_EVALUATION_PROFILE_ID,
+    Standard_Evaluation_Result,
+    Standard_Evaluation_Scene_Summary,
+    evaluate_standard_evaluation_scene,
+    evaluate_standard_evaluation_scene_indexed,
+    reduce_standard_evaluation_summaries,
+    standard_evaluation_result_from_json,
+    standard_evaluation_result_to_json,
+    standard_evaluation_scene_metrics_to_json,
+    standard_evaluation_summary_from_json,
+    standard_evaluation_summary_to_json,
+)
+from hjlib_evaluation.standard_evaluation_scope import (
+    Standard_Evaluation_Direct_Target_Join,
+    Standard_Evaluation_Scope_Index,
+    Standard_Evaluation_Scope_Partition,
+    build_standard_evaluation_scope_index,
+    standard_direct_target_join,
+    standard_evaluation_scope_rows,
 )
 from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import Filter_Stats, TestSet
@@ -269,6 +296,14 @@ __all__ = [
     'SMPL54_ENDPOINT_INDICES',
     'SMPL_Joint_Layout',
     'SMPL_Joint_Occurrence_Result',
+    'STANDARD_EVALUATION_METRICS',
+    'STANDARD_EVALUATION_METRIC_UNITS',
+    'STANDARD_EVALUATION_PROFILE_ID',
+    'Standard_Evaluation_Result',
+    'Standard_Evaluation_Scene_Summary',
+    'Standard_Evaluation_Direct_Target_Join',
+    'Standard_Evaluation_Scope_Index',
+    'Standard_Evaluation_Scope_Partition',
     'TestSet',
     'TestSet_Builder',
     'TestSet_Builder_Base',
@@ -290,7 +325,9 @@ __all__ = [
     'VirtualCrowd_Naive_Matched_Sequence_Summary',
     'build_segment_tag',
     'build_test_assembly',
+    'build_standard_evaluation_scope_index',
     'associate_jta_people',
+    'compute_central_acceleration_magnitudes',
     'compute_jitter',
     'compute_joint_acceleration_errors',
     'compute_joint_height_errors',
@@ -309,6 +346,7 @@ __all__ = [
     'compute_same_ray_ground_errors',
     'compute_smpl_joint_occurrence_metric',
     'compute_keypoint_oks_matrix',
+    'COCO17_OKS_SIGMAS',
     'compute_paired_keypoint_oks',
     'match_coco17_people',
     'project_camera_points',
@@ -336,6 +374,8 @@ __all__ = [
     'evaluate_lsvhr_virtualcrowd_entry',
     'evaluate_lsvhr_virtualcrowd_matrix',
     'evaluate_lsvhr_virtualcrowd_naive_matched_entry',
+    'evaluate_standard_evaluation_scene',
+    'evaluate_standard_evaluation_scene_indexed',
     'evaluate_virtualcrowd_naive_comparison',
     'evaluate_virtualcrowd_naive_matched',
     'estimate_ground_from_observations',
@@ -350,6 +390,7 @@ __all__ = [
     'path_pkl_for_segment',
     'reduce_trajectory_residual_summaries',
     'reduce_smpl_joint_occurrences',
+    'reduce_standard_evaluation_summaries',
     'reduce_corrected_crowd_summaries',
     'reduce_corrected_crowd_selected_view_summaries',
     'reduce_corrected_crowd_world_dynamics_summaries',
@@ -358,6 +399,13 @@ __all__ = [
     'make_coco17_visible_ge9_common_mask',
     'sample_ground_observations',
     'select_ground_observations_at_frame',
+    'standard_evaluation_result_from_json',
+    'standard_evaluation_result_to_json',
+    'standard_evaluation_scene_metrics_to_json',
+    'standard_direct_target_join',
+    'standard_evaluation_scope_rows',
+    'standard_evaluation_summary_from_json',
+    'standard_evaluation_summary_to_json',
     'selected_gt_mask_for_lsvhr_population_scene',
     'summarize_ground_errors',
     'summarize_trajectory_residuals',

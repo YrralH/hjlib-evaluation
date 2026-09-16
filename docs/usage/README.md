@@ -2,6 +2,9 @@
 
 GT-MOT sequence 级可持久统计见 [NAIVE track statistics](naive_track_statistics.md)。
 
+已有 normalized scene、selected GT mask 与 protocol-owned base VISRUN labels 时，见
+[standard evaluation](standard_evaluation.md)：一次 shared index 计算 14 项标准指标。
+
 无 identity 的 per-frame 多人预测需要 OKS matching 时，见
 [person OKS association](person_oks_association.md)：包含默认 thresholded
 cardinality-first 协议与 Crowd4D-author greedy compatibility 协议。
@@ -162,6 +165,8 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 | `reduce_corrected_crowd_summaries(...)` | 按 lexical scene order 合并 full/common 两个 view；输出独立 completeness、15 个 corrected metrics 与具名 ACCEL triple count |
 | `compute_ppds_scores(...)` / `compute_pcod_3class_matches(...)` | 未归约的 unordered-pair crowd-layout leaves |
 | `compute_joint_acceleration_errors(...)` | 未归约的 3D vector acceleration residual，单位继承输入/frame² |
+| `compute_central_acceleration_magnitudes(...)` | 任意 `(T,...,3)` points 的 twice-central-difference magnitude，replicate padding 后两端各裁 3 帧 |
+| `COCO17_OKS_SIGMAS` | `keypoint_oks.py` 单一持有的 canonical COCO17 OKS sigma vector |
 | `make_coco17_visible_ge9_common_mask(...)` | 在 caller 提供的 old-common mask 上选择 mapped COCO-17 source channel `>0` count `>=9`；`0.5` 计入 |
 | `evaluate_corrected_crowd_selected_view(...)` | 复用同一 15-metric 数学，输出独立 selected-view summary |
 | `reduce_corrected_crowd_selected_view_summaries(...)` | lexical scene order 的 selected-view exact reduction |

@@ -28,6 +28,7 @@ from hjlib_evaluation.crowd_layout import (
 from hjlib_evaluation.joint_acceleration import compute_joint_acceleration_errors
 from hjlib_evaluation.joint_error import compute_joint_position_errors
 from hjlib_evaluation.keypoint_oks import (
+    COCO17_OKS_SIGMAS,
     compute_paired_keypoint_oks,
     make_positive_depth_joint_mask,
 )
@@ -41,10 +42,7 @@ from hjlib_geometry import (
 )
 
 
-COCO17_SIGMAS = np.array([
-    0.26, 0.25, 0.25, 0.35, 0.35, 0.79, 0.79, 0.72, 0.72,
-    0.62, 0.62, 1.07, 1.07, 0.87, 0.87, 0.89, 0.89,
-], dtype=np.float64) / 10.0
+COCO17_SIGMAS = COCO17_OKS_SIGMAS
 METRIC_INDEX = {name: index for index, name in enumerate(CORRECTED_CROWD_METRICS)}
 
 

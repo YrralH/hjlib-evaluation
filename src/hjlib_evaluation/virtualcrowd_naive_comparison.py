@@ -15,6 +15,9 @@ from hjlib_evaluation.corrected_crowd_data import (
     validate_corrected_crowd_sequence,
 )
 from hjlib_evaluation.corrected_crowd_protocol import COCO17_SIGMAS
+from hjlib_evaluation.joint_acceleration import (
+    compute_central_acceleration_magnitudes,
+)
 from hjlib_evaluation.joint_error import (
     compute_joint_position_errors,
     compute_pa_joint_position_errors,
@@ -617,13 +620,7 @@ def root_acceleration_magnitudes(
         raise ValueError('root_world_m must have shape (T, 3)')
     if not np.isfinite(root).all():
         raise ValueError('root_world_m must be finite')
-    if len(root) <= 6:
-        return np.empty((0,), dtype=np.float64)
-    derivative = root
-    for _order in range(2):
-        padded = np.concatenate((derivative[:1], derivative, derivative[-1:]))
-        derivative = 0.5 * (padded[2:] - padded[:-2])
-    return np.asarray(np.linalg.norm(derivative[3:-3], axis=1), dtype=np.float64)
+    return compute_central_acceleration_magnitudes(root)
 
 
 def compute_virtualcrowd_acc_root_ratio_statistics(

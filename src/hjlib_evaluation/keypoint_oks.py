@@ -4,6 +4,13 @@ import numpy as np
 from numpy.typing import NDArray
 
 
+COCO17_OKS_SIGMAS = np.array([
+    0.26, 0.25, 0.25, 0.35, 0.35, 0.79, 0.79, 0.72, 0.72,
+    0.62, 0.62, 1.07, 1.07, 0.87, 0.87, 0.89, 0.89,
+], dtype=np.float64) / 10.0
+COCO17_OKS_SIGMAS.setflags(write=False)
+
+
 def make_positive_depth_joint_mask(
         reference_joint_valid: NDArray[np.bool_],
         target_camera_depth: NDArray[np.generic],

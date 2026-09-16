@@ -6,6 +6,25 @@ from numpy.typing import NDArray
 from hjlib_evaluation.joint_error import validate_joint_points
 
 
+def compute_central_acceleration_magnitudes(
+    points: NDArray[np.generic],
+) -> NDArray[np.float64]:
+    '''Return twice-central-differenced magnitudes after trimming three ends.'''
+    values = validate_joint_points(points, 'points')
+    if not np.isfinite(values).all():
+        raise ValueError('central acceleration points must be finite')
+    if len(values) <= 6:
+        return np.empty((0, *values.shape[1:-1]), dtype=np.float64)
+    derivative = values
+    for _order in range(2):
+        padded = np.concatenate((derivative[:1], derivative, derivative[-1:]))
+        derivative = 0.5 * (padded[2:] - padded[:-2])
+    return np.asarray(
+        np.linalg.norm(derivative[3:-3], axis=-1),
+        dtype=np.float64,
+    )
+
+
 def compute_joint_acceleration_errors(
     predicted_joints: NDArray[np.generic],
     reference_joints: NDArray[np.generic],

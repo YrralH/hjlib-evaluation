@@ -10,13 +10,12 @@ import numpy as np
 from numpy.typing import NDArray
 from scipy.optimize import linear_sum_assignment  # pyright: ignore[reportUnknownVariableType]
 
-from hjlib_evaluation.keypoint_oks import compute_keypoint_oks_matrix
+from hjlib_evaluation.keypoint_oks import (
+    COCO17_OKS_SIGMAS,
+    compute_keypoint_oks_matrix,
+)
 
 
-COCO17_OKS_SIGMAS = np.array([
-    0.26, 0.25, 0.25, 0.35, 0.35, 0.79, 0.79, 0.72, 0.72,
-    0.62, 0.62, 1.07, 1.07, 0.87, 0.87, 0.89, 0.89,
-], dtype=np.float64) / 10.0
 STANDARD_OKS_THRESHOLD = 0.5
 AUTHOR_OKS_THRESHOLD = 1e-6
 OKS_QUANTIZATION = 1_000_000_000_000

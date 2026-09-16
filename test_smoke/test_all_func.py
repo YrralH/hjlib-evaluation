@@ -31,6 +31,7 @@ from test_output_publication import smoke_test_output_publication
 from test_smpl_joint_occurrence_reducer import (
     smoke_test_smpl_joint_occurrence_reducer,
 )
+from test_standard_evaluation import smoke_test_standard_evaluation
 from test_corrected_crowd import smoke_test_corrected_crowd
 from test_density_balanced_rcr_operation import smoke_test_density_balanced_rcr_operation
 from test_density_balanced_rcr_cartesian import smoke_test_density_balanced_rcr_cartesian
@@ -56,6 +57,7 @@ def main() -> None:
     smoke_test_naive_track_statistics()
     smoke_test_output_publication()
     smoke_test_smpl_joint_occurrence_reducer()
+    smoke_test_standard_evaluation()
     print('test_all_func: all smoke tests passed')
 
 

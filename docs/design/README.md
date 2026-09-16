@@ -3,6 +3,10 @@
 GT-MOT sequence 的 additive partition 与 nullable reduction 见
 [NAIVE track statistics](naive_track_statistics.md)。
 
+LSV-HR 14-metric standard profile 的一次 shared index、TRACK/VISRUN/FRAME 三次
+traversal 与 raw reduction contract 见
+[standard evaluation](standard_evaluation.md)。
+
 Per-frame unordered person OKS association 的稳定接口见
 [usage](../usage/person_oks_association.md)；两个 profile 共用一个结果 contract，standard pair
 按 GT row canonical 排序，Crowd4D-author pair 保留 release process order。Crowd3D 的跨仓
@@ -111,9 +115,9 @@ src/hjlib_evaluation/
     eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
     output_publication.py  推理/CLI 共用的 failure-clean staged directory wrapper；原子 no-replace commit 复用 hjlib-systools
     joint_error.py         method-neutral unreduced per-joint Euclidean and normalized-ground-height errors
-    joint_acceleration.py  method-neutral GT-relative joint acceleration residuals
+    joint_acceleration.py  method-neutral acceleration magnitudes and GT-relative residuals
     joint_jerk.py          method-neutral GT-relative joint jerk residuals
-    keypoint_oks.py        method-neutral pairwise OKS matrix leaf
+    keypoint_oks.py        method-neutral pairwise OKS leaves + canonical COCO17 sigma policy
     person_oks_association.py named COCO17 association dispatcher + cardinality-first and Crowd4D-author greedy implementations
     corrected_crowd_data.py immutable corrected-crowd input/result records and validation
     corrected_crowd_protocol.py corrected-crowd evaluation and exact reduction
@@ -127,6 +131,9 @@ src/hjlib_evaluation/
     smpl_joint_occurrence_reducer.py sparse paired SMPL occurrence MPJPE/T-MPJPE reduction
     lsvhr_evaluation.py    registered-entry identity、exact split projection 与 ordered matrix composition
     lsvhr_frame_visualization.py method-owned camera、world mesh/frame 与 provider contract
+    standard_evaluation_scope.py lightweight direct join + TRACK/VISRUN/FRAME partitions
+    standard_evaluation_metrics.py scope-blind pure metric leaves
+    standard_evaluation.py three-loop orchestration + raw scene/global reduction
     corrected_crowd_population.py named additive selected-population mask
     corrected_crowd_world_dynamics.py additive exact-window world dynamics summary/result
     ground_estimation_protocol.py generic Tracked_Scene observation selection/sampling + RCR solve + plane/same-ray diagnostics
@@ -234,8 +241,10 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 
 ## State of the world
 
-- Data-free smoke: 143 passed on 2026-09-13; master runner passed. Current
-  repository strict pyright completed with 0 errors across 68 analyzed files.
+- Data-free smoke: 155 passed on 2026-09-15. Repository strict pyright completed
+  with 0 errors across 72 analyzed files. The standard evaluator's real VC
+  scene2 final profile measured 0.0560 s scope indexing and 7.203 s metrics over
+  38,652 selected occurrences: index share 0.772%, below the 1% gate.
 
 - **2026-09-02 LSV-HR registered-entry composition**：新增 evaluation-owned
   `LSVHR_Evaluation_Profile.NAIVE`、exact split population projection、official

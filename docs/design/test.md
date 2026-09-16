@@ -27,6 +27,7 @@ pytest 与 master runner 都执行这组测试。
 | `test_smpl_joint_occurrence_reducer.py` | sparse paired SMPL occurrence 的 identity/layout/unit、MPJPE/T-MPJPE、multi-spec reduction 与错误分支；pytest/master 双入口 |
 | `test_jta_person_detection.py` | unordered JTA GT/prediction contracts、cardinality/quality + explicit row-lex OKS association、MPJPE/PA reduction、exact-degeneracy、result invariants 与 canonical codec |
 | `test_person_oks_association.py` | 两个 named COCO17 profiles 的 dispatch、threshold、cardinality/quality、fixed-order tie、author collision、projection/visibility/empty partition 与 solver accounting |
+| `test_standard_evaluation.py` | shared TRACK/VISRUN/FRAME semantic index、14 个独立 metric leaves、alignment/ACC/OKS/PPDS 数学、raw reduction、JSON 与 scene-local zero support；pytest/master 双入口 |
 | `test_density_balanced_rcr_operation.py` | compact eight-scene unweighted/k16/k32/k64 operation、17,992 dry count、identity/tamper/reload、CLI help |
 | `test_all_func.py` | master runner;导入并依次跑每个 `smoke_test_*` |
 | `clean_test_data.py` | `LIST_PATH_CLEAN`(当前空:无持久产物) |
