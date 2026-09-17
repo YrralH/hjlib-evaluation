@@ -75,7 +75,7 @@ class LSVHR_Renderable_Person:
 
 @dataclass(frozen=True, slots=True)
 class LSVHR_Renderable_Frame:
-    '''One full method frame using a generic per-frame camera value.'''
+    '''One method frame, possibly empty, with its generic per-frame camera.'''
 
     scene_id: str
     frame_id: int
@@ -94,8 +94,8 @@ class LSVHR_Renderable_Frame:
         if type(self.camera.extrinsics) is not Extrinsics_World_to_Camera:
             raise TypeError('camera extrinsics must be exact world-to-camera')
         require_frame_identity(self.camera_source_id, 'camera source_id')
-        if type(self.people) is not tuple or not self.people:
-            raise ValueError('people must be a non-empty tuple')
+        if type(self.people) is not tuple:
+            raise TypeError('people must be an exact tuple')
         if any(type(person) is not LSVHR_Renderable_Person for person in self.people):
             raise TypeError('people must contain exact LSVHR_Renderable_Person values')
         identities = tuple(person.native_track_id for person in self.people)

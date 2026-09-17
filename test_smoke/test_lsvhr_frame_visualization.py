@@ -112,8 +112,15 @@ def test_renderable_frame_requires_sorted_unique_people() -> None:
     assert not frame.people[0].mesh_world_m.verts.flags.writeable
 
 
+def test_renderable_frame_accepts_empty_people() -> None:
+    frame = LSVHR_Renderable_Frame(
+        'scene2', 0, camera(), (), 'method/test-camera')
+    assert frame.people == ()
+
+
 def smoke_test_lsvhr_frame_visualization() -> None:
     test_projects_with_method_intrinsics_and_extrinsics()
     test_camera_owner_rejects_skew()
     test_renderable_frame_rejects_distortion_and_empty_provenance()
     test_renderable_frame_requires_sorted_unique_people()
+    test_renderable_frame_accepts_empty_people()
