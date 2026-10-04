@@ -121,6 +121,7 @@ means 为 `15.384228/15.590497/15.900516 m`，均不是当前 automatic KDE prot
 | 需要 global frame 0 diagnostic | `select_ground_observations_at_frame` |
 | 需要固定 seed、至多 N 个 person-frame | `sample_ground_observations` |
 | 已选 observations + `K`，需要估计 plane | `estimate_ground_from_observations` |
+| 原生像素的 `Tracked_Scene` + `K`，要一次跑完 `baseline001` | `estimate_ground_baseline001(scene, K, distance_max_m=80.0)`：筛选、粗估、KDE 权重、加权重估一步完成，常量全部固定在 `BASELINE001_*`；返回两次解出的 plane 与完整 KDE 记录。`distance_max_m` 是唯一可调项（评测用 80 m；TJU in-the-wild 那批跑的是 200 m，调用方要自己记录） |
 | 已有 GT ray support，需同射线地面误差 | `compute_same_ray_ground_errors` + `summarize_ground_errors` |
 | 需要 normal / D 独立诊断 | `compute_ground_plane_diagnostics` + `compute_ground_effect_decomposition` |
 | 需要完整 strict-filter density variants | `evaluate_virtualcrowd_density_balanced_rcr_ground.py` |
