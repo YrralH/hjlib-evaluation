@@ -59,6 +59,7 @@ from hjlib_evaluation.crowd_layout import (
     compute_ppds_scores,
 )
 from hjlib_evaluation.dump_reader import load_inference_dump
+from hjlib_evaluation.dumped_smpl_gt_provider import Dumped_SMPL_GT_Provider
 from hjlib_evaluation.eval_meta import Eval_Meta, Metric_Spec_2D_OKS, Metric_Spec_3D
 from hjlib_evaluation.eval_reducer import compute_jitter, eval_dumps_against_gt
 from hjlib_evaluation.get_by_dataset import get_gt_provider, get_testset_builder
@@ -211,6 +212,10 @@ from hjlib_evaluation.test_segment import Test_Segment
 from hjlib_evaluation.testset import Filter_Stats, TestSet
 from hjlib_evaluation.testset_builder import TestSet_Builder
 from hjlib_evaluation.testset_builder_base import TestSet_Builder_Base
+from hjlib_evaluation.per_dataset.testset_builder_vrv1 import VRv1_TestSet_Builder
+from hjlib_evaluation.per_dataset.vrv1_eval_meta import (
+    VRV1_EVAL_META, VRV1_GOPRO_EVAL_META,
+)
 from hjlib_evaluation.tester import Tester, build_segment_tag, list_dump_segment_tags, path_pkl_for_segment
 from hjlib_evaluation.trajectory_residual import (
     Trajectory_Residual_Reduction,
@@ -278,6 +283,10 @@ __all__ = [
     'Corrected_Crowd_World_Dynamics_Result',
     'Corrected_Crowd_World_Dynamics_Sequence_Summary',
     'Eval_Meta',
+    'Dumped_SMPL_GT_Provider',
+    'VRv1_TestSet_Builder',
+    'VRV1_EVAL_META',
+    'VRV1_GOPRO_EVAL_META',
     'Filter_Stats',
     'GT_Provider_Base',
     'Ground_Effect_Decomposition',

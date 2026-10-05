@@ -14,6 +14,7 @@ from hjlib_evaluation import (
     Filter_Stats,
     Test_Segment,
     TestSet,
+    TestSet_Builder,
     get_testset_builder,
 )
 
@@ -86,15 +87,18 @@ def _check_restrict_to_scenes() -> None:
 
 def _check_get_testset_builder_paths() -> None:
     b_wp = get_testset_builder('worldpose_smpl', path_dump_root='/dump', path_filter_stats_base='/fs')
+    assert isinstance(b_wp, TestSet_Builder)
     assert b_wp.path_root_label == '/dump/worldpose', b_wp.path_root_label
     assert b_wp.path_filter_store == '/fs/wp_filter_stats/seq_modifications_jsonbin', b_wp.path_filter_store
     assert b_wp.fps == 50.0, b_wp.fps
 
     b_jta = get_testset_builder('jta_smpl_fitted', path_dump_root='/dump', path_filter_stats_base='/fs')
+    assert isinstance(b_jta, TestSet_Builder)
     assert b_jta.path_root_label == '/dump/jta_smpl_fitted', b_jta.path_root_label
     assert b_jta.path_filter_store == '/fs/jta_filter_stats/seq_modifications_jsonbin', b_jta.path_filter_store
 
     b_ext = get_testset_builder('jta_ext_smpl_fitted', path_dump_root='/dump', path_filter_stats_base='/fs')
+    assert isinstance(b_ext, TestSet_Builder)
     assert b_ext.path_root_label == '/dump/jta_ext_smpl_fitted', b_ext.path_root_label
     assert b_ext.path_filter_store == '/fs/jta_ext_filter_stats/seq_modifications_jsonbin', b_ext.path_filter_store
 
@@ -121,10 +125,10 @@ def _check_error_paths() -> None:
 
     try:
         get_testset_builder('vrv1', path_dump_root='/dump', path_filter_stats_base='/fs')
-    except NotImplementedError:
+    except ValueError:
         pass
     else:
-        raise AssertionError('vrv1 should raise NotImplementedError')
+        raise AssertionError('bare vrv1 must provide canonical-name guidance')
 
     try:
         get_testset_builder('nope', path_dump_root='/dump', path_filter_stats_base='/fs')

@@ -50,7 +50,7 @@
 | 源 | 原因 |
 |---|---|
 | filter 生产(monolith `seq_modification.py` 等 415 行) | **复用 assembly 已 washed 的 `Filter_Modifications_Store` v1**,不重港生产(设计 SSOT §6 track 2 明确) |
-| `per_dataset/{testset_builder,gt_provider}_vrv1.py` + `vrv1_eval_meta.py` | **先占位/跳过**:assembly 当前 vrv1 out-of-scope(washed 跳过),待 assembly 支持后再纳入(用户明确) |
+| `per_dataset/{testset_builder,gt_provider}_vrv1.py` + `vrv1_eval_meta.py` | 2026-10-05：接纳 existing fitted-SMPL dumps；full-only builder + generic dumped SMPL GT + preserved SMPL_24 metric，main30/GoPro50 分开；见 [稳定边界](vrv1_dumped_runs.md) |
 | `script/test/test_protocol_dynamic/run_test.py` + `dispatch_*.sh` + `network_driver_ief_legacy.py` | entry / 实验编排 / 具体 IEF driver 归 **hjlib-experiments**(app 层),不进本执行层仓;本仓只留 `Network_Driver_Base` ABC + 通用 driver |
 
 ## 6. Intentional API divergences from monolith
@@ -58,7 +58,7 @@
 | id | 改动 | why |
 |---|---|---|
 | DIV-1 | `build_test_assembly` 经 assembly 工厂 `get_dataset_seq_assembly(..., divider=testset.divider)` 构 Dataset,不再 monolith 式手建 `Dataset_Single_Seq`+`Seq_Label_Manager`+encoder+Dataset。**divider 注入而非 `Assembly_Config_Filtered_Seq`**:eval 的 testset 必须把 divider 与 scene-level Test_Segment 在同一循环里造(GT 查找按 flat index 对齐),且 `restrict_to_scenes` + 策展策略要能传到 Dataset——这些 by-parameter config 路径表达不了,故注入预建 divider(见 DIV-6 的 assembly 增项) | 工厂封装 label-manager/encoder/Dataset 接线 + 对齐安全 + 保 restrict_to_scenes |
-| DIV-3 | monolith 的两个 builder 文件(`per_dataset/testset_builder_wp.py` + `testset_builder_jta.py`,后者含 `TestSet_Builder_JTA` + `TestSet_Builder_JTA_Ext` 两类)共三个 builder 类——仅差 name_dataset + filter-dir token + 一行 meta——合并为单一泛型 `TestSet_Builder`,per-dataset 事实在 `get_by_dataset` 注入 | 去重;vrv1 将来若需特例再单开(现 deferred) |
+| DIV-3 | monolith 的两个 builder 文件(`per_dataset/testset_builder_wp.py` + `testset_builder_jta.py`,后者含 `TestSet_Builder_JTA` + `TestSet_Builder_JTA_Ext` 两类)共三个 builder 类——仅差 name_dataset + filter-dir token + 一行 meta——合并为单一泛型 `TestSet_Builder`,per-dataset 事实在 `get_by_dataset` 注入 | 去重；VRv1 使用不读 filter store 的 full-run builder，原 WP/JTA 路径保留 |
 | DIV-4 | `Filter_Stats` provenance 字段(bias_config_name / bias_tag / min_bias_segment_length / n_frame_min_seq / produced_at)→ `None` | 一次性洗盘进版本化 store 时丢了 monolith `_meta.json` sidecar(store 版本 metadata 只有 created/note/producer/source);count 字段照算 |
 | DIV-5 | `build_test_assembly` 返回单个 `Dataset_Single_Seq_Assembly`(monolith 返回 `(ds_ss, assembly)` tuple) | 新工厂内部持 label-manager;`Dataset_Single_Seq` 磁盘管理器不再外露 |
 | DIV-6(跨仓,assembly 增项) | 给 assembly `get_dataset_seq_assembly` 加 **additive** `divider: Optional[Seq_Divider] = None` 注入参(默认 None = 原行为,现有 caller + `Assembly_Config_Filtered_Seq` smoke 零影响)+ 给 assembly 包加 `py.typed`(其本就 strict-typed,eval 是首个要其类型的 typed 下游) | DIV-1 需要;py.typed 让 eval strict pyright 拿到真类型(非 `reportMissingTypeStubs:none` workaround);均未 commit,随 assembly 同批提交(见 per_lib EVAL 节 + pyproject pin 注) |

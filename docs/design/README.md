@@ -139,6 +139,7 @@ src/hjlib_evaluation/
     ground_estimation_protocol.py generic Tracked_Scene observation selection/sampling + RCR solve + plane/same-ray diagnostics
     dump_reader.py         load_inference_dump(qualname-routing unpickler,读 monolith 真 dump 零 monolith import;legacy bare name→canonical 归一,FIX-1)
     gt_provider_base.py    GT_Provider_Base(ABC;joints/param/eval_meta 抽象,camera/ground/video deferred→raise)
+    dumped_smpl_gt_provider.py generic full-dump fitted-SMPL GT reader, shared by WP and VRv1
     network_driver_base.py Network_Driver_Base(ABC,infer(dict_item)->dict;live driver deferred)
     assembly_factory.py    build_test_assembly(经 assembly 工厂 divider= 注入建测试集 Dataset)
     get_by_dataset.py      name_dataset → TestSet_Builder / GT_Provider 工厂(注入数据根)
@@ -147,6 +148,8 @@ src/hjlib_evaluation/
         wp_eval_meta.py        WP_EVAL_META(全 SMPL-24)
         jta_eval_meta.py       JTA_EVAL_META / JTA_EXT_EVAL_META(12·10 limb endpoints)
         gt_provider_wp.py      WP_GT_Provider(从 assembly dump full label)
+        testset_builder_vrv1.py VRv1 full-run builder; disjoint camera families, no filter store
+        vrv1_eval_meta.py       preserved SMPL_24 metric identities for VR main and GoPro
         gt_provider_jta.py     JTA_GT_Provider / JTA_Ext_GT_Provider(从 dataset-std raw 22-joint)
 docs/{usage,design}/       用法 / 设计两棵树(design/README 本文件 = 唯一 onboarding 入口)
 script/evaluate_virtualcrowd_rcr_ground.py  VirtualCrowd dataset-specific RCR experiment entry
@@ -156,8 +159,9 @@ test_smoke/                合成数据 smoke(test_testset + test_gt + master ru
 test/                      真实数据 FAIL-not-skip(testset / GT / eval-on-dumps + local_setting_test)
 ```
 
-**vrv1 先占位/跳过**(无 per_dataset 实装):assembly 当前把 vrv1 列为 out-of-scope(washed
-时跳过),故 vrv1 评测待 assembly 支持后再纳入(用户明确)。**curated 策略**(visualize_v2/v3/
+VRv1 canonical fitted-SMPL dumps 使用 full-only whole-run builder，main/GoPro 分别为
+30/50 FPS。稳定边界见 [VRv1 dump-backed evaluation](vrv1_dumped_runs.md)。
+**curated 策略**(visualize_v2/v3/
 smoke)deferred(narrow scenes below split,vis-only)。
 
 ## Family conventions inherited
@@ -240,6 +244,12 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 应作为 protocol redesign 单独落地,不得默默替换默认 `joints_54_world` 口径。
 
 ## State of the world
+
+- **2026-10-05 VRv1 existing dumps**：full-only main/GoPro builder 与 generic
+  dump-backed SMPL GT 已接线，WP wrapper 保留原行为。全量 data-free smoke 167 passed；
+  strict pyright 0 errors，78 files analyzed。覆盖检查：77 Python files 进入 config，
+  7 个 campaign scripts 已有显式 exclusion，无未登记文件。真实资产接纳与 cache ready
+  verdict 留在 experiments receipt；此处未运行模型 benchmark。
 
 - Data-free smoke: 155 passed on 2026-09-15. Repository strict pyright completed
   with 0 errors across 72 analyzed files. The standard evaluator's real VC

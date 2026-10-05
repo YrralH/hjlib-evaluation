@@ -14,18 +14,21 @@ from hjlib_evaluation.testset import TestSet
 
 
 class TestSet_Builder_Base(abc.ABC):
-    '''One configured instance per dataset. Reads the dataset's ``Seq_Modification``
-    lists from the washed hjlib-dataset-assembly filter store and returns a unified
-    TestSet (divider + scene-level Test_Segment list, index-aligned).'''
+    '''One configured instance per dataset, returning a unified TestSet.
+
+    The divider and scene-level Test_Segment list are index-aligned. Concrete
+    builders select washed filter-store ranges or complete frozen dump runs.
+    '''
 
     name_dataset: str = ''
+    path_root_label: str
+    fps: float
 
     @abc.abstractmethod
     def build(self, policy: str, split: str) -> TestSet:
         '''
-        @param policy: filter policy. ``full`` (test-set eval policy) or ``visualize``
-            (its superset). Curated subsets (``visualize_v2`` / ``visualize_v3`` /
-            ``*_smoke``) are not yet supported -- see EVAL Cross-lib TODO / migration.md.
+        @param policy: dataset-specific evaluation policy. Filtered builders
+            accept ``full`` or ``visualize``; VRv1 dumped runs accept only ``full``.
         @param split: ``train`` / ``val`` / ``test`` / ``all`` (read from the dump
             root's split txt; ``all`` = the sorted union).
         '''

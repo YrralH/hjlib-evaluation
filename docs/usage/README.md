@@ -14,6 +14,9 @@ cardinality-first 协议与 Crowd4D-author greedy compatibility 协议。
 
 ## 一句话索引
 
+已有 VRv1 fitted-SMPL crop dumps 时，见 [VRv1 dumped runs](vrv1_dumped_runs.md)：
+默认四个 main views/30 FPS，GoPro 显式单独选择/50 FPS，无 filter store。
+
 评测分两段、由 per-segment 预测 dump 衔接(`{'segment': Test_Segment, 'pred':
 {'joints_54_world': (L,54,3)}}`):**推理**(逐 segment 跑网络 → 落 dump)与**归约**
 (读 dump + GT → 指标表)。两段解耦,所以**评已有 dump 不需要 live 网络**。
@@ -137,7 +140,7 @@ monolith)、读取 `pred_joints_key` 指定的世界空间 joint 字段、对齐
 
 | 公开件 | 用途 |
 |---|---|
-| `get_testset_builder(name_dataset, path_dump_root, path_filter_stats_base, filter_version=None)` | → 配好的 `TestSet_Builder`;`.build(policy, split)` 出 `TestSet`。policy ∈ {full, visualize}(curated v2/v3 deferred) |
+| `get_testset_builder(name_dataset, path_dump_root, path_filter_stats_base='', filter_version=None)` | → `TestSet_Builder_Base`;WP/JTA 为 filter-backed `TestSet_Builder`，VRv1 为 full-only whole-run builder |
 | `get_gt_provider(name_dataset, path_dump_root, path_raw_data_root=None, path_raw_more_label=None)` | → `GT_Provider`。worldpose 只用 dump_root;jta/jta_ext 需 raw_data_root |
 | `build_test_assembly(testset, encoder=None, kp_manager=None, ...)` | `TestSet` → 推理输入 `Dataset_Single_Seq_Assembly`(经 assembly 工厂 `divider=` 注入) |
 | `Tester(testset, assembly, gt_provider=None, network_driver=None)` | 评测驱动:`stage_eval` / `stage_list_segments` / `stage_inference` |
@@ -202,6 +205,6 @@ contract 与 empty=`None` 语义见
   `joints_54_world_raw` 是 no-invalid-tame 诊断口径;无 KP 帧的 raw root/world translation
   可为 0、fallback 或大幅漂移,因此 MPJPE 变差是预期诊断信号,不是新的标准协议。
 - **camera/ground/video GT** 当前 deferred(base raise):服务 2D OKS(未实现)+ vis(out of scope)。
-- **vrv1**:`get_*_provider('vrv1')` raise(assembly 当前 out-of-scope)。
+- **VRv1**：使用 `vrv1_smpl_fitted` 或显式 `vrv1_gopro_smpl_fitted`；bare `vrv1` 提示 canonical name，详见 [dumped-run 用法](vrv1_dumped_runs.md)。
 
 详细决策 / 设计见 [../design/README.md](../design/README.md)。

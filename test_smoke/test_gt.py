@@ -36,10 +36,10 @@ def _check_eval_meta() -> None:
 def _check_get_gt_provider_errors() -> None:
     try:
         get_gt_provider('vrv1', path_dump_root='/dump')
-    except NotImplementedError:
+    except ValueError:
         pass
     else:
-        raise AssertionError('vrv1 GT should raise NotImplementedError')
+        raise AssertionError('bare vrv1 GT must provide canonical-name guidance')
 
     try:
         get_gt_provider('nope', path_dump_root='/dump')
