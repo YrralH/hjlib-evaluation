@@ -33,11 +33,11 @@ description_updated = '2026-09-07'
 
 [tool.hjlibm.deps]
 hjlib-camera = { path = '../hjlib-camera', commit = "14d336b3ae7821b5739b57db846a4b474c53ebdc" }
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = 'e56610f9e7f8f89a36e6d1743e068b11a3008b29' }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "ca2db90630eeec3be4b9750661c91dc0afbd5e6b" }
-hjlib-detection = { path = '../hjlib-detection', commit = "9162646025b84720d44c0d44e232bb314025ccf3" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "2c93b517b5ffa720993f8dcd3cb1867fc783198e" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "a058cf69f569a8da2590a70ae545ab5a8b5d9f5a" }
+hjlib-detection = { path = '../hjlib-detection', commit = "a3fd83151a4b90207de6656aa2ced11aca04d8c3" }
 hjlib-geometry = { path = '../hjlib-geometry', commit = "ea56bf8b001daa871defddf5e1d717fee3c8cd4c" }
-hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "69cf4ae444b6f20d74077b8605185b55c1e08f61" }
+hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "53098769d177c1850ce0b99c55433676fb60e2e4" }
 hjlib-meshes = { path = '../hjlib-meshes', commit = "34b2ef3794364b726b12145ca06d7f6cd91a54b2" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "72bec37abeefda708cf9eedfdd2217075758045b" }
 hjlib-systools = { path = '../hjlib-systools', commit = "975fd6aefad4fa4605ba0a3ace4c88c4e46608ad" }
