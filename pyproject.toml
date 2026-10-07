@@ -33,9 +33,9 @@ description_updated = '2026-09-07'
 
 [tool.hjlibm.deps]
 hjlib-camera = { path = '../hjlib-camera', commit = "14d336b3ae7821b5739b57db846a4b474c53ebdc" }
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "966472f126dba225fad972c447893d7f882dee47" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "5ec86e0462996aafe461be4d99af17aa809ca2d2" }
 hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "f81446813ea5b4c595a36b0b0b35afba75311133" }
-hjlib-detection = { path = '../hjlib-detection', commit = "48d154e09b3543fd8e13b88a4d3c9e72038ee68f" }
+hjlib-detection = { path = '../hjlib-detection', commit = "bd2196d3f42c38aaa50eee4a4ef9d573096939e0" }
 hjlib-geometry = { path = '../hjlib-geometry', commit = "ea56bf8b001daa871defddf5e1d717fee3c8cd4c" }
 hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "89ddaedcf2f94c6022c88ff577de75ae92a9d24b" }
 hjlib-meshes = { path = '../hjlib-meshes', commit = "34b2ef3794364b726b12145ca06d7f6cd91a54b2" }

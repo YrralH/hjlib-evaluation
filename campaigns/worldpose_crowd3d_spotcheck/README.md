@@ -51,7 +51,7 @@ surface.
 - Crowd3D external downstream package:
   `/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream`
 - Crowd3D remote source:
-  `G1M-hj:/mnt/ssd_2T_1100_0/zl/crowd3d_NET_ARG_231908_downstream`
+  `G1M-hj:/mnt/qnas_mg09/dog/Data/__from_qnasmini_20261008/ssd_2T/zl/crowd3d_NET_ARG_231908_downstream`
 
 ## First Command
 
