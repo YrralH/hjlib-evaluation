@@ -40,7 +40,7 @@ blue is `baseline001`, green is GT. The arrows point toward each normal's
 camera-space vertical vanishing point. It is synchronized at:
 
 ```text
-\\192.168.31.100\16Thj\Data_Process\sample_vis_sync_space\4090dv1\Code_as_Libs\virtualcrowd\baseline001-normal-field-4k
+\\192.168.31.100\16Thj\Data_Vis\sync_from_hosts\4090dv1\Code_as_Libs\virtualcrowd\baseline001-normal-field-4k
 ```
 
 ## Verified Crowd4D and GeoCalib Facts
