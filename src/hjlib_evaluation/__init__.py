@@ -9,6 +9,12 @@ Top-level re-exports below cover the full ported surface (testset / GT / tester 
 reducer / dump reader).
 '''
 from hjlib_evaluation.assembly_factory import build_test_assembly
+from hjlib_evaluation.body_reconstruction_validation import (
+    BODY_RECONSTRUCTION_VALIDATION_SCHEMA, SHAPE_CONDITIONS, Shape_Condition,
+    Body_Validation_Metric_Sums, compute_body_validation_metric_sums,
+    Body_Reconstruction_Validation_Reducer,
+    body_validation_metric_contract, validate_body_validation_result,
+)
 from hjlib_evaluation.corrected_crowd_data import (
     CORRECTED_CROWD_METRICS,
     CORRECTED_CROWD_METRIC_UNITS,
@@ -108,6 +114,10 @@ from hjlib_evaluation.joint_acceleration import (
     compute_joint_acceleration_errors,
 )
 from hjlib_evaluation.joint_jerk import compute_joint_jerk_errors
+from hjlib_evaluation.local_smpl22_metrics import (
+    compute_local_smpl22_rt_mpjpe_values,
+    compute_local_smpl22_t_mpjpe_values,
+)
 from hjlib_evaluation.jta_person_detection_data import (
     JTA_CAMERA_K,
     JTA_ENDPOINT_INDICES,
@@ -249,6 +259,10 @@ from hjlib_evaluation.virtualcrowd_naive_comparison import (
 )
 
 __all__ = [
+    'BODY_RECONSTRUCTION_VALIDATION_SCHEMA', 'SHAPE_CONDITIONS', 'Shape_Condition',
+    'Body_Validation_Metric_Sums', 'compute_body_validation_metric_sums',
+    'Body_Reconstruction_Validation_Reducer',
+    'body_validation_metric_contract', 'validate_body_validation_result',
     'BASELINE001_BOTTOM_JOINT_PAIR',
     'BASELINE001_CONFIDENCE_THRESHOLD',
     'BASELINE001_DISTANCE_MAX_M',
@@ -371,6 +385,8 @@ __all__ = [
     'compute_joint_jerk_errors',
     'compute_pa_joint_position_errors',
     'compute_joint_position_errors',
+    'compute_local_smpl22_rt_mpjpe_values',
+    'compute_local_smpl22_t_mpjpe_values',
     'compute_virtualcrowd_acc_root_ratio_statistics',
     'compute_virtualcrowd_mpjpe_world_statistics',
     'compute_virtualcrowd_oks_vis_statistics',

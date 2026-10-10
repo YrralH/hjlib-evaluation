@@ -5,7 +5,7 @@ build-backend = 'hatchling.build'
 [project]
 name = 'hjlib-evaluation'
 version = '0.1.0'
-description = 'Evaluation protocol harness for dynamic-scene human pose predictions, owning GT adapters, dump/inference orchestration, GT-track sufficient statistics and metric reduction without model or dataset definitions.'
+description = 'Human reconstruction evaluation protocols, owning model-neutral paired validation metrics, GT adapters, dump/inference orchestration, and sufficient-statistic reduction without model or dataset definitions.'
 requires-python = '>=3.12'
 dependencies = [
     'numpy',
@@ -29,15 +29,15 @@ testpaths = ['test_smoke', 'test']
 # (atomic no-replace directory publication).
 # hjlib-network / hjlib-smpl remain deferred.
 [tool.hjlibm]
-description_updated = '2026-09-07'
+description_updated = '2026-10-08'
 
 [tool.hjlibm.deps]
 hjlib-camera = { path = '../hjlib-camera', commit = "e936c5538b575b54e629402c4dc590d130be7b8b" }
-hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "d797b3bfd6cb9ea0d97664afc4f2264ceafdfb57" }
-hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "2fb5acb866dd18f3eb78a298175e1e2d016545be" }
+hjlib-dataset-assembly = { path = '../hjlib-dataset-assembly', commit = "d204ad9c17ae14003041f22e1cde326577f2c10f" }
+hjlib-dataset-std = { path = '../hjlib-dataset-std', commit = "a23bddbdfaabe2f65a72269dff714d60ffc9f484" }
 hjlib-detection = { path = '../hjlib-detection', commit = "8e5160e9bbd1a63eebdd2906d6f0927023e31136" }
 hjlib-geometry = { path = '../hjlib-geometry', commit = "26da454a2d2b2a9decddfd560b0b19317fc2b625" }
 hjlib-ground-solver = { path = '../hjlib-ground-solver', commit = "1aa27ce6cfc6a1830b3073d12a1e7e50477b6e75" }
 hjlib-meshes = { path = '../hjlib-meshes', commit = "8abe66daba4855c39da57d30062557c1e1fa2a35" }
 hjlib-skeleton = { path = '../hjlib-skeleton', commit = "72bec37abeefda708cf9eedfdd2217075758045b" }
-hjlib-systools = { path = '../hjlib-systools', commit = "7f27dfac74988596a84df9d5c59995ec2074e252" }
+hjlib-systools = { path = '../hjlib-systools', commit = "4a55345cc943af2208d354a23546c819d1efaa58" }

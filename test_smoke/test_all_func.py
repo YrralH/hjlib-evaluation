@@ -21,6 +21,7 @@ from test_jta_sota_metric_reducer import smoke_test_jta_sota_metric_reducer
 from test_lsvhr_frame_visualization import smoke_test_lsvhr_frame_visualization
 from test_lsvhr_evaluation import smoke_test_lsvhr_evaluation
 from test_metric_leaves import smoke_test_metric_leaves
+from test_local_smpl22_metrics import smoke_test_local_smpl22_metrics
 from test_eval_pred_field import smoke_test_eval_pred_field
 from test_testset_fixed_window import smoke_test_testset_fixed_window
 from test_trajectory_residual import smoke_test_trajectory_residual
@@ -32,6 +33,7 @@ from test_smpl_joint_occurrence_reducer import (
     smoke_test_smpl_joint_occurrence_reducer,
 )
 from test_standard_evaluation import smoke_test_standard_evaluation
+from test_body_reconstruction_validation import smoke_test_body_reconstruction_validation
 from test_corrected_crowd import smoke_test_corrected_crowd
 from test_density_balanced_rcr_operation import smoke_test_density_balanced_rcr_operation
 from test_density_balanced_rcr_cartesian import smoke_test_density_balanced_rcr_cartesian
@@ -49,6 +51,7 @@ def main() -> None:
     smoke_test_testset()
     smoke_test_gt()
     smoke_test_metric_leaves()
+    smoke_test_local_smpl22_metrics()
     smoke_test_eval_pred_field()
     smoke_test_testset_fixed_window()
     smoke_test_trajectory_residual()
@@ -58,6 +61,7 @@ def main() -> None:
     smoke_test_output_publication()
     smoke_test_smpl_joint_occurrence_reducer()
     smoke_test_standard_evaluation()
+    smoke_test_body_reconstruction_validation()
     print('test_all_func: all smoke tests passed')
 
 

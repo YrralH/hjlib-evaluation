@@ -1,5 +1,11 @@
 # 用法 —— hjlib-evaluation
 
+需要 SMPL22 local T-MPJPE/RT-MPJPE 的未归约 metre errors 时，见
+[local SMPL22 metrics](local_smpl22_metrics.md)。
+
+已有两臂 SMPL joints 与 GT 时，见[人体重建 validation](body_reconstruction_validation.md)：
+统一 SMPL22 T-MPJPE/PA-MPJPE、按支持汇总、检查完整结果；不依赖 Lightning。
+
 GT-MOT sequence 级可持久统计见 [NAIVE track statistics](naive_track_statistics.md)。
 
 已有 normalized scene、selected GT mask 与 protocol-owned base VISRUN labels 时，见

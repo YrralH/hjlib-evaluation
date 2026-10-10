@@ -1,5 +1,11 @@
 # 设计 —— hjlib-evaluation
 
+SMPL22 的 pelvis-centered T 与 proper-rigid RT 指标见
+[local SMPL22 metrics](local_smpl22_metrics.md)。
+
+[双臂人体重建 validation](body_reconstruction_validation.md)定义 SMPL22 T/PA 指标、
+唯一 person-frame 支持、充分统计量与可复用结果契约。
+
 GT-MOT sequence 的 additive partition 与 nullable reduction 见
 [NAIVE track statistics](naive_track_statistics.md)。
 
@@ -244,6 +250,14 @@ raw 输出。它不是新标准 protocol:无 KP / 无观测帧的 raw root trans
 应作为 protocol redesign 单独落地,不得默默替换默认 `joints_54_world` 口径。
 
 ## State of the world
+
+- 2026-10-09 VRv1 local profile primitives: immutable SMPL22 T/rigid RT leaves
+  select0..21 before checks/fit, retain wrists and leave legacy SMPL24 untouched.
+  The current combined worktree passes181 portable tests and master smoke;
+  strict pyright passes, covering81/88 Python files with seven existing campaign
+  exclusions and no unregistered file. New local-metric files and additive
+  exports/docs/test calls are this wave's scope; previously staged body-validation
+  source belongs to another session and is not adopted by this task.
 
 - **2026-10-05 VRv1 existing dumps**：full-only main/GoPro builder 与 generic
   dump-backed SMPL GT 已接线，WP wrapper 保留原行为。全量 data-free smoke 167 passed；
