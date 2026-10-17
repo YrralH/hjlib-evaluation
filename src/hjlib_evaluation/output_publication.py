@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 import tempfile
 
-from hjlib_systools.fileops import commit_directory_no_replace
+from hjlib_filesystem_atomic import commit_directory_no_replace
 
 
 @contextmanager

@@ -45,7 +45,7 @@ owner split 与完整形式化定义留在
 hjlib-experiments → { hjlib-evaluation, hjlib-network, vis 仓 }      # app/编排层
 hjlib-evaluation  → { hjlib-dataset-assembly, hjlib-dataset-std,
                       hjlib-skeleton, hjlib-geometry, hjlib-detection,
-                      hjlib-ground-solver, hjlib-systools } # 执行层(本仓);已 pin
+                      hjlib-ground-solver, hjlib-filesystem-atomic } # 执行层(本仓);已 pin
                   ( + hjlib-network / hjlib-smpl )      # live driver 落地时再 pin
 ```
 
@@ -119,7 +119,7 @@ src/hjlib_evaluation/
     testset_builder.py     TestSet_Builder(单一泛型,合并 monolith wp/jta/jta_ext;读 washed filter store)
     eval_meta.py           Eval_Meta / Metric_Spec_3D / Metric_Spec_2D_OKS(评测契约)
     eval_reducer.py        eval_dumps_against_gt(预测 vs GT → MPJPE/T-MPJPE/Jitter;pred_joints_key 字段选择)+ compute_jitter
-    output_publication.py  推理/CLI 共用的 failure-clean staged directory wrapper；原子 no-replace commit 复用 hjlib-systools
+    output_publication.py  推理/CLI 共用的 failure-clean staged directory wrapper；原子 no-replace commit 复用 hjlib-filesystem-atomic
     joint_error.py         method-neutral unreduced per-joint Euclidean and normalized-ground-height errors
     joint_acceleration.py  method-neutral acceleration magnitudes and GT-relative residuals
     joint_jerk.py          method-neutral GT-relative joint jerk residuals

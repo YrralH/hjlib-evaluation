@@ -3,7 +3,7 @@ from pathlib import Path
 import shutil
 from tempfile import TemporaryDirectory
 
-from hjlib_systools.fileops import Publication_Destination_Exists_Error
+from hjlib_filesystem_atomic import Publication_Destination_Exists_Error
 
 from hjlib_evaluation.output_publication import staged_output_directory
 
