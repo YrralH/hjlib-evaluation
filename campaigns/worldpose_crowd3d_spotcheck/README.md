@@ -43,13 +43,13 @@ surface.
 ## Known Inputs
 
 - a00 dump:
-  `/home/hj/Data_Process/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/ablation_a00_hvip_hipmid_K1_ep0004`
+  `/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/ablation_a00_hvip_hipmid_K1_ep0004`
 - v18agg dump:
-  `/home/hj/Data_Process/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/ief_global_v18agg_strict_mask_lowcam_K1_lam9e-3_RF31_ep0004__strictoff`
+  `/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/ief_global_v18agg_strict_mask_lowcam_K1_lam9e-3_RF31_ep0004__strictoff`
 - a00 existing per-person vis:
-  `/home/hj/Data_Process/protocol_dynamic/vis/worldpose/full/kp_rtmlib/ablation_a00_hvip_hipmid_K1_ep0004/per_seq`
+  `/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/vis/worldpose/full/kp_rtmlib/ablation_a00_hvip_hipmid_K1_ep0004/per_seq`
 - Crowd3D external downstream package:
-  `/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream`
+  `/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/external_results/worldpose/crowd3d/NET_ARG_231908_downstream`
 - Crowd3D remote source:
   `G1M-hj:/mnt/ssd_2T_1100_0/zl/crowd3d_NET_ARG_231908_downstream`
 

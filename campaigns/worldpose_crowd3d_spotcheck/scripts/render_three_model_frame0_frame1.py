@@ -26,7 +26,7 @@ VIS_ROOT = ARTIFACT_ROOT / 'three_model_visual'
 SIDE_BY_SIDE_ROOT = VIS_ROOT / 'side_by_side'
 SUMMARY_PATH = VIS_ROOT / 'summary.json'
 CROWD3D_PACKAGE_ROOT = Path(
-    '/home/hj/Data_Process/protocol_dynamic/external_results/worldpose/crowd3d/'
+    '/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/external_results/worldpose/crowd3d/'
     'NET_ARG_231908_downstream')
 WORLDPOSE_ROOT = Path('/mnt/hj_exosX18_data0/hj/datasets/worldpose')
 WORLDPOSE_UNDISTORT_FRAMES = Path(
