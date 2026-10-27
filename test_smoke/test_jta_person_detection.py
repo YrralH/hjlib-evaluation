@@ -1,4 +1,5 @@
 '''Data-free gates for unordered JTA person-detection evaluation.'''
+# pyright: reportUnknownMemberType=false
 from dataclasses import replace
 from hashlib import sha256
 from time import perf_counter

@@ -1,4 +1,5 @@
 '''Data-free local SMPL22 alignment, support and population controls.'''
+# pyright: reportUnknownMemberType=false
 
 from collections.abc import Callable
 

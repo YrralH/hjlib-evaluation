@@ -348,11 +348,9 @@ def reduce_corrected_crowd_world_dynamics_summaries(
     view_name = ordered[0].view_name
     if any(item.view_name != view_name for item in ordered):
         raise ValueError('world dynamics view names must match')
-    counts = np.sum(
-        np.stack([item.metric_sample_counts for item in ordered]),
-        axis=0,
-        dtype=np.int64,
-    )
+    counts: NDArray[np.int64] = np.stack(
+        [item.metric_sample_counts for item in ordered],
+    ).sum(axis=0, dtype=np.int64)
     sums = np.asarray([
         math.fsum(float(item.metric_sample_sums[index]) for item in ordered)
         for index in range(len(CORRECTED_CROWD_WORLD_DYNAMICS_METRICS))

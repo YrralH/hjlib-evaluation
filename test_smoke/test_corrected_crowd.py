@@ -1,4 +1,5 @@
 '''Portable smoke tests for corrected crowd metric facilities.'''
+# pyright: reportUnknownMemberType=false
 from dataclasses import replace
 
 import numpy as np

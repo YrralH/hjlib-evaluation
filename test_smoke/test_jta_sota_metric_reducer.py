@@ -1,4 +1,5 @@
 '''Smoke tests for the canonical JTA SOTA six-metric reducer.'''
+# pyright: reportUnknownMemberType=false
 from __future__ import annotations
 
 from dataclasses import replace

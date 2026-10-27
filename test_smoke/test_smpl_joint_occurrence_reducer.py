@@ -1,4 +1,5 @@
 '''Smoke tests for sparse SMPL occurrence MPJPE/T-MPJPE reduction.'''
+# pyright: reportUnknownMemberType=false
 from __future__ import annotations
 
 from collections.abc import Callable

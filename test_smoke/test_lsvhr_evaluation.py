@@ -1,4 +1,5 @@
 '''Smoke for method-neutral LSV-HR entry and matrix evaluation.'''
+# pyright: reportUnknownMemberType=false
 from dataclasses import replace
 
 import numpy as np

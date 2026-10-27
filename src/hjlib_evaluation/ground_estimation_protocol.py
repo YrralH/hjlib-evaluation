@@ -407,7 +407,7 @@ def collect_ground_observations(
                     or bool(np.any(widths <= 0.0))
                 ):
                 raise ValueError('present bbox-ratio observation is invalid')
-            ratio = bottom_separation / widths
+            ratio = np.asarray(bottom_separation / widths, dtype=np.float64)
             selected = selected & (ratio < maximum_bottom_pair_bbox_width_ratio)
         if not bool(np.any(selected)):
             continue

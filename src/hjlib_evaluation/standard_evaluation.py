@@ -558,11 +558,9 @@ def reduce_standard_evaluation_summaries(
         math.fsum(float(value.metric_sample_sums[index]) for value in ordered)
         for index in range(len(STANDARD_MEAN_METRICS))
     ], dtype=np.float64)
-    counts = np.sum(
-        np.stack([value.metric_sample_counts for value in ordered]),
-        axis=0,
-        dtype=np.int64,
-    )
+    counts: NDArray[np.int64] = np.stack(
+        [value.metric_sample_counts for value in ordered],
+    ).sum(axis=0, dtype=np.int64)
     if np.any(counts <= 0):
         missing = [
             STANDARD_MEAN_METRICS[index]

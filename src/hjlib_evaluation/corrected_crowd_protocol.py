@@ -466,11 +466,9 @@ def reduce_corrected_crowd_summaries(
         if precision + recall
         else 0.0
     )
-    counts = np.sum(
-        np.stack([item.metric_sample_counts for item in ordered]),
-        axis=0,
-        dtype=np.int64,
-    )
+    counts: NDArray[np.int64] = np.stack(
+        [item.metric_sample_counts for item in ordered],
+    ).sum(axis=0, dtype=np.int64)
     sums = np.zeros(counts.shape, dtype=np.float64)
     for view_index in range(len(CORRECTED_CROWD_VIEWS)):
         for metric_index in range(len(CORRECTED_CROWD_METRICS)):
@@ -524,11 +522,9 @@ def reduce_corrected_crowd_selected_view_summaries(
     view_name = ordered[0].view_name
     if any(item.view_name != view_name for item in ordered):
         raise ValueError('selected corrected crowd view names must match')
-    counts = np.sum(
-        np.stack([item.metric_sample_counts for item in ordered]),
-        axis=0,
-        dtype=np.int64,
-    )
+    counts: NDArray[np.int64] = np.stack(
+        [item.metric_sample_counts for item in ordered],
+    ).sum(axis=0, dtype=np.int64)
     sums = np.array([
         math.fsum(float(item.metric_sample_sums[index]) for item in ordered)
         for index in range(len(CORRECTED_CROWD_METRICS))

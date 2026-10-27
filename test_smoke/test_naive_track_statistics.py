@@ -1,4 +1,5 @@
 '''Track partition parity, support boundaries and identity failure tests.'''
+# pyright: reportUnknownMemberType=false
 from dataclasses import asdict, replace
 from unittest.mock import patch
 

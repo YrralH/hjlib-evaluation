@@ -1,4 +1,5 @@
 '''Smoke tests for the provisional VirtualCrowd NAIVE evaluator.'''
+# pyright: reportUnknownMemberType=false
 from dataclasses import replace
 
 import numpy as np
