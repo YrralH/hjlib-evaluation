@@ -27,10 +27,10 @@ DEFAULT_PRED_JOINTS_KEY = 'joints_54_world'
 DEFAULT_SCENE = 'NET_ARG_231908'
 METHOD_DUMP_DIRS: Dict[str, Path] = {
     'abla_v1': Path(
-        '/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/'
+        '/mnt/hj_disks/4-4090_8T_ironwolf/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/'
         'ablation_a00_hvip_hipmid_K1_ep0004'),
     'v18agg': Path(
-        '/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/'
+        '/mnt/hj_disks/4-4090_8T_ironwolf/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/inference_dumps/worldpose/full/kp_rtmlib/'
         'ief_global_v18agg_strict_mask_lowcam_K1_lam9e-3_RF31_ep0004__strictoff'),
 }
 

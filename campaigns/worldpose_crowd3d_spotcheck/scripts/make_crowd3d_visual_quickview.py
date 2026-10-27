@@ -20,7 +20,7 @@ import typer
 WORK_ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_ROOT = WORK_ROOT / 'artifacts'
 DEFAULT_PACKAGE_ROOT = Path(
-    '/mnt/hj_disks/v2_16T_exosX18/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/external_results/worldpose/crowd3d/'
+    '/mnt/hj_disks/4-4090_8T_ironwolf/hj/Data_Process/monolith_of_dynamic_hvip/protocol_dynamic/external_results/worldpose/crowd3d/'
     'NET_ARG_231908_downstream')
 DEFAULT_OUTPUT_ROOT = ARTIFACT_ROOT / 'crowd3d_visual'
 
