@@ -1,5 +1,4 @@
 '''Smoke tests for the three-scope standard evaluation profile.'''
-# pyright: reportUnknownMemberType=false
 from __future__ import annotations
 
 from dataclasses import replace

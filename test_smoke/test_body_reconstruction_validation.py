@@ -1,5 +1,4 @@
 '''Metric and support controls for paired body validation.'''
-# pyright: reportUnknownMemberType=false
 import numpy as np
 import pytest
 from numpy.typing import NDArray
